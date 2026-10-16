@@ -128,7 +128,7 @@ def main(src: str, out: str) -> None:
     # c703-2402-09-1, NISE-2403-01-2, e801-4476-02-1. Within one cobas pro and module:
     #  * one serial (c 703, ISE): the sub-unit numbers the units -> c703-1.1, c703-1.2, NISE-2.2
     #  * several serials (e 801): the serial order numbers the modules -> e801-1.1, e801-1.2;
-    #    a sub-unit other than 1 is appended -> e801-1.1-2.
+    #    the trailing number is not a separate unit and is dropped.
     # The same physical unit therefore has the same name for every analyte.
     raw_ins = sorted(raw.loc[raw["Instrument"] != "", "Instrument"].str.strip().unique())
     pat = re.compile(r"CPRO_(\d+)\s*-\s*([A-Za-z]+\d*)-(.+)-(\d+)$")
@@ -150,7 +150,9 @@ def main(src: str, out: str) -> None:
             if mod not in multi:
                 short[r] = f"{mod}-{pro}.{sub}"
             else:
-                short[r] = f"{mod}-{pro}.{serials.index(ser) + 1}" + ("" if sub == "1" else f"-{sub}")
+                # The trailing number on an e 801 is an assay registration, not a separate
+                # unit (25-OH vitamin D appears as -2 on the same three modules), so it is dropped.
+                short[r] = f"{mod}-{pro}.{serials.index(ser) + 1}"
     d["instrument"] = d["Instrument"].map(short)
     d["test_code"] = d["Test"]
     d["analyte"] = d["Test"].map(lambda t: ANALYTES.get(t, (t, ""))[0])
