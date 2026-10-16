@@ -57,8 +57,10 @@ ANALYTES = {
     "S-TnT":     ("hs-Troponin T", "ng/L"),
     "S-hsTnT":   ("hs-Troponin T", "ng/L"),
     "S-Ferritin":("Ferritin", "µg/L"),
+    "S-Ferr":    ("Ferritin", "µg/L"),
     "S-PSA":     ("PSA", "µg/L"),
     "S-D25":     ("25-OH vitamin D", "nmol/L"),
+    "S-VitD":    ("25-OH vitamin D", "nmol/L"),
 }
 
 
@@ -122,18 +124,29 @@ def main(src: str, out: str) -> None:
     d["result"] = num(d["Result"])
     d["target_in_force"] = num(d["Target value"])
     d["sd_defined_in_lis"] = num(d["SD"])
-    # Short names: module, cobas pro number and unit, e.g. c703-1.1, c703-1.2, NISE-2.1,
-    # e801-1.2. Units are numbered within each cobas pro and module in order of their serial
-    # number, so a cobas pro with two c 703, two ISE or two e 801 units keeps them apart and
-    # the same physical unit has the same name for every analyte.
+    # Short names. cobas infinity names a unit "SNR_CPRO_<p> - <module>-<serial>-<sub>", e.g.
+    # c703-2402-09-1, NISE-2403-01-2, e801-4476-02-1. Within one cobas pro and module:
+    #  * one serial (c 703, ISE): the sub-unit numbers the units -> c703-1.1, c703-1.2, NISE-2.2
+    #  * several serials (e 801): the serial order numbers the modules -> e801-1.1, e801-1.2;
+    #    a sub-unit other than 1 is appended -> e801-1.1-2.
+    # The same physical unit therefore has the same name for every analyte.
     raw_ins = sorted(raw.loc[raw["Instrument"] != "", "Instrument"].str.strip().unique())
-    groups = {}
+    pat = re.compile(r"CPRO_(\d+)\s*-\s*([A-Za-z]+\d*)-(.+)-(\d+)$")
+    parsed, short = {}, {}
     for r in raw_ins:
-        groups.setdefault(short_instrument(r), []).append(r)
-    short = {}
-    for base, members in groups.items():
-        for k, r in enumerate(sorted(members), 1):
-            short[r] = f"{base}.{k}" if base != r.strip() else r.strip()
+        m = pat.search(r)
+        if m:
+            parsed[r] = m.groups()
+        else:
+            short[r] = r
+    for (pro, mod) in {(v[0], v[1]) for v in parsed.values()}:
+        members = {r: v for r, v in parsed.items() if v[0] == pro and v[1] == mod}
+        serials = sorted({v[2] for v in members.values()})
+        for r, (_, _, ser, sub) in members.items():
+            if len(serials) == 1:
+                short[r] = f"{mod}-{pro}.{sub}"
+            else:
+                short[r] = f"{mod}-{pro}.{serials.index(ser) + 1}" + ("" if sub == "1" else f"-{sub}")
     d["instrument"] = d["Instrument"].map(short)
     d["test_code"] = d["Test"]
     d["analyte"] = d["Test"].map(lambda t: ANALYTES.get(t, (t, ""))[0])
