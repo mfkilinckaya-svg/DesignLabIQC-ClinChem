@@ -44,15 +44,18 @@ ANALYTES = {
     "S-ALAT":    ("ALT", "U/L"),
     "S-ALT":     ("ALT", "U/L"),
     "S-Glukose": ("Glucose", "mmol/L"),
+    "S-Gluk":    ("Glucose", "mmol/L"),
     "S-Glu":     ("Glucose", "mmol/L"),
     "S-Ca":      ("Calcium", "mmol/L"),
     "S-Kalsium": ("Calcium", "mmol/L"),
+    "S-Kals":    ("Calcium", "mmol/L"),
     "S-Na":      ("Sodium", "mmol/L"),
     "S-K":       ("Potassium", "mmol/L"),
     "S-Cl":      ("Chloride", "mmol/L"),
     "S-Natrium": ("Sodium", "mmol/L"),
     "S-TSH":     ("TSH", "mIU/L"),
     "S-TnT":     ("hs-Troponin T", "ng/L"),
+    "S-hsTnT":   ("hs-Troponin T", "ng/L"),
     "S-Ferritin":("Ferritin", "µg/L"),
     "S-PSA":     ("PSA", "µg/L"),
     "S-D25":     ("25-OH vitamin D", "nmol/L"),
@@ -215,7 +218,10 @@ def main(src: str, out: str) -> None:
     sens2 = (seg.groupby(["analyte", "level", "instrument"]).apply(pooled_cv, include_groups=False)["cv"]
              .rename("cv_within_target_period"))
     cv = cv.merge(sens2.reset_index(), on=["analyte", "level", "instrument"], how="left")
-    cv["bias_vs_target_pct"] = 100 * (cv["mean"] / cv["target"] - 1)
+    # Bias against the target in force for each result's own lot (correct when the lot changes).
+    bias = (acc.assign(b=100 * (acc["result"] / acc["target_in_force"] - 1))
+               .groupby(["analyte", "level", "instrument"])["b"].mean().rename("bias_vs_target_pct"))
+    cv = cv.merge(bias.reset_index(), on=["analyte", "level", "instrument"], how="left")
     cv["cv_lis_pct"] = 100 * cv["sd_lis"] / cv["target"]
     cv["observed_to_defined"] = cv["cv"] / cv["cv_lis_pct"]
     cv = cv.round(4)
