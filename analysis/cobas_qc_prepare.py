@@ -60,7 +60,7 @@ ANALYTES = {
 
 
 def short_instrument(s: str) -> str:
-    """'SNR_CPRO_1 - c703-2402-09-1' -> 'c703-1'; falls back to the raw string."""
+    """'SNR_CPRO_1 - c703-2402-09-1' -> 'c703-1' (unit suffix added by the caller)."""
     m = re.search(r"CPRO_(\d+)\s*-\s*([A-Za-z]+\d*)", s)
     return f"{m.group(2)}-{m.group(1)}" if m else s.strip()
 
@@ -119,15 +119,14 @@ def main(src: str, out: str) -> None:
     d["result"] = num(d["Result"])
     d["target_in_force"] = num(d["Target value"])
     d["sd_defined_in_lis"] = num(d["SD"])
-    # Short names; when two units share a cobas pro and module (the ISE module has two
-    # units per cobas pro), keep the unit suffix so they are not merged.
+    # Short names: module, cobas pro number and unit, e.g. c703-1.1, c703-1.2, NISE-2.1.
+    # Each cobas pro carries two c 703 units and two ISE units; the unit suffix is kept for
+    # every analyte so that the same physical unit has the same name everywhere.
     raw_ins = d["Instrument"].drop_duplicates()
-    short = {r: short_instrument(r) for r in raw_ins}
-    clash = pd.Series(short).duplicated(keep=False)
+    short = {}
     for r in raw_ins:
-        if clash[r]:
-            m = re.search(r"-(\d+)\s*$", r)
-            short[r] = f"{short[r]}.{m.group(1)}" if m else r.strip()
+        m = re.search(r"-(\d+)\s*$", r)
+        short[r] = f"{short_instrument(r)}.{m.group(1)}" if m else r.strip()
     d["instrument"] = d["Instrument"].map(short)
     d["test_code"] = d["Test"]
     d["analyte"] = d["Test"].map(lambda t: ANALYTES.get(t, (t, ""))[0])
@@ -209,6 +208,13 @@ def main(src: str, out: str) -> None:
     sens = (acc[~acc_err].groupby(["analyte", "level", "instrument"])
             .apply(pooled_cv, include_groups=False)["cv"].rename("cv_without_accepted_error"))
     cv = cv.merge(sens.reset_index(), on=["analyte", "level", "instrument"], how="left")
+    # Sensitivity only: pooled within lot AND within each LIS target period, so that a step
+    # change the laboratory corrected by re-targeting (e.g. after a recalibration) does not
+    # count as imprecision.
+    seg = acc.assign(lot=acc["lot"].astype(str) + "|" + acc["target_in_force"].astype(str))
+    sens2 = (seg.groupby(["analyte", "level", "instrument"]).apply(pooled_cv, include_groups=False)["cv"]
+             .rename("cv_within_target_period"))
+    cv = cv.merge(sens2.reset_index(), on=["analyte", "level", "instrument"], how="left")
     cv["bias_vs_target_pct"] = 100 * (cv["mean"] / cv["target"] - 1)
     cv["cv_lis_pct"] = 100 * cv["sd_lis"] / cv["target"]
     cv["observed_to_defined"] = cv["cv"] / cv["cv_lis_pct"]
@@ -236,13 +242,13 @@ def main(src: str, out: str) -> None:
             rep.append(f"| {r['analyte']} | {r['instrument']} | {r['level']} | {r['timestamp']:%Y-%m-%d %H:%M} | {r['result']:g} | "
                        f"{r['target_in_force']:g} | {r['z_vs_target']:+.1f} | {r['lis_rule_outcome']} |")
     rep += ["", "## Imprecision (Accepted, no instrument flag; pooled within-lot)", "",
-            "| Analyte | Level | Instrument | n | Mean | CV % | CV % without accepted Error | LIS CV % | Obs/def | Bias vs target % |",
-            "|---|---|---|---|---|---|---|---|---|---|"]
+            "| Analyte | Level | Instrument | n | Mean | CV % | CV % without accepted Error | CV % within target period | LIS CV % | Obs/def | Bias vs target % |",
+            "|---|---|---|---|---|---|---|---|---|---|---|"]
     for _, r in cv.iterrows():
         star = " ★" if ((worst["analyte"] == r["analyte"]) & (worst["level"] == r["level"]) &
                         (worst["instrument"] == r["instrument"])).any() else ""
         rep.append(f"| {r['analyte']} | {r['level']} | {r['instrument']}{star} | {int(r['n'])} | {r['mean']:.4g} | "
-                   f"{r['cv']:.2f} | {r['cv_without_accepted_error']:.2f} | {r['cv_lis_pct']:.2f} | {r['observed_to_defined']:.2f} | {r['bias_vs_target_pct']:+.2f} |")
+                   f"{r['cv']:.2f} | {r['cv_without_accepted_error']:.2f} | {r['cv_within_target_period']:.2f} | {r['cv_lis_pct']:.2f} | {r['observed_to_defined']:.2f} | {r['bias_vs_target_pct']:+.2f} |")
     rep.append("")
     rep.append("★ = worst instrument, carried forward to the rule design.")
 
