@@ -246,6 +246,7 @@ const DEFAULT_ANALYTES = [
 
 /* Names offered when adding an allowable-error source. Any label may be typed. */
 const SOURCE_SUGGESTIONS = [
+  "Labquality",
   "Noklus",
   "CLIA",
   "Rili-BÄK",
