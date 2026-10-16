@@ -24,7 +24,7 @@ One row per control measurement, produced by `analysis/cobas_qc_prepare.py` from
 | `lis_masked` | 0/1 | 1 if the QC status carries `Masked`. In the creatinine data this occurs on every row from one analyser and no row from the other, so it is treated as an analyser attribute and not as an exclusion. |
 | `lis_review` | Accepted / Rejected | Review decision in the LIS. |
 | `lis_rejected` | 0/1 | 1 if `lis_review` is `Rejected`. These rows are excluded from imprecision and kept for the false-rejection analysis. |
-| `instrument_flag` | text | Instrument notification codes other than N (normal) and 48/49 (QC range), e.g. 43 calibration abnormal, 47 calibration invalid, 18 ISE noise, 120 expired ISE electrode, 123 ISE on-board stability exceeded. Empty if none. |
+| `instrument_flag` | text | Instrument notification codes other than N (normal), 48/49 (QC range) and 71 (potential carry-over, a run-order notice), e.g. 43 calibration abnormal, 47 calibration invalid, 18 ISE noise, 120 expired ISE electrode, 123 ISE on-board stability exceeded. Empty if none. |
 | `excluded_reason` | text | Reason a whole analyte level was excluded from imprecision after review (see `EXCLUDED_LEVELS` in the script). Empty if not excluded. |
 | `used_for_imprecision` | 0/1 | 1 if the result was accepted by the LIS, carries no instrument flag and its level is not excluded after review. Imprecision uses these rows only. Accepted results with QC status `Error` are kept; their effect is reported as a sensitivity CV. |
 | `bottle_status` | text | Control bottle status (`Current`, `Standby`). |
