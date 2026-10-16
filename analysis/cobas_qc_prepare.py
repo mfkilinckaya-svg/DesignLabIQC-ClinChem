@@ -122,14 +122,18 @@ def main(src: str, out: str) -> None:
     d["result"] = num(d["Result"])
     d["target_in_force"] = num(d["Target value"])
     d["sd_defined_in_lis"] = num(d["SD"])
-    # Short names: module, cobas pro number and unit, e.g. c703-1.1, c703-1.2, NISE-2.1.
-    # Each cobas pro carries two c 703 units and two ISE units; the unit suffix is kept for
-    # every analyte so that the same physical unit has the same name everywhere.
-    raw_ins = d["Instrument"].drop_duplicates()
-    short = {}
+    # Short names: module, cobas pro number and unit, e.g. c703-1.1, c703-1.2, NISE-2.1,
+    # e801-1.2. Units are numbered within each cobas pro and module in order of their serial
+    # number, so a cobas pro with two c 703, two ISE or two e 801 units keeps them apart and
+    # the same physical unit has the same name for every analyte.
+    raw_ins = sorted(raw.loc[raw["Instrument"] != "", "Instrument"].str.strip().unique())
+    groups = {}
     for r in raw_ins:
-        m = re.search(r"-(\d+)\s*$", r)
-        short[r] = f"{short_instrument(r)}.{m.group(1)}" if m else r.strip()
+        groups.setdefault(short_instrument(r), []).append(r)
+    short = {}
+    for base, members in groups.items():
+        for k, r in enumerate(sorted(members), 1):
+            short[r] = f"{base}.{k}" if base != r.strip() else r.strip()
     d["instrument"] = d["Instrument"].map(short)
     d["test_code"] = d["Test"]
     d["analyte"] = d["Test"].map(lambda t: ANALYTES.get(t, (t, ""))[0])
