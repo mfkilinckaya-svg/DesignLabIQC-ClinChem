@@ -249,6 +249,7 @@ const SOURCE_SUGGESTIONS = [
   "Noklus",
   "CLIA",
   "Rili-BÄK",
+  "Turkey MoH 2026",
   "BV EFLM (optimal)",
   "BV EFLM (desirable)",
   "BV EFLM (minimum)",
