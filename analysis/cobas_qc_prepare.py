@@ -38,6 +38,12 @@ import pandas as pd
 
 TRUNCATION_LIMIT = 2000          # cobas infinity export row cap
 
+# Single results excluded from imprecision after review: (test, short instrument, timestamp) -> reason.
+EXCLUDED_RESULTS = {
+    ("S-Parac", "c703-2.2", "2025-10-16 15:29:45"): "Result 15863 against target 100 (158-fold), QC status Error "
+                                                    "but accepted: physically implausible; excluded after review (16 Oct 2026).",
+}
+
 # Analyte levels excluded from imprecision after review, with the reason (kept in the data set).
 EXCLUDED_LEVELS = {
     ("S-C-pep", "IMMUN L2", "301804"): "Three distinct levels (~0.39, ~0.63, ~0.98 nmol/L) within one control lot "
@@ -217,6 +223,9 @@ def main(src: str, out: str) -> None:
     d["instrument_flag"] = codes.apply(lambda c: ",".join(c))
     d["excluded_reason"] = [EXCLUDED_LEVELS.get((t, c, l), "")
                             for t, c, l in zip(d["test_code"], d["control_name"], d["lot"])]
+    ts = d["timestamp"].dt.strftime("%Y-%m-%d %H:%M:%S")
+    single = [EXCLUDED_RESULTS.get((t, i, x), "") for t, i, x in zip(d["test_code"], d["instrument"], ts)]
+    d["excluded_reason"] = [a or b for a, b in zip(d["excluded_reason"], single)]
     d["used_for_imprecision"] = ((d["lis_rejected"] == 0) & (d["instrument_flag"] == "")
                                  & (d["excluded_reason"] == "")).astype(int)
     d["bottle_status"] = d["Bottle status"]
@@ -293,8 +302,10 @@ def main(src: str, out: str) -> None:
             rep.append(f"| {r['analyte']} | {r['instrument']} | {r['level']} | {r['timestamp']:%Y-%m-%d %H:%M} | {r['result']:g} | "
                        f"{r['target_in_force']:g} | {r['instrument_flag']} | {r['lis_rule_outcome']} |")
     ae = acc[acc_err]
-    if EXCLUDED_LEVELS:
-        rep += ["", "## Levels excluded from imprecision after review", ""]
+    if EXCLUDED_LEVELS or EXCLUDED_RESULTS:
+        rep += ["", "## Levels and results excluded from imprecision after review", ""]
+        for (t, i, x), why in EXCLUDED_RESULTS.items():
+            rep.append(f"- {t}, {i}, {x}: {why}")
         for (t, c, l), why in EXCLUDED_LEVELS.items():
             n = int(((d["test_code"] == t) & (d["control_name"] == c) & (d["lot"] == l)).sum())
             if n:
