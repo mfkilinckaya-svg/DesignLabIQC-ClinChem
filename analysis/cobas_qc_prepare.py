@@ -51,6 +51,9 @@ ANALYTES = {
     "S-Kals":    ("Calcium", "mmol/L"),
     "S-Na":      ("Sodium", "mmol/L"),
     "S-K":       ("Potassium", "mmol/L"),
+    "S-Kalium":  ("Potassium", "mmol/L"),
+    "S-Urea":    ("Urea", "mmol/L"),
+    "S-Klorid":  ("Chloride", "mmol/L"),
     "S-Cl":      ("Chloride", "mmol/L"),
     "S-Natrium": ("Sodium", "mmol/L"),
     "S-TSH":     ("TSH", "mIU/L"),
@@ -75,7 +78,20 @@ def num(s: pd.Series) -> pd.Series:
 
 
 def load(path: str) -> pd.DataFrame:
-    d = pd.read_csv(path, sep=";", dtype=str, encoding="utf-8-sig").fillna("")
+    # A free-text comment typed at the analyser can contain a line break, which splits one
+    # record over two lines. Join physical lines until a record has the header's field count.
+    import io
+    with open(path, encoding="utf-8-sig") as fh:
+        lines = fh.read().splitlines()
+    n_sep = lines[0].count(";")
+    records, buf = [lines[0]], ""
+    for ln in lines[1:]:
+        buf = f"{buf} {ln}" if buf else ln
+        if buf.count(";") >= n_sep:
+            records.append(buf); buf = ""
+    if buf:
+        records.append(buf)
+    d = pd.read_csv(io.StringIO("\n".join(records)), sep=";", dtype=str).fillna("")
     d.columns = [c.strip() for c in d.columns]
     d = d.apply(lambda c: c.str.strip())
     d["source_file"] = os.path.basename(path)
@@ -121,7 +137,9 @@ def main(src: str, out: str) -> None:
     d = raw[~is_cal].copy()
     d["timestamp"] = pd.to_datetime(d["Date"], format="%d/%m/%Y %H:%M:%S", errors="coerce")
     bad_ts = d["timestamp"].isna().sum()
-    d["result"] = num(d["Result"])
+    # A comment can be appended to the result as "value|text"; keep the value.
+    d["result_comment"] = d["Result"].str.partition("|")[2].str.strip()
+    d["result"] = num(d["Result"].str.partition("|")[0])
     d["target_in_force"] = num(d["Target value"])
     d["sd_defined_in_lis"] = num(d["SD"])
     # Short names. cobas infinity names a unit "SNR_CPRO_<p> - <module>-<serial>-<sub>", e.g.
