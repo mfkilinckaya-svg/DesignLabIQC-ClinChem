@@ -139,11 +139,15 @@ def main(src: str, out: str) -> None:
             parsed[r] = m.groups()
         else:
             short[r] = r
+    # Decide per module type, across all cobas pro units, so the scheme is the same everywhere.
+    multi = {mod for mod in {v[1] for v in parsed.values()}
+             if any(len({v[2] for v in parsed.values() if v[0] == p and v[1] == mod}) > 1
+                    for p in {v[0] for v in parsed.values()})}
     for (pro, mod) in {(v[0], v[1]) for v in parsed.values()}:
         members = {r: v for r, v in parsed.items() if v[0] == pro and v[1] == mod}
         serials = sorted({v[2] for v in members.values()})
         for r, (_, _, ser, sub) in members.items():
-            if len(serials) == 1:
+            if mod not in multi:
                 short[r] = f"{mod}-{pro}.{sub}"
             else:
                 short[r] = f"{mod}-{pro}.{serials.index(ser) + 1}" + ("" if sub == "1" else f"-{sub}")
