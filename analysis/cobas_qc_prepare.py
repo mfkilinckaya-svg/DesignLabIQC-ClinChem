@@ -46,6 +46,8 @@ ANALYTES = {
     "S-Ca":      ("Calcium", "mmol/L"),
     "S-Kalsium": ("Calcium", "mmol/L"),
     "S-Na":      ("Sodium", "mmol/L"),
+    "S-K":       ("Potassium", "mmol/L"),
+    "S-Cl":      ("Chloride", "mmol/L"),
     "S-Natrium": ("Sodium", "mmol/L"),
     "S-TSH":     ("TSH", "mIU/L"),
     "S-TnT":     ("hs-Troponin T", "ng/L"),
@@ -115,7 +117,16 @@ def main(src: str, out: str) -> None:
     d["result"] = num(d["Result"])
     d["target_in_force"] = num(d["Target value"])
     d["sd_defined_in_lis"] = num(d["SD"])
-    d["instrument"] = d["Instrument"].map(short_instrument)
+    # Short names; when two units share a cobas pro and module (the ISE module has two
+    # units per cobas pro), keep the unit suffix so they are not merged.
+    raw_ins = d["Instrument"].drop_duplicates()
+    short = {r: short_instrument(r) for r in raw_ins}
+    clash = pd.Series(short).duplicated(keep=False)
+    for r in raw_ins:
+        if clash[r]:
+            m = re.search(r"-(\d+)\s*$", r)
+            short[r] = f"{short[r]}.{m.group(1)}" if m else r.strip()
+    d["instrument"] = d["Instrument"].map(short)
     d["test_code"] = d["Test"]
     d["analyte"] = d["Test"].map(lambda t: ANALYTES.get(t, (t, ""))[0])
     d["unit"] = d.apply(lambda r: r["Unit"] or ANALYTES.get(r["Test"], ("", ""))[1], axis=1)
