@@ -26,8 +26,8 @@ The central claim is the same as in the haematology study. Internal quality cont
 
 | Folder | Content |
 |---|---|
-| `tool/` | **`iqc-rule-designer-clinchem.html`**: single-file browser tool, no installation, no network. It opens with the ten-analyte panel at two control levels. Targets come from the LIS. CV and allowable total error are left empty, except creatinine, which is pre-filled from the study period. `iqc-rule-designer-clinchem.jsx` is the source. `build/` rebuilds the HTML from the source. |
-| `analysis/` | **`cobas_qc_prepare.py`**: turns cobas infinity QC exports into the study data set and the tool's import file, and writes a data-quality report. |
+| `tool/` | **`iqc-rule-designer-clinchem.html`**: single-file browser tool, no installation, no network. It opens with the ten-analyte panel at two control levels, pre-filled from 1 May 2025 – 30 June 2026: CV of the worst analyser (pooled within lot), target (mean of the control lot in use at the end of the period) and largest analyser offset. Allowable total error is left empty; Turkey MoH 2026 is listed as a comparison source where available. `iqc-rule-designer-clinchem.jsx` is the source; `build/` rebuilds the HTML (`preload_panel.py` writes the panel values into the source). |
+| `analysis/` | **`cobas_qc_prepare.py`**: turns cobas infinity QC exports into the study data set and the tool's import file, and writes a data-quality report. **`tool_values.py`**: per analyte and level, the CV, target and analyser offset the tool uses. |
 | `docs/` | `DATA_DICTIONARY.md`: the columns of the prepared data set. |
 | `data/` | Prepared control-result data (to be deposited). |
 

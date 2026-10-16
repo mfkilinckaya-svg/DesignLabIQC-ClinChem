@@ -202,8 +202,9 @@ const PANELS = ["Clinical chemistry", "Immunochemistry"];
    16 October 2026. CV and allowable total error are deliberately left empty:
    CV comes from "Import results" (pooled within-lot CV of the worst analyser
    over the study period), the allowable error and its source are entered per
-   analyte. Creatinine is pre-filled from 1 May 2025 – 30 June 2026
-   (2 630 accepted results). */
+   analyte. CV (worst analyser, pooled within lot),
+   target (mean of the control lot in use at the end of the period) and analyser offset
+   are pre-filled from 1 May 2025 – 30 June 2026. */
 function ccAnalyte(panel, name, unit, pedReq, l1, l2, note = "") {
   return {
     id: uid(),
@@ -224,24 +225,166 @@ function ccAnalyte(panel, name, unit, pedReq, l1, l2, note = "") {
 }
 
 const DEFAULT_ANALYTES = [
-  ccAnalyte("Clinical chemistry", "Sodium", "mmol/L", 90, [136.5], [153.5],
-    "Measured on the ISE module, not the c 703 photometric units. Narrow within-subject biological variation; the biological-variation tiers may fall below the analyser CV."),
-  (() => {
-    const a = ccAnalyte("Clinical chemistry", "Creatinine", "µmol/L", 90, [99.1476, 1.915], [356.99, 1.289],
-      "Imported from 1 May 2025 – 30 June 2026, accepted results only, one control lot per level. LIS targets 99.2 and 361; the L2 analyser means sit about 1% below the LIS target.");
-    a.levels[0].bias = 0.111;
-    a.levels[1].bias = 0.071;
-    return a;
-  })(),
-  ccAnalyte("Clinical chemistry", "ALT", "U/L", 70, [55], [167]),
-  ccAnalyte("Clinical chemistry", "Glucose", "mmol/L", 90, [5.3], [14.5]),
-  ccAnalyte("Clinical chemistry", "Calcium", "mmol/L", 90, [2.24], [3.135]),
-  ccAnalyte("Immunochemistry", "TSH", "mIU/L", 70, [3.06], [10.6]),
-  ccAnalyte("Immunochemistry", "hs-Troponin T", "ng/L", 90, [19.4], [2190],
-    "L1 sits near the 99th-percentile decision limit, where a CV of 10% or less is required."),
-  ccAnalyte("Immunochemistry", "Ferritin", "µg/L", 70, [95.8], [597]),
-  ccAnalyte("Immunochemistry", "PSA", "µg/L", 70, [4.11], [21.2]),
-  ccAnalyte("Immunochemistry", "25-OH vitamin D", "nmol/L", 70, [95.1], [168]),
+  {
+    id: uid(),
+    panel: "Clinical chemistry",
+    name: "Sodium",
+    pedReq: 90,
+    unit: "mmol/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 9 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 136.569, 1.088, 1, 3), { bias: 0.236 }),
+      Object.assign(lvl("L2", 154.677, 0.726, 1, 3), { bias: 0.251 }),
+    ],
+    note: "ISE module, four units. CV includes accepted results whose QC status was Error (sensitivity CV without them: L1 0.67%).",
+  },
+  {
+    id: uid(),
+    panel: "Clinical chemistry",
+    name: "Creatinine",
+    pedReq: 90,
+    unit: "\u00b5mol/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 20 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 99.1432, 1.903, 1, 3), { bias: 0.116 }),
+      Object.assign(lvl("L2", 356.985, 1.288, 1, 3), { bias: 0.073 }),
+    ],
+    note: "Two c 703 units. One control lot over the period; LIS targets 99.2 and 361.",
+  },
+  {
+    id: uid(),
+    panel: "Clinical chemistry",
+    name: "ALT",
+    pedReq: 70,
+    unit: "U/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 20 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 53.6702, 2.446, 1, 3), { bias: 0.935 }),
+      Object.assign(lvl("L2", 166.062, 2.171, 1, 3), { bias: 1.059 }),
+    ],
+    note: "Three c 703 units. Recalibration step of about +7% on 20\u201324 May 2025; targets re-set within the lot.",
+  },
+  {
+    id: uid(),
+    panel: "Clinical chemistry",
+    name: "Glucose",
+    pedReq: 90,
+    unit: "mmol/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 10 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 5.30429, 1.932, 1, 3), { bias: 0.478 }),
+      Object.assign(lvl("L2", 14.679, 1.495, 1, 3), { bias: 0.322 }),
+    ],
+    note: "Two c 703 units.",
+  },
+  {
+    id: uid(),
+    panel: "Clinical chemistry",
+    name: "Calcium",
+    pedReq: 90,
+    unit: "mmol/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 10 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 2.24434, 1.190, 1, 3), { bias: 0.670 }),
+      Object.assign(lvl("L2", 3.13051, 0.998, 1, 3), { bias: 0.476 }),
+    ],
+    note: "Two c 703 units. Defined L2 SD (0.99%) equals the observed CV.",
+  },
+  {
+    id: uid(),
+    panel: "Immunochemistry",
+    name: "TSH",
+    pedReq: 70,
+    unit: "mIU/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 25 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 3.02944, 2.462, 1, 3), { bias: 0.894 }),
+      Object.assign(lvl("L2", 10.4928, 2.287, 1, 3), { bias: 0.874 }),
+    ],
+    note: "Three e 801 units. Control lot changed 24 Feb 2026.",
+  },
+  {
+    id: uid(),
+    panel: "Immunochemistry",
+    name: "hs-Troponin T",
+    pedReq: 90,
+    unit: "ng/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 18.7954, 3.013, 1, 3), { bias: 0.821 }),
+      Object.assign(lvl("L2", 2134.1, 4.509, 1, 3), { bias: 0.402 }),
+    ],
+    note: "Two e 801 units. L1 near the 99th-percentile limit (CV \u2264 10% required). Old L2 lot drifted upwards through 2025; new lot from 24 Feb 2026.",
+  },
+  {
+    id: uid(),
+    panel: "Immunochemistry",
+    name: "Ferritin",
+    pedReq: 70,
+    unit: "\u00b5g/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 25 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 93.418, 2.571, 1, 3), { bias: 0.499 }),
+      Object.assign(lvl("L2", 586.639, 2.878, 1, 3), { bias: 0.144 }),
+    ],
+    note: "Three e 801 units. Four L2 targets over the period; new lot reads below its target.",
+  },
+  {
+    id: uid(),
+    panel: "Immunochemistry",
+    name: "PSA",
+    pedReq: 70,
+    unit: "\u00b5g/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 25 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 4.04595, 4.088, 1, 3), { bias: 2.859 }),
+      Object.assign(lvl("L2", 20.8947, 3.992, 1, 3), { bias: 2.653 }),
+    ],
+    note: "Two e 801 units. e801-1.1 drifts down between calibrations (\u224810% apart from e801-2.1 before the 21 May 2026 recalibration).",
+  },
+  {
+    id: uid(),
+    panel: "Immunochemistry",
+    name: "25-OH vitamin D",
+    pedReq: 70,
+    unit: "nmol/L",
+    tea: "",
+    teaSource: "Custom",
+    teaOptions: [{ label: "Turkey MoH 2026", value: 25 }],
+    bv: {},
+    levels: [
+      Object.assign(lvl("L1", 97.6875, 6.697, 1, 3), { bias: 1.798 }),
+      Object.assign(lvl("L2", 170.797, 5.749, 1, 3), { bias: 0.797 }),
+    ],
+    note: "Three e 801 units. Reagent-lot change in June 2025 raised results by \u224810%.",
+  },
 ];
 
 /* Names offered when adding an allowable-error source. Any label may be typed. */
@@ -2020,7 +2163,7 @@ function MethodGuide({ settings }) {
 /* App                                                                 */
 /* ------------------------------------------------------------------ */
 
-const STORE_KEY = "designlabiqc-clinchem-v1";
+const STORE_KEY = "designlabiqc-clinchem-v2";
 
 export default function IqcRuleDesigner() {
   const [analytes, setAnalytes] = useState(DEFAULT_ANALYTES);
