@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it together with the accompanying article (in preparation)."
+title: "Clinical chemistry and immunochemistry IQC rule design from laboratory imprecision: data, analysis code and rule-design tool"
+authors:
+  - family-names: Kilinckaya
+    given-names: Muhammed
+    affiliation: "Helse Møre og Romsdal HF, Norway"
+version: "0.1.0"
+license: MIT
+repository-code: "https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem"
+references:
+  - type: software
+    title: "Haematology IQC rule design from laboratory imprecision: data, analysis code and rule-design tools"
+    authors:
+      - family-names: Kilinckaya
+        given-names: Muhammed
+    doi: "10.5281/zenodo.22685381"
+keywords:
+  - quality control
+  - clinical chemistry
+  - immunoassay
+  - Westgard rules
+  - sigma metric
+  - allowable total error
+  - biological variation

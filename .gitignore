@@ -1,0 +1,10 @@
+node_modules/
+tool/build/app.jsx
+tool/build/main.jsx
+tool/build/tw.css
+tool/build/tailwind.config.js
+tool/build/out.css
+tool/build/out.js
+data/raw/
+__pycache__/
+.DS_Store
