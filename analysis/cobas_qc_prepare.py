@@ -38,6 +38,13 @@ import pandas as pd
 
 TRUNCATION_LIMIT = 2000          # cobas infinity export row cap
 
+# Analyte levels excluded from imprecision after review, with the reason (kept in the data set).
+EXCLUDED_LEVELS = {
+    ("S-C-pep", "IMMUN L2"): "Three distinct levels (~0.39, ~0.63, ~0.98 nmol/L) within one control lot "
+                             "(May and Sep-Oct 2025), most accepted against target 0.391: control material "
+                             "mix-up or undocumented change; excluded after review (16 Oct 2026).",
+}
+
 # Test code -> (manuscript name, unit). Extend as new analytes are exported.
 ANALYTES = {
     "S-Kreat":   ("Creatinine", "µmol/L"),
@@ -205,7 +212,9 @@ def main(src: str, out: str) -> None:
     codes = d["Notifications"].str.split("/").apply(
         lambda xs: sorted({x.split("|")[0].strip() for x in xs if x.strip()} - {"N", "48", "49"}))
     d["instrument_flag"] = codes.apply(lambda c: ",".join(c))
-    d["used_for_imprecision"] = ((d["lis_rejected"] == 0) & (d["instrument_flag"] == "")).astype(int)
+    d["excluded_reason"] = [EXCLUDED_LEVELS.get((t, c), "") for t, c in zip(d["test_code"], d["control_name"])]
+    d["used_for_imprecision"] = ((d["lis_rejected"] == 0) & (d["instrument_flag"] == "")
+                                 & (d["excluded_reason"] == "")).astype(int)
     d["bottle_status"] = d["Bottle status"]
     d["reagent_lot_r1"] = d["R1 lot"]
     d = d.sort_values(["analyte", "instrument", "level", "timestamp"])
@@ -213,7 +222,7 @@ def main(src: str, out: str) -> None:
     full_cols = ["analyte", "test_code", "unit", "timestamp", "instrument", "level", "control_name",
                  "lot", "result", "target_in_force", "sd_defined_in_lis", "lis_limit_low",
                  "lis_limit_high", "z_vs_target", "lis_rule_outcome", "lis_qc_status", "lis_masked",
-                 "lis_review", "lis_rejected", "instrument_flag", "used_for_imprecision", "bottle_status", "reagent_lot_r1", "source_file"]
+                 "lis_review", "lis_rejected", "instrument_flag", "excluded_reason", "used_for_imprecision", "bottle_status", "reagent_lot_r1", "source_file"]
     d[full_cols].to_csv(os.path.join(out, "qc_measurements.csv"), index=False,
                         date_format="%Y-%m-%d %H:%M:%S")
 
@@ -280,6 +289,12 @@ def main(src: str, out: str) -> None:
             rep.append(f"| {r['analyte']} | {r['instrument']} | {r['level']} | {r['timestamp']:%Y-%m-%d %H:%M} | {r['result']:g} | "
                        f"{r['target_in_force']:g} | {r['instrument_flag']} | {r['lis_rule_outcome']} |")
     ae = acc[acc_err]
+    if EXCLUDED_LEVELS:
+        rep += ["", "## Levels excluded from imprecision after review", ""]
+        for (t, c), why in EXCLUDED_LEVELS.items():
+            n = int(((d["test_code"] == t) & (d["control_name"] == c)).sum())
+            if n:
+                rep.append(f"- {t}, {c} ({n} results): {why}")
     rep += ["", "## Accepted results with QC status Error (kept in imprecision; sensitivity only)", "",
             f"{len(ae)} result(s). The LIS rule failed but the result was accepted on review. "
             "Imprecision keeps them (LIS decision governs); `cv_without_accepted_error` shows the CV without them.", ""]
