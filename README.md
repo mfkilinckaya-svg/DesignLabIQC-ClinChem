@@ -10,7 +10,7 @@ The method and the calculation engine are the same. What changes is the platform
 
 The central claim is the same as in the haematology study. Internal quality control rules should be derived from the imprecision a laboratory actually measures, with the target taken from its own pooled analyser mean, not from assigned ranges. For several analytes, whether a rule looks attainable at all depends more on the chosen allowable-error source than on the analyser.
 
-**Status:** work in progress. The tool and the data-preparation script are usable. Data for the full panel, the analysis scripts and the results will be added as the study proceeds.
+**Status:** data collection, allowable-error sources and rule selection for the ten-analyte panel are complete (October 2026). Retrospective false-rejection analysis and the manuscript follow.
 
 ## Setting
 
@@ -26,10 +26,11 @@ The central claim is the same as in the haematology study. Internal quality cont
 
 | Folder | Content |
 |---|---|
-| `tool/` | **`iqc-rule-designer-clinchem.html`**: single-file browser tool, no installation, no network. It opens with the ten-analyte panel at two control levels, pre-filled from 1 May 2025 – 30 June 2026: CV of the worst analyser (pooled within lot), target (mean of the control lot in use at the end of the period) and largest analyser offset. Allowable total error is left empty; Turkey MoH 2026 is listed as a comparison source where available. `iqc-rule-designer-clinchem.jsx` is the source; `build/` rebuilds the HTML (`preload_panel.py` writes the panel values into the source). |
-| `analysis/` | **`cobas_qc_prepare.py`**: turns cobas infinity QC exports into the study data set and the tool's import file, and writes a data-quality report. **`tool_values.py`**: per analyte and level, the CV, target and analyser offset the tool uses. |
+| `tool/` | **`iqc-rule-designer-clinchem.html`**: single-file browser tool, no installation, no network. It opens with the ten-analyte panel at two control levels, pre-filled from 1 May 2025 – 30 June 2026: CV of the worst analyser (pooled within lot), target (mean of the control lot in use at the end of the period), largest analyser offset, every allowable-error source collected for the analyte, EFLM CVI/CVG, the source chosen by the hierarchy and the K per level found by the rule search. `iqc-rule-designer-clinchem.jsx` is the source; `build/` rebuilds the HTML (`preload_panel.py` writes the panel values into the source). |
+| `analysis/` | **`cobas_qc_prepare.py`**: turns cobas infinity QC exports into the study data set and the tool's import file, and writes a data-quality report. **`tool_values.py`**: per analyte and level, the CV, target and analyser offset the tool uses. **`rule_search.py`**: applies the source hierarchy (most stringent traceable source with sigma ≥ 3 at every level and a rule set within the false-rejection allowance that meets the detection requirement) and the tool's rule search to the panel. **`lis_compare.py`**: the chosen rules against the SD currently defined in the LIS. **`patch_tool.py`**: writes sources, biological-variation inputs and chosen rules into the tool's starting panel. Run all three from the repository root. |
 | `docs/` | `DATA_DICTIONARY.md`: the columns of the prepared data set. |
-| `data/` | Prepared control-result data (to be deposited). |
+| `data/` | `TEa_sources_clinical_chemistry.xlsx`: allowable-error sources per analyte (Labquality, CLIA, Rili-BÄK, Noklus, RCPA, China WS/T 403-2024, SEKK Dmax, Belgium WIV-ISP, Turkey MoH 2026, EFLM and Ricos biological variation) with the measured CV, target and analyser offset and the resulting sigma per level. `prepared/tool_values_by_level.csv`: per analyte and level, the values the tool uses. Control-result data to be deposited. |
+| `results/` | `panel_rules.csv`: for the ten-analyte panel, the chosen allowable-error source, sigma, K per level, the SD to enter in the LIS and the current LIS SD. `rule_search_results.json`: every source tried per analyte with its sigma and best rule set. |
 
 ## Differences from the haematology tool
 
