@@ -1806,6 +1806,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
         </div>
 
         <CusumPanel analyte={analyte} settings={settings} series={series} />
+        <ModelsPanel analyte={analyte} settings={settings} series={series} />
 
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <select
@@ -2305,6 +2306,420 @@ function CusumPanel({ analyte, settings, series }) {
   );
 }
 
+
+/* ------------------------------------------------------------------ */
+/* Further laboratory-specific models from the same control data      */
+/* ------------------------------------------------------------------ */
+
+/* Seeded normal deviates (xorshift32 + Box–Muller) so that simulations
+   repeat exactly between renders. */
+function makeRng(seed = 20261018) {
+  let x = seed >>> 0 || 1;
+  const u = () => {
+    x ^= x << 13; x >>>= 0; x ^= x >>> 17; x ^= x << 5; x >>>= 0;
+    return (x + 0.5) / 4294967296;
+  };
+  return () => {
+    const a = u(), b = u();
+    return Math.sqrt(-2 * Math.log(a)) * Math.cos(2 * Math.PI * b);
+  };
+}
+
+/* EWMA: e = λ z + (1 − λ) e, alarm when |e| > L·sqrt(λ/(2−λ)). */
+function ewmaLimit(lam, L) { return L * Math.sqrt(lam / (2 - lam)); }
+function ewmaArl(shift, lam, L, runs = 1200, cap = 6000) {
+  const rnd = makeRng(7 + Math.round(shift * 100)); const lim = ewmaLimit(lam, L); let tot = 0;
+  for (let r = 0; r < runs; r++) {
+    let e = 0, i = 0;
+    for (i = 1; i <= cap; i++) { e = lam * (rnd() + shift) + (1 - lam) * e; if (Math.abs(e) > lim) break; }
+    tot += i;
+  }
+  return tot / runs;
+}
+function runEwma(z, lam, L) {
+  const lim = ewmaLimit(lam, L); let e = 0; const path = []; const alarms = []; let run = 0;
+  for (let i = 0; i < z.length; i++) {
+    e = lam * z[i] + (1 - lam) * e; run++;
+    const alarm = Math.abs(e) > lim ? Math.sign(e) : 0;
+    path.push({ i, e, z: z[i], alarm });
+    if (alarm) { alarms.push({ i, sign: alarm, run }); e = 0; run = 0; }
+  }
+  return { path, alarms, lim };
+}
+
+/* Westgard multirule evaluation on the laboratory's own SD. Two or more
+   levels per event; rules read across levels within an event and across
+   consecutive events (2-2s, 4-1s, 10x). */
+function multiruleReject(rules, hist, nl) {
+  const z = hist[hist.length - 1];
+  if (rules.has("13s") && z.some((v) => Math.abs(v) > 3)) return true;
+  if (rules.has("12s") && z.some((v) => Math.abs(v) > 2)) return true;
+  if (rules.has("22s")) {
+    if (z.every((v) => v > 2) || z.every((v) => v < -2)) return true;
+    if (hist.length >= 2) {
+      const p = hist[hist.length - 2];
+      for (let i = 0; i < nl; i++) if ((z[i] > 2 && p[i] > 2) || (z[i] < -2 && p[i] < -2)) return true;
+    }
+  }
+  if (rules.has("R4s") && nl >= 2 && Math.max(...z) > 2 && Math.min(...z) < -2) return true;
+  if (rules.has("41s")) {
+    const seq = hist.slice(-Math.max(1, Math.ceil(4 / nl))).flat().slice(-4);
+    if (seq.length >= 4 && (seq.every((v) => v > 1) || seq.every((v) => v < -1))) return true;
+    if (hist.length >= 4) for (let i = 0; i < nl; i++) {
+      const col = hist.slice(-4).map((e) => e[i]);
+      if (col.every((v) => v > 1) || col.every((v) => v < -1)) return true;
+    }
+  }
+  if (rules.has("10x")) {
+    const seq = hist.slice(-Math.max(1, Math.ceil(10 / nl))).flat().slice(-10);
+    if (seq.length >= 10 && (seq.every((v) => v > 0) || seq.every((v) => v < 0))) return true;
+  }
+  return false;
+}
+function multirulePfr(rules, nl, events = 8000) {
+  const rnd = makeRng(11); let hist = []; let rej = 0, tot = 0;
+  for (let ev = 0; ev < events + 12; ev++) {
+    hist.push(Array.from({ length: nl }, () => rnd())); if (hist.length > 12) hist.shift();
+    if (ev >= 12) { tot++; if (multiruleReject(rules, hist, nl)) rej++; }
+  }
+  return rej / tot;
+}
+function multirulePed(rules, shifts, trials = 3000) {
+  const rnd = makeRng(13); const nl = shifts.length; let first = 0, two = 0;
+  for (let t = 0; t < trials; t++) {
+    const hist = Array.from({ length: 12 }, () => Array.from({ length: nl }, () => rnd()));
+    hist.push(shifts.map((s) => rnd() + s)); const r1 = multiruleReject(rules, hist.slice(-12), nl);
+    hist.push(shifts.map((s) => rnd() + s)); const r2 = r1 || multiruleReject(rules, hist.slice(-12), nl);
+    if (r1) first++; if (r2) two++;
+  }
+  return { first: first / trials, two: two / trials };
+}
+
+/* Binary segmentation: split where the standardised mean difference is largest. */
+function binseg(z, minseg = 15, thr = 4, depth = 0, offset = 0, out = []) {
+  const n = z.length;
+  if (n < 2 * minseg || depth > 5) return out;
+  const cs = []; let acc = 0; for (const v of z) { acc += v; cs.push(acc); }
+  const tot = acc; let best = null;
+  for (let i = minseg; i <= n - minseg; i++) {
+    const m1 = cs[i - 1] / i, m2 = (tot - cs[i - 1]) / (n - i);
+    const stat = Math.abs(m1 - m2) * Math.sqrt((i * (n - i)) / n);
+    if (!best || stat > best.stat) best = { stat, i, m1, m2 };
+  }
+  if (best && best.stat > thr) {
+    out.push({ i: offset + best.i, step: best.m2 - best.m1, stat: best.stat });
+    binseg(z.slice(0, best.i), minseg, thr, depth + 1, offset, out);
+    binseg(z.slice(best.i), minseg, thr, depth + 1, offset + best.i, out);
+  }
+  return out;
+}
+
+const RULE_SETS = [
+  ["1-2s", ["12s"]], ["1-3s", ["13s"]], ["1-3s/2-2s/R-4s", ["13s", "22s", "R4s"]],
+  ["1-3s/2-2s/R-4s/4-1s", ["13s", "22s", "R4s", "41s"]], ["1-3s/2-2s/R-4s/4-1s/10x", ["13s", "22s", "R4s", "41s", "10x"]],
+];
+
+function ModelsPanel({ analyte, settings, series }) {
+  const [open, setOpen] = useState(false);
+  const [lam, setLam] = useState(0.2);
+  const [L, setL] = useState(2.86);
+  const [eqaBias, setEqaBias] = useState("");
+  const [uRef, setURef] = useState("");
+  const [pickEw, setPickEw] = useState("");
+  const lamN = Number(lam) > 0 && Number(lam) <= 1 ? Number(lam) : 0.2;
+  const LN = Number(L) > 0 ? Number(L) : 2.86;
+  const ready = analyte.ready;
+  const dd = (v) => sigDigits(v);
+  const fmtDate = (t) => (t > 1e11 ? new Date(t).toISOString().slice(0, 10) : String(t));
+
+  // --- EWMA design (only when the block is open: Monte Carlo)
+  const ewDesign = useMemo(() => {
+    if (!open) return null;
+    return { arl0: ewmaArl(0, lamN, LN), s05: ewmaArl(0.5, lamN, LN), s1: ewmaArl(1, lamN, LN), s2: ewmaArl(2, lamN, LN) };
+  }, [open, lamN, LN]);
+
+  // --- multirule at the card's critical shifts
+  const shifts = analyte.levels.map((l) => Math.max(0, (l.criticalShift ?? 0)));
+  const mr = useMemo(() => {
+    if (!open || !ready) return null;
+    const nl = analyte.levels.length;
+    return RULE_SETS.map(([name, rs]) => {
+      const set = new Set(rs);
+      const ped = multirulePed(set, shifts);
+      return { name, pfr: multirulePfr(set, nl), ped1: ped.first, ped2: ped.two };
+    });
+  }, [open, ready, shifts.join(","), analyte.levels.length]);
+
+  // --- measurement uncertainty
+  const mu = analyte.levels.map((l) => {
+    const cv = Number(l.cv); const off = Math.abs(Number(l.bias) || 0);
+    const eb = Number(eqaBias); const ur = Number(uRef);
+    const ubEqa = isFinite(eb) && eqaBias !== "" ? Math.sqrt(eb * eb + (isFinite(ur) ? ur * ur : 0)) : NaN;
+    return { label: l.label, cv, off, uImp: 2 * cv, uOff: 2 * Math.sqrt(cv * cv + off * off), uEqa: isFinite(ubEqa) ? 2 * Math.sqrt(cv * cv + ubEqa * ubEqa) : NaN };
+  });
+
+  // --- data-driven: EWMA alarms, reagent-lot steps, control-lot start, variance components, change points
+  const data = useMemo(() => {
+    if (!open || !series) return null;
+    const ew = [], steps = [], lots = [], vc = [], cps = [];
+    for (const l of analyte.levels) {
+      const byIns = series[l.label]; const cv = Number(l.cv) / 100;
+      if (!byIns || !(cv > 0)) continue;
+      // lot means over all analysers
+      const lotAll = {};
+      for (const lotsI of Object.values(byIns)) for (const [lot, pts] of Object.entries(lotsI)) {
+        (lotAll[lot] ??= { s: 0, n: 0 }); for (const p of pts) { lotAll[lot].s += p.v; lotAll[lot].n++; }
+      }
+      const lm = Object.fromEntries(Object.entries(lotAll).map(([k, v]) => [k, v.s / v.n]));
+      // control-lot start (all analysers pooled, time order)
+      for (const [lot, m] of Object.entries(lm)) {
+        const pts = Object.values(byIns).flatMap((li) => li[lot] || []).sort((a, b) => a.t - b.t);
+        if (pts.length < 40) continue;
+        const first = pts.slice(0, 20).reduce((a, p) => a + p.v, 0) / 20; const sd = cv * m;
+        lots.push({ level: l.label, lot, n: pts.length, first, final: m, dev: (first - m) / sd, lisTarget: pts.slice(0, 20).map((p) => p.target).find((v) => v > 0), lisDev: NaN });
+        const last = lots[lots.length - 1]; if (last.lisTarget > 0) last.lisDev = (last.lisTarget - m) / sd;
+      }
+      for (const [ins, lotsI] of Object.entries(byIns)) {
+        const lotNames = Object.keys(lotsI).sort((a, b) => (lotsI[a][0]?.t ?? 0) - (lotsI[b][0]?.t ?? 0));
+        // series across lots, z relative to the lot mean
+        const seq = []; for (const lot of lotNames) for (const p of lotsI[lot]) seq.push({ ...p, lot, z: (p.v - lm[lot]) / (cv * lm[lot]) });
+        // EWMA alarms, restart at lot change
+        let nAl = 0, path = [], alarms = [], off = 0;
+        for (const lot of lotNames) {
+          const z = lotsI[lot].map((p) => (p.v - lm[lot]) / (cv * lm[lot]));
+          const r = runEwma(z, lamN, LN); nAl += r.alarms.length;
+          path = path.concat(r.path.map((q) => ({ ...q, i: q.i + off, t: lotsI[lot][q.i].t, lot })));
+          alarms = alarms.concat(r.alarms.map((a) => ({ ...a, i: a.i + off })));
+          off += z.length;
+        }
+        ew.push({ level: l.label, instrument: ins, n: seq.length, alarms: nAl, per1000: seq.length ? (1000 * nAl) / seq.length : NaN, path, alarmList: alarms });
+        // reagent-lot transitions (needs r1 in the points)
+        if (seq.some((p) => p.r1)) {
+          const seenR1 = new Set(seq[0]?.r1 ? [seq[0].r1] : []);
+          for (let i = 1; i < seq.length; i++) {
+            // a transition is the first appearance of a lot on this analyser; packs
+            // alternating on board do not count as repeated transitions
+            if (!seq[i].r1) continue;
+            if (seenR1.has(seq[i].r1)) continue;
+            seenR1.add(seq[i].r1);
+            if (!seq[i - 1].r1) continue;
+            const before = seq.slice(Math.max(0, i - 30), i), after = seq.slice(i, i + 30);
+            if (before.length < 8 || after.length < 8) continue;
+            const mb = before.reduce((a, p) => a + p.v, 0) / before.length, ma = after.reduce((a, p) => a + p.v, 0) / after.length;
+            const vb = before.reduce((a, p) => a + (p.v - mb) ** 2, 0) / (before.length - 1), va = after.reduce((a, p) => a + (p.v - ma) ** 2, 0) / (after.length - 1);
+            const sd = cv * (lm[seq[i].lot] || ma);
+            const t = (ma - mb) / Math.sqrt(va / after.length + vb / before.length);
+            steps.push({ level: l.label, instrument: ins, t: seq[i].t, oldLot: seq[i - 1].r1, newLot: seq[i].r1, nb: before.length, na: after.length, step: (ma - mb) / sd, p: 2 * normSf(Math.abs(t)) });
+          }
+        }
+        // variance components per control lot, one-way by day
+        for (const lot of lotNames) {
+          const pts = lotsI[lot]; if (pts.length < 30 || !pts.some((p) => p.t > 1e11)) continue;
+          const days = {}; for (const p of pts) (days[Math.floor(p.t / 86400000)] ??= []).push(p.v);
+          const k = Object.keys(days).length; const N = pts.length; if (k < 10 || N - k <= 0) continue;
+          const gm = pts.reduce((a, p) => a + p.v, 0) / N;
+          let ssw = 0, ssb = 0, sumn2 = 0;
+          for (const v of Object.values(days)) { const m = v.reduce((a, x) => a + x, 0) / v.length; ssw += v.reduce((a, x) => a + (x - m) ** 2, 0); ssb += v.length * (m - gm) ** 2; sumn2 += v.length ** 2; }
+          const msw = ssw / (N - k), msb = ssb / (k - 1), n0 = (N - sumn2 / N) / (k - 1);
+          const sb2 = n0 > 0 ? Math.max(0, (msb - msw) / n0) : NaN;
+          vc.push({ level: l.label, instrument: ins, lot, n: N, days: k, within: (100 * Math.sqrt(msw)) / gm, between: (100 * Math.sqrt(sb2)) / gm, total: (100 * Math.sqrt(msw + sb2)) / gm });
+        }
+        // change points
+        for (const c of binseg(seq.map((p) => p.z)).sort((a, b) => a.i - b.i)) {
+          const q = seq[c.i]; const near = seq.slice(Math.max(0, c.i - 5), c.i + 6).some((p, j, arr) => j > 0 && p.r1 && arr[j - 1].r1 && p.r1 !== arr[j - 1].r1);
+          cps.push({ level: l.label, instrument: ins, t: q.t, lot: q.lot, step: c.step, stat: c.stat, nearR1: near });
+        }
+      }
+    }
+    return { ew, steps, lots, vc, cps };
+  }, [open, series, analyte.levels, lamN, LN]);
+
+  const ewKeys = data ? data.ew.map((r) => `${r.level} · ${r.instrument}`) : [];
+  const ewSel = data ? data.ew.find((r) => `${r.level} · ${r.instrument}` === pickEw) || data.ew[0] : null;
+  const Th = ({ children, right }) => <th className={`py-1 pr-3 font-medium ${right ? "text-right" : ""}`}>{children}</th>;
+  const Td = ({ children, right, cls = "" }) => <td className={`py-1 pr-3 ${right ? "text-right font-mono" : ""} ${cls}`}>{children}</td>;
+  const Cap = ({ children }) => <p className="mb-1 mt-3 text-xs font-medium uppercase tracking-wide text-slate-500">{children}</p>;
+
+  return (
+    <div className="mt-4 border border-slate-200 bg-white px-3 py-2.5">
+      <button type="button" onClick={() => setOpen((o) => !o)} className="flex w-full items-center justify-between text-left">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          More from the same data: EWMA · multirule · measurement uncertainty · lots and steps
+        </span>
+        <span className="text-xs text-slate-500">{open ? "hide" : "show"}</span>
+      </button>
+      {open && (
+        <div>
+          {/* ---------------- EWMA ---------------- */}
+          <Cap>EWMA</Cap>
+          <div className="mb-1 flex flex-wrap items-center gap-3 text-xs text-slate-600">
+            <label className="flex items-center gap-1">λ <NumberCell value={lam} onChange={setLam} width="w-16" step="0.05" /></label>
+            <label className="flex items-center gap-1">L <NumberCell value={L} onChange={setL} width="w-16" step="0.1" /></label>
+            {ewDesign && (
+              <span className="font-mono">ARL₀ {fmt(ewDesign.arl0, 0)} · at 0.5 SD {fmt(ewDesign.s05, 1)} · 1 SD {fmt(ewDesign.s1, 1)} · 2 SD {fmt(ewDesign.s2, 1)} (Monte Carlo)</span>
+            )}
+          </div>
+          {data && data.ew.length > 0 && (
+            <div>
+              <div className="mb-1">
+                <select value={pickEw || ewKeys[0]} onChange={(e) => setPickEw(e.target.value)}
+                  className="rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 focus:border-teal-600 focus:outline-none">
+                  {ewKeys.map((k) => <option key={k} value={k}>{k}</option>)}
+                </select>
+              </div>
+              <table className="w-full text-sm">
+                <thead><tr className="text-left text-xs text-slate-500"><Th>Level · analyser</Th><Th right>n</Th><Th right>EWMA alarms</Th><Th right>per 1000</Th><Th right>Expected</Th></tr></thead>
+                <tbody>{data.ew.map((r) => (
+                  <tr key={r.level + r.instrument} className="border-t border-slate-100">
+                    <Td cls="font-mono text-slate-700">{r.level} · {r.instrument}</Td><Td right>{r.n}</Td><Td right>{r.alarms}</Td>
+                    <Td right cls={ewDesign && r.per1000 > 5 * (1000 / ewDesign.arl0) ? "text-rose-700" : "text-slate-600"}>{fmt(r.per1000, 1)}</Td>
+                    <Td right cls="text-slate-400">{ewDesign ? fmt(1000 / ewDesign.arl0, 1) : "—"}</Td>
+                  </tr>))}</tbody>
+              </table>
+              {ewSel && (
+                <div className="mt-2 h-48 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={ewSel.path} margin={{ top: 8, right: 16, left: 0, bottom: 4 }}>
+                      <CartesianGrid stroke="#e2e8f0" strokeDasharray="2 4" />
+                      <XAxis dataKey="i" tick={{ fontSize: 10 }} tickFormatter={(i) => fmtDate(ewSel.path[i]?.t)} minTickGap={40} />
+                      <YAxis tick={{ fontSize: 10 }} domain={[-ewmaLimit(lamN, LN) * 2.2, ewmaLimit(lamN, LN) * 2.2]} />
+                      <Tooltip contentStyle={{ fontSize: 11 }} labelFormatter={(i) => `${fmtDate(ewSel.path[i]?.t)} · lot ${ewSel.path[i]?.lot ?? ""}`} formatter={(v) => [fmt(v, 2), "EWMA (SD)"]} />
+                      <ReferenceLine y={ewmaLimit(lamN, LN)} stroke="#b91c1c" strokeDasharray="4 4" />
+                      <ReferenceLine y={-ewmaLimit(lamN, LN)} stroke="#b91c1c" strokeDasharray="4 4" />
+                      <ReferenceLine y={0} stroke="#94a3b8" />
+                      <Line type="monotone" dataKey="e" stroke="#0f766e" dot={false} strokeWidth={1.5} isAnimationActive={false} />
+                      {ewSel.alarmList.map((a) => <ReferenceDot key={a.i} x={a.i} y={a.sign * ewmaLimit(lamN, LN)} r={3} fill="#b91c1c" stroke="none" />)}
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              )}
+            </div>
+          )}
+          <p className="mt-1 text-xs leading-relaxed text-slate-600">
+            Exponentially weighted moving average of the standardised results; λ 0.2 with L 2.86 gives a few hundred results between
+            false alarms and catches a 1 SD shift in about ten. Restarts at each lot change and after each alarm.
+          </p>
+
+          {/* ---------------- multirule ---------------- */}
+          <Cap>Westgard multirule sets on the measured SD</Cap>
+          {mr ? (
+            <table className="w-full text-sm">
+              <thead><tr className="text-left text-xs text-slate-500"><Th>Rule set</Th><Th right>False rejection / event</Th><Th right>Detection, first event</Th><Th right>Within two events</Th></tr></thead>
+              <tbody>
+                <tr className="border-t border-slate-100 bg-slate-50">
+                  <Td cls="text-slate-700">Derived 1:K ({analyte.levels.map((l) => fmt(l.k, 1)).join(" / ")})</Td>
+                  <Td right>{fmt(analyte.combinedPfr * 100, 2)}%</Td><Td right>{fmt(analyte.combinedPed * 100, 1)}%</Td><Td right cls="text-slate-400">—</Td>
+                </tr>
+                {mr.map((r) => (
+                  <tr key={r.name} className="border-t border-slate-100">
+                    <Td cls="text-slate-700">{r.name}</Td>
+                    <Td right cls={r.pfr * 100 > settings.pfrBudget ? "text-rose-700" : "text-slate-700"}>{fmt(r.pfr * 100, 2)}%</Td>
+                    <Td right cls={r.ped1 * 100 >= (analyte.pedReq ?? settings.pedTarget) ? "text-emerald-800" : "text-slate-700"}>{fmt(r.ped1 * 100, 1)}%</Td>
+                    <Td right>{fmt(r.ped2 * 100, 1)}%</Td>
+                  </tr>))}
+              </tbody>
+            </table>
+          ) : <p className="text-xs text-slate-500">Needs CV, target and allowable error.</p>}
+          <p className="mt-1 text-xs leading-relaxed text-slate-600">
+            Monte Carlo with the card's levels as one event, the critical shift of each level applied to every level. 2-2s, 4-1s and
+            10x read across levels within the event and across consecutive events. "First event" is the Westgard convention;
+            "within two events" counts the across-event rules.
+          </p>
+
+          {/* ---------------- measurement uncertainty ---------------- */}
+          <Cap>Measurement uncertainty from IQC (ISO/TS 20914)</Cap>
+          <div className="mb-1 flex flex-wrap items-center gap-3 text-xs text-slate-600">
+            <label className="flex items-center gap-1">EQA bias % <NumberCell value={eqaBias} onChange={setEqaBias} width="w-20" /></label>
+            <label className="flex items-center gap-1">u(reference) % <NumberCell value={uRef} onChange={setURef} width="w-20" /></label>
+          </div>
+          <table className="w-full text-sm">
+            <thead><tr className="text-left text-xs text-slate-500"><Th>Level</Th><Th right>u(Rw) = CV %</Th><Th right>U, imprecision only</Th><Th right>Analyser offset %</Th><Th right>U with offset</Th><Th right>U with EQA bias</Th></tr></thead>
+            <tbody>{mu.map((r) => (
+              <tr key={r.label} className="border-t border-slate-100">
+                <Td cls="font-mono text-slate-700">{r.label}</Td><Td right>{fmt(r.cv, 2)}</Td><Td right cls="font-semibold text-slate-900">{fmt(r.uImp, 2)}%</Td>
+                <Td right>{fmt(r.off, 2)}</Td><Td right>{fmt(r.uOff, 2)}%</Td><Td right>{isFinite(r.uEqa) ? `${fmt(r.uEqa, 2)}%` : "—"}</Td>
+              </tr>))}</tbody>
+          </table>
+          <p className="mt-1 text-xs leading-relaxed text-slate-600">
+            u(Rw) is the pooled within-lot CV; U = 2·√(u(Rw)² + u(bias)²), k = 2. The analyser offset is the largest departure of
+            an analyser from the pooled mean; enter the EQA bias and the uncertainty of the reference value to get the full estimate.
+          </p>
+
+          {/* ---------------- lots and steps ---------------- */}
+          {data ? (
+            <div>
+              <Cap>Reagent-lot transitions: first use of a new lot on the analyser (last 30 vs first 30 results)</Cap>
+              {data.steps.length ? (
+                <table className="w-full text-sm">
+                  <thead><tr className="text-left text-xs text-slate-500"><Th>Level · analyser</Th><Th>Date</Th><Th>Lot → lot</Th><Th right>n</Th><Th right>Step (SD)</Th><Th right>p</Th></tr></thead>
+                  <tbody>{data.steps.sort((a, b) => Math.abs(b.step) - Math.abs(a.step)).slice(0, 40).map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <Td cls="font-mono text-slate-700">{r.level} · {r.instrument}</Td><Td cls="font-mono text-slate-600">{fmtDate(r.t)}</Td>
+                      <Td cls="font-mono text-slate-600">{r.oldLot} → {r.newLot}</Td><Td right>{r.nb}/{r.na}</Td>
+                      <Td right cls={Math.abs(r.step) >= 1 ? "text-rose-700" : "text-slate-700"}>{r.step > 0 ? "+" : ""}{fmt(r.step, 2)}</Td><Td right>{r.p < 0.001 ? "<0.001" : fmt(r.p, 3)}</Td>
+                    </tr>))}</tbody>
+                </table>
+              ) : <p className="text-xs text-slate-500">No reagent-lot column in the imported data (cobas infinity "R1 lot").</p>}
+
+              <Cap>Control-lot start: first 20 results against the lot's final mean</Cap>
+              {data.lots.length ? (
+                <table className="w-full text-sm">
+                  <thead><tr className="text-left text-xs text-slate-500"><Th>Level</Th><Th>Lot</Th><Th right>n</Th><Th right>First 20 mean</Th><Th right>Final mean</Th><Th right>Difference (SD)</Th><Th right>LIS target set</Th><Th right>vs final (SD)</Th></tr></thead>
+                  <tbody>{data.lots.map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <Td cls="font-mono text-slate-700">{r.level}</Td><Td cls="font-mono text-slate-600">{r.lot}</Td><Td right>{r.n}</Td>
+                      <Td right>{fmt(r.first, dd(r.final))}</Td><Td right>{fmt(r.final, dd(r.final))}</Td>
+                      <Td right cls={Math.abs(r.dev) >= 0.5 ? "text-amber-800" : "text-slate-700"}>{r.dev > 0 ? "+" : ""}{fmt(r.dev, 2)}</Td>
+                      <Td right>{r.lisTarget > 0 ? fmt(r.lisTarget, dd(r.final)) : "—"}</Td><Td right cls={Math.abs(r.lisDev) >= 1 ? "text-rose-700" : "text-slate-700"}>{isFinite(r.lisDev) ? `${r.lisDev > 0 ? "+" : ""}${fmt(r.lisDev, 2)}` : "—"}</Td>
+                    </tr>))}</tbody>
+                </table>
+              ) : <p className="text-xs text-slate-500">No lot with 40 or more results.</p>}
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                A provisional target from n results has standard error SD/√n: 16 results give 0.25 SD, 25 give 0.2 SD. The difference
+                column shows how far the first 20 results sat from where the lot ended up.
+              </p>
+
+              <Cap>Within-day and between-day imprecision, per analyser and control lot</Cap>
+              {data.vc.length ? (
+                <table className="w-full text-sm">
+                  <thead><tr className="text-left text-xs text-slate-500"><Th>Level · analyser</Th><Th>Lot</Th><Th right>n</Th><Th right>Days</Th><Th right>CV within-day</Th><Th right>CV between-day</Th><Th right>CV total</Th></tr></thead>
+                  <tbody>{data.vc.map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <Td cls="font-mono text-slate-700">{r.level} · {r.instrument}</Td><Td cls="font-mono text-slate-600">{r.lot}</Td><Td right>{r.n}</Td><Td right>{r.days}</Td>
+                      <Td right>{fmt(r.within, 2)}%</Td><Td right cls={r.between > r.within ? "text-amber-800" : "text-slate-700"}>{fmt(r.between, 2)}%</Td><Td right>{fmt(r.total, 2)}%</Td>
+                    </tr>))}</tbody>
+                </table>
+              ) : <p className="text-xs text-slate-500">Needs dated results, at least 10 days per lot.</p>}
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                One-way components by day (CLSI EP05 logic on routine data). A between-day CV larger than the within-day CV says that
+                the analyser moves from day to day more than it scatters within a day: calibration and reagent effects, not noise.
+              </p>
+
+              <Cap>Change points in the analyser mean (binary segmentation)</Cap>
+              {data.cps.length ? (
+                <table className="w-full text-sm">
+                  <thead><tr className="text-left text-xs text-slate-500"><Th>Level · analyser</Th><Th>Date</Th><Th>Control lot</Th><Th right>Step (SD)</Th><Th right>Statistic</Th><Th>Near reagent-lot change</Th></tr></thead>
+                  <tbody>{data.cps.sort((a, b) => Math.abs(b.step) - Math.abs(a.step)).slice(0, 40).map((r, i) => (
+                    <tr key={i} className="border-t border-slate-100">
+                      <Td cls="font-mono text-slate-700">{r.level} · {r.instrument}</Td><Td cls="font-mono text-slate-600">{fmtDate(r.t)}</Td><Td cls="font-mono text-slate-600">{r.lot}</Td>
+                      <Td right cls={Math.abs(r.step) >= 1 ? "text-rose-700" : "text-slate-700"}>{r.step > 0 ? "+" : ""}{fmt(r.step, 2)}</Td><Td right>{fmt(r.stat, 1)}</Td><Td>{r.nearR1 ? "yes" : ""}</Td>
+                    </tr>))}</tbody>
+                </table>
+              ) : <p className="text-xs text-slate-500">No step above the threshold (statistic 4, segments of at least 15 results).</p>}
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">
+                The series of each analyser, standardised against the lot mean, is split where the mean changes most; splits continue
+                within segments while the standardised difference exceeds 4. Steps that coincide with a reagent-lot change are marked.
+              </p>
+            </div>
+          ) : (
+            <p className="mt-3 text-xs text-slate-500">Import results (cobas infinity export with Date and R1 lot columns) for lots, steps and variance components.</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Formula({ children }) {
   return (
     <p className="my-3 border-l-2 border-teal-700 bg-slate-50 px-4 py-2.5 font-mono text-sm text-slate-800">
@@ -2555,6 +2970,30 @@ function MethodGuide({ settings }) {
           instead of it: the single-result rule still catches the gross error.
         </p>
       </Section>
+      <Section title="More models from the same control data">
+        <p>
+          Each card can open a second block that reuses the imported results for
+          other laboratory-specific estimates. <span className="font-semibold text-slate-900">EWMA</span>:
+          an exponentially weighted moving average of the standardised results, a
+          smoother relative of the CUSUM with the same purpose; its run lengths are
+          simulated. <span className="font-semibold text-slate-900">Multirule sets</span>:
+          the classic Westgard combinations evaluated on the laboratory&rsquo;s measured
+          SD rather than the manufacturer&rsquo;s, by simulation, with the card&rsquo;s
+          critical shift; this shows whether a 1-3s/2-2s/R-4s set on the right SD does
+          the job of the tuned single rule. <span className="font-semibold text-slate-900">Measurement
+          uncertainty</span>: u(Rw) from the pooled within-lot CV and U = 2·√(u(Rw)² +
+          u(bias)²) in the manner of ISO/TS 20914, with the analyser offset or an entered
+          EQA bias as the bias term. <span className="font-semibold text-slate-900">Reagent-lot
+          transitions</span>: the step of each analyser&rsquo;s mean at every R1 lot change,
+          in SD, with a Welch test. <span className="font-semibold text-slate-900">Control-lot
+          start</span>: how far the first 20 results of a lot sat from where the lot ended,
+          and what the LIS target set at the time missed by. <span className="font-semibold text-slate-900">Variance
+          components</span>: within-day and between-day CV per analyser and lot from daily
+          means. <span className="font-semibold text-slate-900">Change points</span>: binary
+          segmentation of each analyser&rsquo;s series, which dates the steps that the CUSUM
+          alarms on and marks those that coincide with a reagent-lot change.
+        </p>
+      </Section>
       <Section title="Where this stops helping">
         <p>
           The arithmetic assumes results are normally distributed, that control
@@ -2671,6 +3110,14 @@ function MethodGuide({ settings }) {
           <li>
             Siegmund D. Sequential analysis: tests and confidence intervals. New York:
             Springer; 1985.
+          </li>
+          <li>
+            Roberts SW. Control chart tests based on geometric moving averages.
+            Technometrics 1959;1:239–50.
+          </li>
+          <li>
+            ISO/TS 20914:2019. Medical laboratories — practical guidance for the
+            estimation of measurement uncertainty. Geneva: ISO; 2019.
           </li>
         </ol>
         <p className="mt-3 text-xs text-slate-500">
@@ -2792,6 +3239,7 @@ export default function IqcRuleDesigner() {
       const kTgt = key(first, "target value", "target", "target_in_force", "lis target");
       const kSd = key(first, "sd", "sd_defined_in_lis", "lis sd");
       const kDate = key(first, "date", "timestamp", "time");
+      const kR1 = key(first, "r1 lot", "reagent_lot_r1", "reagent lot");
       const lisOf = {}; // analyte -> level -> {t, target, sd}
       const when = (v) => {
         if (v instanceof Date) return v.getTime();
@@ -2842,7 +3290,10 @@ export default function IqcRuleDesigner() {
         const lot = kLot ? String(r[kLot]).trim() || "—" : "—";
         (((tree[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= [];
         tree[a][lv][ins][lot].push(val);
-        ((((ser[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= []).push({ t: kDate ? when(r[kDate]) || rowIdx : rowIdx, v: val });
+        ((((ser[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= []).push({
+          t: kDate ? when(r[kDate]) || rowIdx : rowIdx, v: val,
+          r1: kR1 ? String(r[kR1]).trim() : "", target: kTgt ? num(r[kTgt]) : NaN,
+        });
         if (kTgt && kSd) {
           const tg = num(r[kTgt]), sdv = num(r[kSd]);
           if (isFinite(tg) && isFinite(sdv) && tg > 0 && sdv > 0) {

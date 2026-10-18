@@ -1,0 +1,21 @@
+analyte,level,n,ewma_alarms_per1000
+Sodium,L1,1777,5.6
+Sodium,L2,1787,14.0
+Creatinine,L1,1325,24.2
+Creatinine,L2,1303,29.2
+ALT,L1,1180,31.4
+ALT,L2,1161,36.2
+Glucose,L1,882,53.3
+Glucose,L2,881,55.6
+Calcium,L1,897,69.1
+Calcium,L2,889,56.2
+TSH,L1,1866,39.7
+TSH,L2,1856,43.1
+hs-Troponin T,L1,1012,44.5
+hs-Troponin T,L2,1007,37.7
+Ferritin,L1,1886,21.7
+Ferritin,L2,1871,32.6
+PSA,L1,988,62.8
+PSA,L2,987,59.8
+25-OH vitamin D,L1,1837,33.8
+25-OH vitamin D,L2,1802,26.1
