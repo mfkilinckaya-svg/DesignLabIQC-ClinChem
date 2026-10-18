@@ -245,8 +245,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 0.5, cvg: 0.7 },
     levels: [
-      Object.assign(lvl("L1", 136.569, 1.088, 1, 2.5), { bias: 0.236 }),
-      Object.assign(lvl("L2", 154.677, 0.726, 1, 3.1), { bias: 0.251 }),
+      Object.assign(lvl("L1", 136.569, 1.088, 1, 2.5), { bias: 0.236, lisTarget: 136.5, lisSd: 1.365 }),
+      Object.assign(lvl("L2", 154.677, 0.726, 1, 3.1), { bias: 0.251, lisTarget: 153.5, lisSd: 1.535 }),
     ],
     note: "ISE module, four units. CV includes accepted results whose QC status was Error (sensitivity CV without them: L1 0.67%).",
   },
@@ -271,8 +271,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 4.4, cvg: 16.1 },
     levels: [
-      Object.assign(lvl("L1", 99.1432, 1.903, 1, 2.6), { bias: 0.116 }),
-      Object.assign(lvl("L2", 356.985, 1.288, 1, 2.8), { bias: 0.073 }),
+      Object.assign(lvl("L1", 99.1432, 1.903, 1, 2.6), { bias: 0.116, lisTarget: 99.2, lisSd: 2.94 }),
+      Object.assign(lvl("L2", 356.985, 1.288, 1, 2.8), { bias: 0.073, lisTarget: 361, lisSd: 5.4 }),
     ],
     note: "Two c 703 units. One control lot over the period; LIS targets 99.2 and 361.",
   },
@@ -297,8 +297,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 12.4, cvg: 29.8 },
     levels: [
-      Object.assign(lvl("L1", 53.6702, 2.446, 1, 2.6), { bias: 0.935 }),
-      Object.assign(lvl("L2", 166.062, 2.171, 1, 2.8), { bias: 1.059 }),
+      Object.assign(lvl("L1", 53.6702, 2.446, 1, 2.6), { bias: 0.935, lisTarget: 55, lisSd: 2.2 }),
+      Object.assign(lvl("L2", 166.062, 2.171, 1, 2.8), { bias: 1.059, lisTarget: 167, lisSd: 3.34 }),
     ],
     note: "Three c 703 units. Recalibration step of about +7% on 20\u201324 May 2025; targets re-set within the lot.",
   },
@@ -323,8 +323,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 4.9, cvg: 8.1 },
     levels: [
-      Object.assign(lvl("L1", 5.30429, 1.932, 1, 2.6), { bias: 0.478 }),
-      Object.assign(lvl("L2", 14.679, 1.495, 1, 2.8), { bias: 0.322 }),
+      Object.assign(lvl("L1", 5.30429, 1.932, 1, 2.6), { bias: 0.478, lisTarget: 5.3, lisSd: 0.159 }),
+      Object.assign(lvl("L2", 14.679, 1.495, 1, 2.8), { bias: 0.322, lisTarget: 14.5, lisSd: 0.435 }),
     ],
     note: "Two c 703 units.",
   },
@@ -348,8 +348,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 1.8, cvg: 2.7 },
     levels: [
-      Object.assign(lvl("L1", 2.24434, 1.190, 1, 2.6), { bias: 0.670 }),
-      Object.assign(lvl("L2", 3.13051, 0.998, 1, 2.8), { bias: 0.476 }),
+      Object.assign(lvl("L1", 2.24434, 1.190, 1, 2.6), { bias: 0.670, lisTarget: 2.24, lisSd: 0.034 }),
+      Object.assign(lvl("L2", 3.13051, 0.998, 1, 2.8), { bias: 0.476, lisTarget: 3.135, lisSd: 0.031 }),
     ],
     note: "Two c 703 units. Defined L2 SD (0.99%) equals the observed CV.",
   },
@@ -372,8 +372,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 17.9, cvg: 36.1 },
     levels: [
-      Object.assign(lvl("L1", 3.02944, 2.462, 1, 2.6), { bias: 0.894 }),
-      Object.assign(lvl("L2", 10.4928, 2.287, 1, 2.8), { bias: 0.874 }),
+      Object.assign(lvl("L1", 3.02944, 2.462, 1, 2.6), { bias: 0.894, lisTarget: 3.06, lisSd: 0.113 }),
+      Object.assign(lvl("L2", 10.4928, 2.287, 1, 2.8), { bias: 0.874, lisTarget: 10.6, lisSd: 0.336 }),
     ],
     note: "Three e 801 units. Control lot changed 24 Feb 2026.",
   },
@@ -393,8 +393,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 11.4, cvg: 30.9 },
     levels: [
-      Object.assign(lvl("L1", 18.7954, 3.013, 1, 2.8), { bias: 0.821 }),
-      Object.assign(lvl("L2", 2134.1, 4.509, 1, 2.6), { bias: 0.402 }),
+      Object.assign(lvl("L1", 18.7954, 3.013, 1, 2.8), { bias: 0.821, lisTarget: 19.4, lisSd: 0.873 }),
+      Object.assign(lvl("L2", 2134.1, 4.509, 1, 2.6), { bias: 0.402, lisTarget: 2190, lisSd: 98.55 }),
     ],
     note: "Two e 801 units. L1 near the 99th-percentile limit (CV \u2264 10% required). Old L2 lot drifted upwards through 2025; new lot from 24 Feb 2026.",
   },
@@ -418,8 +418,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: {},
     levels: [
-      Object.assign(lvl("L1", 93.418, 2.571, 1, 2.6), { bias: 0.499 }),
-      Object.assign(lvl("L2", 586.639, 2.878, 1, 2.8), { bias: 0.144 }),
+      Object.assign(lvl("L1", 93.418, 2.571, 1, 2.6), { bias: 0.499, lisTarget: 95.8, lisSd: 3.832 }),
+      Object.assign(lvl("L2", 586.639, 2.878, 1, 2.8), { bias: 0.144, lisTarget: 597, lisSd: 17.91 }),
     ],
     note: "Three e 801 units. Four L2 targets over the period; new lot reads below its target.",
   },
@@ -442,8 +442,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 6.8, cvg: 42 },
     levels: [
-      Object.assign(lvl("L1", 4.04595, 4.088, 1, 2.8), { bias: 2.859 }),
-      Object.assign(lvl("L2", 20.8947, 3.992, 1, 2.6), { bias: 2.653 }),
+      Object.assign(lvl("L1", 4.04595, 4.088, 1, 2.8), { bias: 2.859, lisTarget: 4.11, lisSd: 0.226 }),
+      Object.assign(lvl("L2", 20.8947, 3.992, 1, 2.6), { bias: 2.653, lisTarget: 21.2, lisSd: 1.024 }),
     ],
     note: "Two e 801 units. e801-1.1 drifts down between calibrations (\u224810% apart from e801-2.1 before the 21 May 2026 recalibration).",
   },
@@ -463,8 +463,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 6.8, cvg: 37.6 },
     levels: [
-      Object.assign(lvl("L1", 97.6875, 6.697, 1, 2.6), { bias: 1.798 }),
-      Object.assign(lvl("L2", 170.797, 5.749, 1, 2.8), { bias: 0.797 }),
+      Object.assign(lvl("L1", 97.6875, 6.697, 1, 2.6), { bias: 1.798, lisTarget: 95.1, lisSd: 8.469 }),
+      Object.assign(lvl("L2", 170.797, 5.749, 1, 2.8), { bias: 0.797, lisTarget: 168, lisSd: 11.138 }),
     ],
     note: "Three e 801 units. Reagent-lot change in June 2025 raised results by \u224810%.",
   },
@@ -517,16 +517,30 @@ function computeLevel(level, tea, settings) {
   const actionLimit = cv > 0 ? target * (cv / 100) * k : NaN;
   const sdForLis = actionLimit / settings.qmMultiplier;
   const cvForLis = target > 0 ? (sdForLis / target) * 100 : NaN;
+  const sd = target * (cv / 100);
 
   // The manufacturer states a range, not a rule. Expressed in the laboratory's
   // own imprecision it becomes one, and can then be compared like for like.
-  const sd = target * (cv / 100);
   const mfrRange = Number(level.mfrRange) || 0;
   const hasMfr = mfrRange > 0 && sd > 0;
   const mfrK = hasMfr ? mfrRange / sd : NaN;
   const mfrPfr = hasMfr ? falseRejection(mfrK, n) : NaN;
   const mfrPed =
     hasMfr && criticalShift > 0 ? errorDetection(mfrK, n, criticalShift) : hasMfr ? 0 : NaN;
+
+  // The target and SD currently entered in the LIS, when known. The LIS rule is
+  // taken as 1:3s on its own SD, which is how cobas infinity flags "Error".
+  // Expressed in the laboratory's observed SD it becomes a K around a centre
+  // that may sit away from the lot mean, and its false-alarm and detection
+  // probabilities follow like any other rule.
+  const lisTarget = Number(level.lisTarget);
+  const lisSd = Number(level.lisSd);
+  const hasLis = lisTarget > 0 && lisSd > 0 && sd > 0;
+  const lisK = hasLis ? (settings.qmMultiplier * lisSd) / sd : NaN;
+  const lisOffsetSd = hasLis ? (lisTarget - target) / sd : NaN;
+  const lisPfr = hasLis ? errorDetection(lisK, n, Math.abs(lisOffsetSd)) || falseRejection(lisK, n) : NaN;
+  const lisPed = hasLis && criticalShift > 0 ? errorDetection(lisK, n, criticalShift) : hasLis ? 0 : NaN;
+  const lisSdChange = hasLis ? (sdForLis / lisSd - 1) * 100 : NaN;
 
   return {
     ...level,
@@ -535,6 +549,12 @@ function computeLevel(level, tea, settings) {
     sigma,
     criticalShift,
     pfr,
+    hasLis,
+    lisK,
+    lisOffsetSd,
+    lisPfr,
+    lisPed,
+    lisSdChange,
     offsetSd,
     pfrOffset,
     ped,
@@ -575,6 +595,8 @@ function computeAnalyte(analyte, settings) {
   const combinedPfrOffset = combine(levels.map((l) => l.pfrOffset));
   const anyOffset = levels.some((l) => l.offsetSd > 0);
   const combinedPed = combine(levels.map((l) => l.ped));
+  const lisLevels = levels.filter((l) => l.hasLis);
+  const hasLis = lisLevels.length === levels.length && levels.length > 0;
   const mfrLevels = levels.filter((l) => l.hasMfr);
   const complete = mfrLevels.length === levels.length && levels.length > 0;
   const missing = missingInputs(analyte);
@@ -590,6 +612,10 @@ function computeAnalyte(analyte, settings) {
     combinedMfrPfr: complete ? combine(mfrLevels.map((l) => l.mfrPfr)) : NaN,
     combinedMfrPed: complete ? combine(mfrLevels.map((l) => l.mfrPed)) : NaN,
     hasMfr: complete,
+    hasLis,
+    anyLis: lisLevels.length > 0,
+    combinedLisPfr: hasLis ? combine(lisLevels.map((l) => l.lisPfr)) : NaN,
+    combinedLisPed: hasLis ? combine(lisLevels.map((l) => l.lisPed)) : NaN,
     pfrOk: combinedPfr * 100 <= settings.pfrBudget + 1e-9,
     pfrOffsetOk: combinedPfrOffset * 100 <= settings.pfrBudget + 1e-9,
     // An analyte's own detection requirement, where set, overrides the global target.
@@ -1649,6 +1675,65 @@ function AnalytePanel({ analyte, settings, onChange, onRemove }) {
           );
         })()}
 
+        <div className="mt-4 border border-slate-200 bg-white px-3 py-2.5">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+            What to enter in the LIS — now and recommended
+          </p>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-xs text-slate-500">
+                <th className="py-1 pr-3 font-medium">Level</th>
+                <th className="py-1 pr-3 text-right font-medium">Target now</th>
+                <th className="py-1 pr-3 text-right font-medium">SD now</th>
+                <th className="py-1 pr-3 text-right font-medium">Rule now (K)</th>
+                <th className="py-1 pr-3 text-right font-medium">False alarm now</th>
+                <th className="py-1 pr-3 text-right font-medium">Detection now</th>
+                <th className="py-1 pr-3 text-right font-medium">Target recommended</th>
+                <th className="py-1 pr-3 text-right font-medium">SD recommended</th>
+                <th className="py-1 pr-3 text-right font-medium">SD change</th>
+                <th className="py-1 pr-3 text-right font-medium">Target shift (SD)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {analyte.levels.map((l) => {
+                const d = sigDigits(l.target);
+                return (
+                  <tr key={l.id} className="border-t border-slate-100">
+                    <td className="py-1.5 pr-3 font-mono text-slate-700">{l.label}</td>
+                    <td className="py-1.5 pr-3 text-right">
+                      <NumberCell value={l.lisTarget ?? ""} onChange={(v) => setLevel(l.id, { lisTarget: v })} width="w-24" />
+                    </td>
+                    <td className="py-1.5 pr-3 text-right">
+                      <NumberCell value={l.lisSd ?? ""} onChange={(v) => setLevel(l.id, { lisSd: v })} width="w-24" />
+                    </td>
+                    <td className="py-1.5 pr-3 text-right font-mono text-slate-600">{l.hasLis ? fmt(l.lisK, 2) : "\u2014"}</td>
+                    <td className={`py-1.5 pr-3 text-right font-mono ${l.hasLis && l.lisPfr > l.pfr * 2 ? "text-rose-700" : "text-slate-600"}`}>{l.hasLis ? `${fmt(l.lisPfr * 100, 2)}%` : "\u2014"}</td>
+                    <td className={`py-1.5 pr-3 text-right font-mono ${l.hasLis && l.lisPed < l.ped ? "text-rose-700" : "text-slate-600"}`}>{l.hasLis ? fmt(l.lisPed, 3) : "\u2014"}</td>
+                    <td className="py-1.5 pr-3 text-right font-mono font-semibold text-slate-900">{analyte.ready ? fmt(l.target, d) : "\u2014"}</td>
+                    <td className="py-1.5 pr-3 text-right font-mono font-semibold text-slate-900">{analyte.ready ? fmt(l.sdForLis, d + 1) : "\u2014"}</td>
+                    <td className={`py-1.5 pr-3 text-right font-mono ${l.hasLis && Math.abs(l.lisSdChange) >= 20 ? "text-amber-800" : "text-slate-600"}`}>{l.hasLis && analyte.ready ? `${l.lisSdChange > 0 ? "+" : ""}${fmt(l.lisSdChange, 0)}%` : "\u2014"}</td>
+                    <td className={`py-1.5 pr-3 text-right font-mono ${l.hasLis && Math.abs(l.lisOffsetSd) >= 1 ? "text-amber-800" : "text-slate-600"}`}>{l.hasLis ? fmt(-l.lisOffsetSd, 2) : "\u2014"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+            &ldquo;Now&rdquo; is the target and SD currently entered in the LIS (read from a cobas
+            infinity export, or typed here); its rule is taken as 1:3s on that SD and expressed in the
+            measured SD. &ldquo;Recommended&rdquo; is the pooled lot mean as target and the action
+            limit ÷ {settings.qmMultiplier} as SD, so that the same 1:3s rule reproduces the derived
+            limit. Target shift is how far the recommended target moves from the current one, in measured SD.
+            {analyte.hasLis && analyte.ready && (
+              <>
+                {" "}With the current entries the combined false alarm is {fmt(analyte.combinedLisPfr * 100, 2)}% and
+                detection {fmt(analyte.combinedLisPed * 100, 1)}%; with the recommended entries{" "}
+                {fmt(analyte.combinedPfr * 100, 2)}% and {fmt(analyte.combinedPed * 100, 1)}%.
+              </>
+            )}
+          </p>
+        </div>
+
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <select
             value={strategy}
@@ -2343,6 +2428,19 @@ export default function IqcRuleDesigner() {
       const kR = key(first, "result", "verdi", "value", "resultat");
       const kLot = key(first, "lot", "lotnr", "lot number", "control lot");
       const kIns = key(first, "instrument", "analyser", "analyzer", "device", "instrument id");
+      // Target and SD the LIS was using (cobas infinity "Target value" / "SD", or the
+      // prepared file's target_in_force / sd_defined_in_lis); the latest pair is kept.
+      const kTgt = key(first, "target value", "target", "target_in_force", "lis target");
+      const kSd = key(first, "sd", "sd_defined_in_lis", "lis sd");
+      const kDate = key(first, "date", "timestamp", "time");
+      const lisOf = {}; // analyte -> level -> {t, target, sd}
+      const when = (v) => {
+        const s = String(v).trim();
+        const m = s.match(/^(\d{2})[./](\d{2})[./](\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?/);
+        if (m) return Date.UTC(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0), +(m[6] || 0));
+        const t = Date.parse(s);
+        return isFinite(t) ? t : 0;
+      };
       // Rows the LIS rejected are left out of the imprecision estimate.
       const kRev = key(first, "review");
       const kRej = key(first, "lis_rejected");
@@ -2379,6 +2477,14 @@ export default function IqcRuleDesigner() {
         const lot = kLot ? String(r[kLot]).trim() || "—" : "—";
         (((tree[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= [];
         tree[a][lv][ins][lot].push(val);
+        if (kTgt && kSd) {
+          const tg = num(r[kTgt]), sdv = num(r[kSd]);
+          if (isFinite(tg) && isFinite(sdv) && tg > 0 && sdv > 0) {
+            const t = kDate ? when(r[kDate]) : 0;
+            const cur = (lisOf[a] ??= {})[lv];
+            if (!cur || t >= cur.t) lisOf[a][lv] = { t, target: tg, sd: sdv };
+          }
+        }
       }
       // Level labels that are not L1, L2, … (for example "ClinChem 2" and
       // "ClinChem 3") are renumbered by ascending mean: lowest becomes L1.
@@ -2394,8 +2500,13 @@ export default function IqcRuleDesigner() {
         };
         const ranked = labels.sort((x, y) => meanOf(x) - meanOf(y));
         const next = {};
-        ranked.forEach((l, i) => (next[`L${i + 1}`] = lvls[l]));
+        const nextLis = {};
+        ranked.forEach((l, i) => {
+          next[`L${i + 1}`] = lvls[l];
+          if (lisOf[a]?.[l]) nextLis[`L${i + 1}`] = lisOf[a][l];
+        });
         tree[a] = next;
+        if (lisOf[a]) lisOf[a] = nextLis;
       }
       // pooled within-lot CV for one instrument's set of lots
       const pooledCv = (lots) => {
@@ -2458,7 +2569,7 @@ export default function IqcRuleDesigner() {
                 if (dv > maxDev) maxDev = dv;
               }
             }
-            cvOf[a][lv] = { ...worst, target, maxDev };
+            cvOf[a][lv] = { ...worst, target, maxDev, lis: lisOf[a]?.[lv] || null };
             report.push(
               `${a} ${lv}: CV ${worst.cv.toFixed(2)}% (n=${worst.n}), target ${
                 target != null ? target.toPrecision(4) : "—"
@@ -2479,6 +2590,10 @@ export default function IqcRuleDesigner() {
           // Worst analyser offset from that pooled target, carried in as a
           // systematic error so its effect on false alarms is visible.
           if (isFinite(c.maxDev)) next.bias = Number((c.maxDev * c.cv).toFixed(3));
+          if (c.lis) {
+            next.lisTarget = Number(c.lis.target.toPrecision(6));
+            next.lisSd = Number(c.lis.sd.toPrecision(4));
+          }
           return next;
         });
       const names = Object.keys(cvOf);
@@ -2564,6 +2679,11 @@ export default function IqcRuleDesigner() {
         "Lower",
         "Upper",
         "SD for LIS",
+        "LIS target now",
+        "LIS SD now",
+        "K now (measured SD)",
+        "False alarm now %",
+        "Detection now",
         "Maker range",
         "Maker K",
         "Maker detection",
@@ -2596,6 +2716,11 @@ export default function IqcRuleDesigner() {
           fmt(l.lower, 4),
           fmt(l.upper, 4),
           fmt(l.sdForLis, 4),
+          l.hasLis ? l.lisTarget : "",
+          l.hasLis ? l.lisSd : "",
+          l.hasLis ? fmt(l.lisK, 2) : "",
+          l.hasLis ? fmt(l.lisPfr * 100, 3) : "",
+          l.hasLis ? fmt(l.lisPed, 3) : "",
           l.hasMfr ? l.mfrRange : "",
           l.hasMfr ? fmt(l.mfrK, 2) : "",
           l.hasMfr ? fmt(l.mfrPed, 3) : "",
