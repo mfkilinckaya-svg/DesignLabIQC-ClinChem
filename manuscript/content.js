@@ -100,7 +100,7 @@ references: [
 "Siegmund D. Sequential analysis: tests and confidence intervals. New York: Springer; 1985.",
 "ISO/TS 20914:2019. Medical laboratories — practical guidance for the estimation of measurement uncertainty. Geneva: International Organization for Standardization; 2019.",
 "Parvin CA. Assessing the impact of the frequency of quality control testing on the quality of reported patient results. Clin Chem 2008;54:2049–54.",
-"De Bruyne S, et al. Vibe coding in laboratory medicine. Clin Chem Lab Med 2026. [citation to be completed]",
+"De Bruyne S, Rommes S, Fiers T, Volders PJ, Maes B. Vibe coding and the illusion of competence: why laboratory medicine specialists shouldn't trust their AI-generated code for clinical deployment. Clin Chem Lab Med 2026; Epub 7 Sep. doi:10.1515/cclm-2026-0887.",
 ],
 
 tables: {
