@@ -470,6 +470,75 @@ const DEFAULT_ANALYTES = [
   },
 ];
 
+/* cobas infinity test codes of the study laboratory, mapped to the names used
+   in the panel so that a raw export updates the matching card. Any other code
+   is kept as it is and added as a new card. */
+const TEST_CODES = {
+  "S-Na": "Sodium",
+  "S-Kalium": "Potassium",
+  "S-Klorid": "Chloride",
+  "S-Kreat": "Creatinine",
+  "S-Urea": "Urea",
+  "S-Urat": "Urate",
+  "S-ALAT": "ALT",
+  "S-ASAT": "AST",
+  "S-ALP": "ALP",
+  "S-gGT": "GGT",
+  "S-LD": "LD",
+  "S-CK": "CK",
+  "S-Amyl": "Amylase",
+  "S-Lipase": "Lipase",
+  "S-Bili": "Bilirubin",
+  "S-Alb": "Albumin",
+  "S-Prot": "Total protein",
+  "S-Gluk": "Glucose",
+  "S-Kals": "Calcium",
+  "S-Fosfat": "Phosphate",
+  "S-Mg": "Magnesium",
+  "S-CRP": "CRP",
+  "S-Kol": "Cholesterol",
+  "S-HDL": "HDL cholesterol",
+  "S-LDL": "LDL cholesterol",
+  "S-Trig": "Triglycerides",
+  "S-Jern": "Iron",
+  "S-Trans": "Transferrin",
+  "S-IgA": "IgA",
+  "S-IgG": "IgG",
+  "S-IgM": "IgM",
+  "S-RF": "Rheumatoid factor",
+  "S-Bikarb": "Bicarbonate",
+  "P-Ammon": "Ammonia",
+  "S-Etanol": "Ethanol",
+  "P-HCY": "Homocysteine",
+  "S-Litium": "Lithium",
+  "S-Genta": "Gentamicin",
+  "S-Vanc3": "Vancomycin",
+  "S-Valp": "Valproate",
+  "S-Karb": "Carbamazepine",
+  "S-Parac": "Paracetamol",
+  "S-TSH": "TSH",
+  "S-FT4": "Free T4",
+  "S-FT3": "Free T3",
+  "S-hsTnT": "hs-Troponin T",
+  "S-proBNP": "NT-proBNP",
+  "S-PTH": "PTH",
+  "S-Ferr": "Ferritin",
+  "S-PSA": "PSA",
+  "S-VitD": "25-OH vitamin D",
+  "S-B12": "Vitamin B12 (total)",
+  "S-AB12": "Active B12",
+  "S-Folat": "Folate",
+  "S-PCT": "Procalcitonin",
+  "S-Kort": "Cortisol",
+  "S-HCG-GR": "hCG",
+  "S-C-pep": "C-peptide",
+  "S-CEA": "CEA",
+  "S-CA125": "CA 125",
+  "S-A-TPO": "Anti-TPO",
+  "S-A-CCP": "Anti-CCP",
+  "S-Dig": "Digoxin"
+};
+
 /* Names offered when adding an allowable-error source. Any label may be typed. */
 const SOURCE_SUGGESTIONS = [
   "Labquality",
@@ -490,6 +559,8 @@ const DEFAULT_SETTINGS = {
   pedTarget: 90, // %
   zAlpha: 1.65,
   qmMultiplier: 3,
+  cusumK: 0.5,
+  cusumH: 5,
 };
 
 /* ------------------------------------------------------------------ */
@@ -1165,7 +1236,7 @@ function SourceEditor({ analyte, onChange }) {
   );
 }
 
-function AnalytePanel({ analyte, settings, onChange, onRemove }) {
+function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
   const [chart, setChart] = useState("none");
   const [strategy, setStrategy] = useState("ends");
   const [suggestion, setSuggestion] = useState(null);
@@ -1734,6 +1805,8 @@ function AnalytePanel({ analyte, settings, onChange, onRemove }) {
           </p>
         </div>
 
+        <CusumPanel analyte={analyte} settings={settings} series={series} />
+
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <select
             value={strategy}
@@ -1987,6 +2060,251 @@ function ComparisonView({ computed, settings }) {
 /* Method guide                                                        */
 /* ------------------------------------------------------------------ */
 
+
+/* ------------------------------------------------------------------ */
+/* CUSUM                                                               */
+/* ------------------------------------------------------------------ */
+/* Tabular CUSUM (Page 1954) on standardised control results
+   z = (x − centre) / SD. Two sums accumulate departures beyond a reference
+   value k: C⁺ = max(0, C⁺ + z − k), C⁻ = max(0, C⁻ − z − k). An alarm is
+   raised when either exceeds the decision limit h; both are then reset.
+   k is set to half the shift the chart should catch quickly (k = 0.5 SD for
+   a 1 SD shift). Average run lengths use Siegmund's approximation with
+   b = h + 1.166 (Siegmund 1985), which is accurate to a few percent.    */
+
+function cusumArl(shift, k, h) {
+  const d = shift - k;
+  const b = h + 1.166;
+  if (Math.abs(d) < 1e-9) return b * b;
+  return (Math.exp(-2 * d * b) + 2 * d * b - 1) / (2 * d * d);
+}
+
+/* Two-sided ARL: in control the two one-sided charts run in parallel. */
+function cusumArl0(k, h) {
+  return cusumArl(0, k, h) / 2;
+}
+
+/* ARL of a 1:K Shewhart rule with n controls per event at a shift (SD). */
+function shewhartArl(k, n, shift) {
+  const p = shift > 0 ? errorDetection(k, n, shift) : falseRejection(k, n);
+  return p > 0 ? 1 / p : Infinity;
+}
+
+/* Run the tabular CUSUM over one series of standardised values. Returns the
+   path and the alarms (index, sign). */
+function runCusum(z, k, h) {
+  let cp = 0, cn = 0;
+  const path = [];
+  const alarms = [];
+  let run = 0;
+  for (let i = 0; i < z.length; i++) {
+    cp = Math.max(0, cp + z[i] - k);
+    cn = Math.max(0, cn - z[i] - k);
+    run++;
+    let alarm = 0;
+    if (cp > h) alarm = 1;
+    else if (cn > h) alarm = -1;
+    path.push({ i, cp, cn: -cn, z: z[i], alarm });
+    if (alarm) {
+      alarms.push({ i, sign: alarm, run });
+      cp = 0; cn = 0; run = 0;
+    }
+  }
+  return { path, alarms };
+}
+
+function CusumPanel({ analyte, settings, series }) {
+  const [k, setK] = useState(settings.cusumK ?? 0.5);
+  const [h, setH] = useState(settings.cusumH ?? 5);
+  const [centre, setCentre] = useState("lot"); // "lot" | "analyser" | "target"
+  const [pick, setPick] = useState("");
+  const kk = Number(k) > 0 ? Number(k) : 0.5;
+  const hh = Number(h) > 0 ? Number(h) : 5;
+  const shifts = [0.5, 1, 1.5, 2, 3];
+
+  // Design comparison, no data needed
+  const design = analyte.levels.map((l) => ({
+    label: l.label,
+    k: Number(l.k),
+    n: Math.max(1, Math.round(Number(l.n) || 1)),
+  }));
+
+  // Data: series[level][instrument][lot] = [{t, v}]
+  const runs = useMemo(() => {
+    if (!series) return [];
+    const out = [];
+    for (const l of analyte.levels) {
+      const byIns = series[l.label];
+      if (!byIns) continue;
+      const cv = Number(l.cv);
+      if (!(cv > 0)) continue;
+      // lot means over all analysers, and per analyser
+      const lotAll = {};
+      const lotIns = {};
+      for (const [ins, lots] of Object.entries(byIns))
+        for (const [lot, pts] of Object.entries(lots)) {
+          const m = pts.reduce((a, p) => a + p.v, 0) / pts.length;
+          (lotAll[lot] ??= { s: 0, n: 0 });
+          lotAll[lot].s += m * pts.length; lotAll[lot].n += pts.length;
+          lotIns[`${ins}|${lot}`] = m;
+        }
+      for (const [ins, lots] of Object.entries(byIns)) {
+        // one chart per analyser, lots in time order, CUSUM reset at a lot change
+        const lotNames = Object.keys(lots).sort((a, b) => (lots[a][0]?.t ?? 0) - (lots[b][0]?.t ?? 0));
+        let path = [], alarms = [], n = 0, offset = 0;
+        for (const lot of lotNames) {
+          const pts = lots[lot];
+          const c =
+            centre === "analyser" ? lotIns[`${ins}|${lot}`]
+            : centre === "target" && Number(l.target) > 0 ? Number(l.target)
+            : lotAll[lot].s / lotAll[lot].n;
+          const sd = (cv / 100) * c;
+          const z = pts.map((p) => (p.v - c) / sd);
+          const r = runCusum(z, kk, hh);
+          path = path.concat(r.path.map((q) => ({ ...q, i: q.i + offset, t: pts[q.i].t, lot })));
+          alarms = alarms.concat(r.alarms.map((a) => ({ ...a, i: a.i + offset, t: pts[a.i].t, lot })));
+          offset += pts.length; n += pts.length;
+        }
+        out.push({ level: l.label, instrument: ins, n, alarms, path,
+          per1000: n ? (1000 * alarms.length) / n : NaN,
+          medianRun: alarms.length ? [...alarms.map((a) => a.run)].sort((a, b) => a - b)[Math.floor(alarms.length / 2)] : NaN });
+      }
+    }
+    return out;
+  }, [series, analyte.levels, kk, hh, centre]);
+
+  const keys = runs.map((r) => `${r.level} · ${r.instrument}`);
+  const sel = runs.find((r) => `${r.level} · ${r.instrument}` === pick) || runs[0];
+  const fmtDate = (t) => (t ? new Date(t).toISOString().slice(0, 10) : "");
+
+  return (
+    <div className="mt-4 border border-slate-200 bg-white px-3 py-2.5">
+      <div className="mb-2 flex flex-wrap items-center gap-3">
+        <p className="text-xs font-medium uppercase tracking-wide text-slate-500">CUSUM</p>
+        <label className="flex items-center gap-1 text-xs text-slate-600">
+          k (SD) <NumberCell value={k} onChange={setK} width="w-16" step="0.1" />
+        </label>
+        <label className="flex items-center gap-1 text-xs text-slate-600">
+          h (SD) <NumberCell value={h} onChange={setH} width="w-16" step="0.5" />
+        </label>
+        <span className="font-mono text-xs text-slate-600">
+          ARL₀ {fmt(cusumArl0(kk, hh), 0)} · ARL at 1 SD {fmt(cusumArl(1, kk, hh), 1)}
+        </span>
+      </div>
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="text-left text-xs text-slate-500">
+            <th className="py-1 pr-3 font-medium">Average run length to alarm</th>
+            <th className="py-1 pr-3 text-right font-medium">In control</th>
+            {shifts.map((d) => (
+              <th key={d} className="py-1 pr-3 text-right font-medium">{d} SD</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="border-t border-slate-100">
+            <td className="py-1.5 pr-3 text-slate-700">CUSUM k {kk}, h {hh}</td>
+            <td className="py-1.5 pr-3 text-right font-mono text-slate-700">{fmt(cusumArl0(kk, hh), 0)}</td>
+            {shifts.map((d) => (
+              <td key={d} className="py-1.5 pr-3 text-right font-mono text-slate-700">{fmt(cusumArl(d, kk, hh), 1)}</td>
+            ))}
+          </tr>
+          {design.map((d) => (
+            <tr key={d.label} className="border-t border-slate-100">
+              <td className="py-1.5 pr-3 text-slate-700">{d.label}: 1:{fmt(d.k, 1)} rule, n {d.n}</td>
+              <td className="py-1.5 pr-3 text-right font-mono text-slate-700">{fmt(shewhartArl(d.k, d.n, 0), 0)}</td>
+              {shifts.map((s) => (
+                <td key={s} className="py-1.5 pr-3 text-right font-mono text-slate-700">{fmt(shewhartArl(d.k, d.n, s), 1)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p className="mt-2 text-xs leading-relaxed text-slate-600">
+        Average number of control results until an alarm when the process is in control and after a
+        sustained shift. The 1:K rule reacts to single results; the CUSUM accumulates small departures
+        and catches a persistent 0.5–1 SD shift several times sooner at a lower in-control alarm rate.
+        Siegmund's approximation, two-sided.
+      </p>
+
+      {runs.length > 0 ? (
+        <div className="mt-3">
+          <div className="mb-2 flex flex-wrap items-center gap-3">
+            <select value={centre} onChange={(e) => setCentre(e.target.value)}
+              className="rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 focus:border-teal-600 focus:outline-none">
+              <option value="lot">Centre: pooled lot mean</option>
+              <option value="analyser">Centre: analyser lot mean</option>
+              <option value="target">Centre: card target</option>
+            </select>
+            <select value={pick || keys[0]} onChange={(e) => setPick(e.target.value)}
+              className="rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 focus:border-teal-600 focus:outline-none">
+              {keys.map((kx) => (<option key={kx} value={kx}>{kx}</option>))}
+            </select>
+          </div>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-xs text-slate-500">
+                <th className="py-1 pr-3 font-medium">Level · analyser</th>
+                <th className="py-1 pr-3 text-right font-medium">n</th>
+                <th className="py-1 pr-3 text-right font-medium">Alarms</th>
+                <th className="py-1 pr-3 text-right font-medium">per 1000</th>
+                <th className="py-1 pr-3 text-right font-medium">Median run</th>
+                <th className="py-1 pr-3 text-right font-medium">Expected per 1000</th>
+              </tr>
+            </thead>
+            <tbody>
+              {runs.map((r) => (
+                <tr key={`${r.level}${r.instrument}`} className="border-t border-slate-100">
+                  <td className="py-1 pr-3 font-mono text-slate-700">{r.level} · {r.instrument}</td>
+                  <td className="py-1 pr-3 text-right font-mono text-slate-600">{r.n}</td>
+                  <td className="py-1 pr-3 text-right font-mono text-slate-600">{r.alarms.length}</td>
+                  <td className={`py-1 pr-3 text-right font-mono ${r.per1000 > 5 * (1000 / cusumArl0(kk, hh)) ? "text-rose-700" : "text-slate-600"}`}>{fmt(r.per1000, 1)}</td>
+                  <td className="py-1 pr-3 text-right font-mono text-slate-600">{isFinite(r.medianRun) ? r.medianRun : "—"}</td>
+                  <td className="py-1 pr-3 text-right font-mono text-slate-400">{fmt(1000 / cusumArl0(kk, hh), 1)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {sel && (
+            <div className="mt-3 h-56 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={sel.path} margin={{ top: 8, right: 16, left: 0, bottom: 4 }}>
+                  <CartesianGrid stroke="#e2e8f0" strokeDasharray="2 4" />
+                  <XAxis dataKey="i" tick={{ fontSize: 10 }} tickFormatter={(i) => fmtDate(sel.path[i]?.t)} minTickGap={40} />
+                  <YAxis tick={{ fontSize: 10 }} domain={[-hh * 1.4, hh * 1.4]} />
+                  <Tooltip
+                    contentStyle={{ fontSize: 11 }}
+                    labelFormatter={(i) => `${fmtDate(sel.path[i]?.t)} · lot ${sel.path[i]?.lot ?? ""}`}
+                    formatter={(v, name) => [fmt(v, 2), name === "cp" ? "C⁺" : name === "cn" ? "−C⁻" : "z"]}
+                  />
+                  <ReferenceLine y={hh} stroke="#b91c1c" strokeDasharray="4 4" />
+                  <ReferenceLine y={-hh} stroke="#b91c1c" strokeDasharray="4 4" />
+                  <ReferenceLine y={0} stroke="#94a3b8" />
+                  <Line type="monotone" dataKey="cp" stroke="#0f766e" dot={false} strokeWidth={1.5} isAnimationActive={false} />
+                  <Line type="monotone" dataKey="cn" stroke="#1d4ed8" dot={false} strokeWidth={1.5} isAnimationActive={false} />
+                  {sel.alarms.map((a) => (
+                    <ReferenceDot key={a.i} x={a.i} y={a.sign > 0 ? hh : -hh} r={3} fill="#b91c1c" stroke="none" />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+            One chart per analyser; the sums restart at each control-lot change and after each alarm.
+            Results are standardised with the level's CV and the chosen centre. An alarm rate well above
+            the expected in-control rate means the process sits persistently away from the centre, which
+            the single-result rule does not show. Imported results are kept for this session only.
+          </p>
+        </div>
+      ) : (
+        <p className="mt-2 text-xs text-slate-500">
+          Import results (with a date column) to run the CUSUM on the data; the comparison above needs no data.
+        </p>
+      )}
+    </div>
+  );
+}
+
 function Formula({ children }) {
   return (
     <p className="my-3 border-l-2 border-teal-700 bg-slate-50 px-4 py-2.5 font-mono text-sm text-slate-800">
@@ -2215,6 +2533,28 @@ function MethodGuide({ settings }) {
         </ol>
       </Section>
 
+      <Section title="CUSUM: catching the slow drift">
+        <p>
+          The 1:K rule looks at one result at a time, so a shift of half an SD that
+          persists for weeks never trips it. The cumulative sum chart (CUSUM) adds up
+          the departures of successive results from the centre, discounting each by a
+          reference value k, and alarms when the sum passes a decision limit h:
+        </p>
+        <Formula>C⁺ = max(0, C⁺ + z − k) · C⁻ = max(0, C⁻ − z − k) · alarm when C⁺ &gt; h or C⁻ &gt; h</Formula>
+        <p>
+          z is the result in SD units from the centre. k is half the shift the chart
+          should catch quickly (0.5 for a 1 SD shift) and h sets the in-control alarm
+          rate; k 0.5 with h 5 gives an average of about a thousand results between
+          false alarms and catches a 1 SD shift in about ten results, where a 1:2.6
+          rule needs about eighteen and alarms falsely every hundred. The run
+          lengths shown are Siegmund&rsquo;s approximation. On imported data the
+          chart restarts at every lot change and after every alarm; an alarm rate far
+          above the expected one tells you that the analyser sits persistently off the
+          centre, and the comparison of centres shows whether that is an analyser
+          offset or drift within the lot. Use the CUSUM beside the 1:K rule, not
+          instead of it: the single-result rule still catches the gross error.
+        </p>
+      </Section>
       <Section title="Where this stops helping">
         <p>
           The arithmetic assumes results are normally distributed, that control
@@ -2320,11 +2660,25 @@ function MethodGuide({ settings }) {
             Kinns H, Pitkin S, Housley D, Freedman DB. Internal quality control: best
             practice. J Clin Pathol 2013;66:1027–32.
           </li>
+          <li>
+            Page ES. Continuous inspection schemes. Biometrika 1954;41:100–15.
+          </li>
+          <li>
+            Westgard JO, Groth T, Aronsson T, de Verdier CH. Combined Shewhart-cusum
+            control chart for improved quality control in clinical chemistry. Clin
+            Chem 1977;23:1881–7.
+          </li>
+          <li>
+            Siegmund D. Sequential analysis: tests and confidence intervals. New York:
+            Springer; 1985.
+          </li>
         </ol>
         <p className="mt-3 text-xs text-slate-500">
           The false rejection and error detection framework comes from references 1
           to 3. The sigma bands and the control plans attached to them are reference
-          4. Verify page numbers against the publisher record before submission.
+          4. The CUSUM is reference 6, its use beside Shewhart rules in clinical
+          chemistry reference 7, and the run-length approximation reference 8. Verify
+          page numbers against the publisher record before submission.
         </p>
       </Section>
     </div>
@@ -2343,6 +2697,9 @@ export default function IqcRuleDesigner() {
   const [status, setStatus] = useState("Loading saved work…");
   const [tab, setTab] = useState("design");
   const [importNote, setImportNote] = useState("");
+  // Imported result series for the CUSUM, by analyte name -> level -> instrument -> lot.
+  // Kept in memory for the session; not saved with the work.
+  const [series, setSeries] = useState({});
   const loaded = useRef(false);
 
   useEffect(() => {
@@ -2407,9 +2764,11 @@ export default function IqcRuleDesigner() {
     try {
       setStatus("Reading results…");
       const buf = await file.arrayBuffer();
-      const wb = XLSX.read(buf, { type: "array" });
+      // raw: keep cells as text, so that dd/mm/yyyy dates are not re-read as
+      // mm/dd and turned into serial numbers
+      const wb = XLSX.read(buf, { type: "array", raw: true });
       const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { defval: "" });
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: "", raw: true });
       if (!rows.length) {
         setStatus("No rows found in file.");
         return;
@@ -2435,6 +2794,8 @@ export default function IqcRuleDesigner() {
       const kDate = key(first, "date", "timestamp", "time");
       const lisOf = {}; // analyte -> level -> {t, target, sd}
       const when = (v) => {
+        if (v instanceof Date) return v.getTime();
+        if (typeof v === "number" && v > 20000 && v < 80000) return (v - 25569) * 86400000; // Excel serial
         const s = String(v).trim();
         const m = s.match(/^(\d{2})[./](\d{2})[./](\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?/);
         if (m) return Date.UTC(+m[3], +m[2] - 1, +m[1], +(m[4] || 0), +(m[5] || 0), +(m[6] || 0));
@@ -2461,8 +2822,12 @@ export default function IqcRuleDesigner() {
       };
       // group values by analyte -> level -> instrument -> lot
       const tree = {};
+      const ser = {}; // analyte -> level -> instrument -> lot -> [{t, v}]
+      let rowIdx = 0;
       for (const r of rows) {
-        const a = String(r[kA]).trim();
+        rowIdx++;
+        const rawName = String(r[kA]).trim();
+        const a = TEST_CODES[rawName] || rawName;
         const lv = normLevel(r[kL]);
         const val = num(r[kR]);
         if (!a || !lv || !isFinite(val)) continue;
@@ -2477,6 +2842,7 @@ export default function IqcRuleDesigner() {
         const lot = kLot ? String(r[kLot]).trim() || "—" : "—";
         (((tree[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= [];
         tree[a][lv][ins][lot].push(val);
+        ((((ser[a] ??= {})[lv] ??= {})[ins] ??= {})[lot] ??= []).push({ t: kDate ? when(r[kDate]) || rowIdx : rowIdx, v: val });
         if (kTgt && kSd) {
           const tg = num(r[kTgt]), sdv = num(r[kSd]);
           if (isFinite(tg) && isFinite(sdv) && tg > 0 && sdv > 0) {
@@ -2501,12 +2867,15 @@ export default function IqcRuleDesigner() {
         const ranked = labels.sort((x, y) => meanOf(x) - meanOf(y));
         const next = {};
         const nextLis = {};
+        const nextSer = {};
         ranked.forEach((l, i) => {
           next[`L${i + 1}`] = lvls[l];
           if (lisOf[a]?.[l]) nextLis[`L${i + 1}`] = lisOf[a][l];
+          if (ser[a]?.[l]) nextSer[`L${i + 1}`] = ser[a][l];
         });
         tree[a] = next;
         if (lisOf[a]) lisOf[a] = nextLis;
+        if (ser[a]) ser[a] = nextSer;
       }
       // pooled within-lot CV for one instrument's set of lots
       const pooledCv = (lots) => {
@@ -2627,6 +2996,33 @@ export default function IqcRuleDesigner() {
         ),
         note: "",
       }));
+      // time order within each lot, for the CUSUM
+      for (const lv of Object.values(ser)) for (const ins of Object.values(lv)) for (const lots of Object.values(ins))
+        for (const pts of Object.values(lots)) pts.sort((p, q) => p.t - q.t);
+      const serByName = {};
+      for (const an of [...updated, ...fresh]) {
+        const hit = Object.keys(ser).find((k) => k.toLowerCase() === an.name.trim().toLowerCase());
+        if (hit) serByName[an.name] = ser[hit];
+      }
+      // Merge with series imported earlier in the session (several export
+      // periods of the same analyte), keeping time order within each lot.
+      setSeries((prev) => {
+        const next = { ...prev };
+        for (const [name, lv] of Object.entries(serByName)) {
+          const tgt = (next[name] = { ...(next[name] || {}) });
+          for (const [l, ins] of Object.entries(lv)) {
+            const tl = (tgt[l] = { ...(tgt[l] || {}) });
+            for (const [i, lots] of Object.entries(ins)) {
+              const ti = (tl[i] = { ...(tl[i] || {}) });
+              for (const [lot, pts] of Object.entries(lots)) {
+                const seen = new Set((ti[lot] || []).map((p) => `${p.t}|${p.v}`));
+                ti[lot] = [...(ti[lot] || []), ...pts.filter((p) => !seen.has(`${p.t}|${p.v}`))].sort((p, q) => p.t - q.t);
+              }
+            }
+          }
+        }
+        return next;
+      });
       setAnalytes([...updated, ...fresh]);
       setStatus("Imported");
       setImportNote(
@@ -2922,6 +3318,7 @@ export default function IqcRuleDesigner() {
                     key={a.id}
                     analyte={a}
                     settings={settings}
+                    series={series[a.name]}
                     onChange={(next) =>
                       updateAnalyte(a.id, {
                         ...next,
