@@ -4,7 +4,8 @@ const {
   Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, Table, TableRow, TableCell,
   WidthType, BorderStyle, LineNumberRestartFormat, PageBreak, PageNumber, Footer, ShadingType,
 } = require("docx");
-const C = require("./content.js");
+const LANG = process.env.LANG_TR ? "tr" : "en";
+const C = require(LANG === "tr" ? "./content_tr.js" : "./content.js");
 const csv = (p) => {
   const [h, ...rows] = fs.readFileSync(p, "utf8").trim().split("\n").map((l) => l.split(","));
   return rows.map((r) => Object.fromEntries(h.map((k, i) => [k, r[i]])));
@@ -88,46 +89,46 @@ console.log("abstract words", nAbs, "main text words", nMain, "references", C.re
 const titlePage = [
   P(C.title, { bold: true }),
   P(""),
-  P(`Short title: ${C.shortTitle}`),
+  P(LANG === "tr" ? `Kısa başlık: ${C.shortTitle}` : `Short title: ${C.shortTitle}`),
   P(""),
   P(`${C.author}`), P(C.affiliation), P(`ORCID: ${C.orcid}`),
   P(""),
-  P(`Corresponding author: ${C.corresponding}`),
+  P((LANG === "tr" ? "Sorumlu yazar: " : "Corresponding author: ") + C.corresponding),
   P(""),
   P(`Word count: abstract ${nAbs}; main text ${nMain} (excluding references, tables and figure legends). Tables: 3. Figures: 4. References: ${C.references.length}. Supplementary tables: 3.`),
   P(""),
-  P(`Keywords: ${C.keywords.join("; ")}`),
+  P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
   BR(),
-  H1("Abstract"),
+  H1(LANG === "tr" ? "Özet" : "Abstract"),
   ...Object.entries(C.abstract).map(([k, v]) => P([new TextRun({ text: k + ": ", font: FONT, size: 24, bold: true }), new TextRun({ text: v, font: FONT, size: 24 })])),
   P(""),
-  P(`Keywords: ${C.keywords.join("; ")}`),
+  P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
   BR(),
 ];
 const body = [
-  H1("Introduction"), ...C.introduction.map((t) => P(t)),
-  H1("Materials and methods"), ...C.methods.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
-  H1("Results"), ...C.results.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
-  H1("Discussion"), ...C.discussion.map((t) => P(t)),
-  H1("Acknowledgements"), P(C.acknowledgements),
-  H1("Research funding"), P(C.funding),
-  H1("Author contributions"), P(C.contributions),
-  H1("Competing interests"), P(C.coi),
-  H1("Ethical approval"), P(C.ethics),
-  H1("Data availability"), P(C.dataAvailability),
+  H1(LANG === "tr" ? "Giriş" : "Introduction"), ...C.introduction.map((t) => P(t)),
+  H1(LANG === "tr" ? "Gereç ve yöntem" : "Materials and methods"), ...C.methods.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
+  H1(LANG === "tr" ? "Bulgular" : "Results"), ...C.results.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
+  H1(LANG === "tr" ? "Tartışma" : "Discussion"), ...C.discussion.map((t) => P(t)),
+  H1(LANG === "tr" ? "Teşekkür" : "Acknowledgements"), P(C.acknowledgements),
+  H1(LANG === "tr" ? "Araştırma desteği" : "Research funding"), P(C.funding),
+  H1(LANG === "tr" ? "Yazar katkıları" : "Author contributions"), P(C.contributions),
+  H1(LANG === "tr" ? "Çıkar çatışması" : "Competing interests"), P(C.coi),
+  H1(LANG === "tr" ? "Etik onay" : "Ethical approval"), P(C.ethics),
+  H1(LANG === "tr" ? "Veri erişilebilirliği" : "Data availability"), P(C.dataAvailability),
   BR(),
-  H1("References"), ...C.references.map((r, i) => P(`${i + 1}. ${r}`)),
+  H1(LANG === "tr" ? "Kaynaklar" : "References"), ...C.references.map((r, i) => P(`${i + 1}. ${r}`)),
   BR(),
-  H1("Tables"),
+  H1(LANG === "tr" ? "Tablolar" : "Tables"),
   P(C.tables.t1.title), tableWithRule(C.tables.t1.head, t1rows, [1500, 600, 760, 980, 640, 980, 760, 820, 640, 700]), P(C.tables.t1.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
   P(C.tables.t2.title), tableWithRule(C.tables.t2.head, t2rows, [1450, 1250, 650, 1000, 850, 650, 650, 600, 1300, 1300]), P(C.tables.t2.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
   P(C.tables.t3.title), tableWithRule(C.tables.t3.head, t3rows, [1500, 700, 950, 950, 1000, 1100, 1150, 1250]), P(C.tables.t3.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
-  H1("Figure legends"), ...C.legends.map((t) => P(t)),
+  H1(LANG === "tr" ? "Figür açıklamaları" : "Figure legends"), ...C.legends.map((t) => P(t)),
   BR(),
-  H1("Supplementary material"), ...C.supplementary.map((t) => P(t)),
+  H1(LANG === "tr" ? "Ek materyal" : "Supplementary material"), ...C.supplementary.map((t) => P(t)),
 ];
 const doc = new Document({
   creator: C.author, title: C.title,
@@ -138,4 +139,4 @@ const doc = new Document({
     children: [...titlePage, ...body],
   }],
 });
-Packer.toBuffer(doc).then((b) => { fs.writeFileSync("Kilinckaya_ClinChem_IQC_CCLM.docx", b); console.log("written"); });
+Packer.toBuffer(doc).then((b) => { fs.writeFileSync(LANG === "tr" ? "Kilinckaya_ClinChem_IQC_TR.docx" : "Kilinckaya_ClinChem_IQC_CCLM.docx", b); console.log("written"); });
