@@ -917,75 +917,68 @@ function BudgetMeter({ levels, combinedPfr, budget }) {
 }
 
 function PowerCurves({ analyte, settings }) {
+  // Two views of the same thing. In SD units each level has its own curve and
+  // its own critical shift. In per cent a systematic error is one number for
+  // the measurand: it is a different number of SD at each level (CV differs),
+  // so the per-level curves separate and the combined curve, 1 − Π(1 − p),
+  // is the probability that at least one level flags that error.
+  const [unit, setUnit] = useState("pct");
+  const tea = effectiveTea(analyte);
+  const maxPct = isFinite(tea) ? Math.max(tea * 1.3, 1) : 10;
   const data = useMemo(() => {
     const points = [];
-    for (let s = 0; s <= 6.01; s += 0.15) {
-      const row = { shift: Number(s.toFixed(2)) };
+    const steps = 50;
+    for (let i = 0; i <= steps; i++) {
+      const x = unit === "sd" ? (i / steps) * 6 : (i / steps) * maxPct;
+      const row = { x: Number(x.toFixed(3)) };
+      let miss = 1;
       analyte.levels.forEach((l) => {
-        row[l.label] = errorDetection(Number(l.k), l.n, s);
+        const cv = Number(l.cv);
+        const shiftSd = unit === "sd" ? x : cv > 0 ? Math.max(0, x - Math.abs(Number(l.bias) || 0)) / cv : 0;
+        const p = errorDetection(Number(l.k), l.n, shiftSd);
+        row[l.label] = p;
+        miss *= 1 - p;
       });
+      row.Combined = 1 - miss;
       points.push(row);
     }
     return points;
-  }, [analyte, settings]);
+  }, [analyte, settings, unit, maxPct]);
 
   const colors = ["#0f766e", "#0891b2", "#7c3aed", "#b45309"];
+  const critPct = isFinite(tea) ? tea - 1.65 * Math.max(...analyte.levels.map((l) => Number(l.cv) || 0)) : NaN;
 
   return (
     <div className="mt-4 border-t border-slate-200 pt-4">
-      <p className="mb-3 max-w-2xl text-sm text-slate-600">
-        Detection probability against the size of a systematic shift. The vertical
-        marks show each level's critical shift — where the curve sits at that mark is
-        the Ped in the table.
-      </p>
+      <div className="mb-3 flex flex-wrap items-center gap-3">
+        <p className="max-w-2xl text-sm text-slate-600">
+          Detection probability against the size of a systematic error, per level and
+          combined over the levels (at least one level rejects). Dashed marks: each
+          level's critical shift; in per cent the critical error of the measurand.
+        </p>
+        <select value={unit} onChange={(e) => setUnit(e.target.value)}
+          className="rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 focus:border-teal-600 focus:outline-none">
+          <option value="pct">Error in % of the result</option>
+          <option value="sd">Shift in SD of each level</option>
+        </select>
+      </div>
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 16, bottom: 24, left: 4 }}>
             <CartesianGrid stroke="#e2e8f0" strokeDasharray="2 3" />
-            <XAxis
-              dataKey="shift"
-              tick={{ fontSize: 11, fill: "#475569" }}
-              stroke="#94a3b8"
-              label={{
-                value: "Systematic shift (SD)",
-                position: "insideBottom",
-                offset: -12,
-                fontSize: 11,
-                fill: "#475569",
-              }}
-            />
-            <YAxis
-              domain={[0, 1]}
-              tick={{ fontSize: 11, fill: "#475569" }}
-              stroke="#94a3b8"
-              tickFormatter={(v) => v.toFixed(1)}
-            />
-            <Tooltip
-              formatter={(v) => v.toFixed(3)}
-              labelFormatter={(v) => `Shift ${v} SD`}
-              contentStyle={{ fontSize: 12, borderRadius: 4 }}
-            />
+            <XAxis dataKey="x" type="number" domain={[0, unit === "sd" ? 6 : Number(maxPct.toFixed(2))]} tickFormatter={(v) => (unit === "sd" ? v.toFixed(1) : v.toFixed(1))} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8"
+              label={{ value: unit === "sd" ? "Systematic shift (SD)" : "Systematic error (%)", position: "insideBottom", offset: -12, fontSize: 11, fill: "#475569" }} />
+            <YAxis domain={[0, 1]} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8" tickFormatter={(v) => v.toFixed(1)} />
+            <Tooltip formatter={(v) => v.toFixed(3)} labelFormatter={(v) => (unit === "sd" ? `Shift ${v} SD` : `Error ${v}%`)} contentStyle={{ fontSize: 12, borderRadius: 4 }} />
             <Legend verticalAlign="top" align="right" height={22} wrapperStyle={{ fontSize: 12 }} />
             {analyte.levels.map((l, i) => (
-              <Line
-                key={l.id}
-                type="monotone"
-                dataKey={l.label}
-                stroke={colors[i % colors.length]}
-                dot={false}
-                strokeWidth={2}
-              />
+              <Line key={l.id} type="monotone" dataKey={l.label} stroke={colors[i % colors.length]} dot={false} strokeWidth={1.5} />
             ))}
-            {analyte.levels.map((l, i) =>
-              l.criticalShift > 0 ? (
-                <ReferenceLine
-                  key={`ref-${l.id}`}
-                  x={Number(l.criticalShift.toFixed(2))}
-                  stroke={colors[i % colors.length]}
-                  strokeDasharray="4 3"
-                />
-              ) : null
-            )}
+            <Line type="monotone" dataKey="Combined" stroke="#0f172a" dot={false} strokeWidth={2.5} />
+            {unit === "sd"
+              ? analyte.levels.map((l, i) => (l.criticalShift > 0 ? <ReferenceLine key={`ref-${l.id}`} x={Number(l.criticalShift.toFixed(2))} stroke={colors[i % colors.length]} strokeDasharray="4 3" /> : null))
+              : isFinite(critPct) && critPct > 0 ? <ReferenceLine x={Number(critPct.toFixed(2))} stroke="#0f172a" strokeDasharray="4 3" label={{ value: "critical error", fontSize: 10, fill: "#475569", position: "top" }} /> : null}
+            {unit === "pct" && isFinite(tea) ? <ReferenceLine x={Number(tea.toFixed(2))} stroke="#b91c1c" strokeDasharray="2 3" label={{ value: "TEa", fontSize: 10, fill: "#b91c1c", position: "top" }} /> : null}
           </LineChart>
         </ResponsiveContainer>
       </div>
