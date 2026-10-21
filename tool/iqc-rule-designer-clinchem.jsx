@@ -1377,6 +1377,20 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
               </span>
             );
           })()}
+          {(() => {
+            const cvi = Number(analyte.bv && analyte.bv.cvi);
+            const cvs = analyte.levels.map((l) => Number(l.cv)).filter((c) => c > 0);
+            if (!(cvi > 0) || !cvs.length) return null;
+            const soc = cvi / Math.max(...cvs);
+            return (
+              <span
+                className={`rounded px-2 py-0.5 font-mono text-xs ${soc >= 4.65 ? "bg-emerald-50 text-emerald-800" : "bg-slate-100 text-slate-600"}`}
+                title={`Oosterhuis–Coskun sigma: CVI / CV, no coverage factor, bias set aside. CVI ${cvi}% / worst CV ${fmt(Math.max(...cvs), 2)}%. Their benchmark is 4.65 (CV ≤ 0.22·CVI, here ≤ ${fmt(0.22 * cvi, 2)}%). Reported for comparison; not used for rule design.`}
+              >
+                σ<sub>CVI/CV</sub> {fmt(soc, 2)}
+              </span>
+            );
+          })()}
           {analyte.ready && isFinite(analyte.critPct) && (
             <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-700" title="Critical systematic error of the measurand: TEa − max over levels of (|offset| + z·CV). One size, applied to every level.">
               critical error {fmt(analyte.critPct, 2)}%
@@ -2850,6 +2864,25 @@ function MethodGuide({ settings }) {
           sit between the two: they assume the same shift in SD at both levels.
         </p>
       </Section>
+      <Section title="A second sigma: CVI / CV (Oosterhuis and Coskun)">
+        <p>
+          Oosterhuis and Coskun argue that the usual sigma, (TEa − |bias|)/CV,
+          rests on a tolerance that already contains a coverage factor and a bias
+          term, and so reasons in a circle. They propose a sigma without TEa:
+        </p>
+        <Formula>σ = CVI / CV</Formula>
+        <p>
+          with the within-subject biological variation CVI as the tolerance, no
+          coverage factor, and bias judged separately. Their benchmark is 4.65,
+          which requires CV ≤ 0.22 · CVI. When a CVI is entered on the card, the
+          header shows this value for the worst level beside the conventional
+          sigma. It is reported for comparison only: it yields no tolerance from
+          which a control limit can be sized, so the rules, the critical error and
+          the detection probabilities on the card are unaffected by it. For the
+          preloaded panel only ALT, TSH and ferritin exceed 4.65; sodium would need
+          a CV of 0.11 %.
+        </p>
+      </Section>
       <Section title="Why the levels are judged together">
         <p>
           The three control levels run in the same event, so what matters is whether{" "}
@@ -3166,6 +3199,15 @@ function MethodGuide({ settings }) {
           <li>
             ISO/TS 20914:2019. Medical laboratories — practical guidance for the
             estimation of measurement uncertainty. Geneva: ISO; 2019.
+          </li>
+          <li>
+            Oosterhuis WP, Coskun A. Sigma metrics in laboratory medicine revisited:
+            we are on the right road with the wrong map. Biochem Med (Zagreb)
+            2018;28:020503.
+          </li>
+          <li>
+            Coskun A, Serteser M, Ünsal I. Sigma metric revisited: true known
+            mistakes. Biochem Med (Zagreb) 2019;29:010902.
           </li>
         </ol>
         <p className="mt-3 text-xs text-slate-500">
