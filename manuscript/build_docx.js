@@ -6,7 +6,7 @@ const {
 } = require("docx");
 const LANG = process.env.LANG_TR ? "tr" : "en";
 const FORMAT = process.env.FORMAT || "cclm";
-const C = require(LANG === "tr" ? "./content_tr.js" : FORMAT === "acb" ? "./content_acb.js" : "./content.js");
+const C = require(LANG === "tr" ? (FORMAT === "acb" ? "./content_tr_acb.js" : "./content_tr.js") : FORMAT === "acb" ? "./content_acb.js" : "./content.js");
 const NFIG = C.legends.length, NSUP = C.supplementary.filter((t) => t.startsWith("Supplementary")).length;
 const csv = (p) => {
   const [h, ...rows] = fs.readFileSync(p, "utf8").trim().split("\n").map((l) => l.split(","));
@@ -97,7 +97,7 @@ const titlePage = [
   P(""),
   P((LANG === "tr" ? "Sorumlu yazar: " : "Corresponding author: ") + C.corresponding),
   P(""),
-  P(LANG === "tr" ? `Türkçe okuma sürümü; İngilizce aslının birebir çevirisi. Tablo: 3. Figür: 5. Kaynak: ${C.references.length}. Ek tablo: 5.` : `Word count: abstract ${nAbs}; main text ${nMain} (excluding abstract, references, tables and figure legends). Tables: 3. Figures: ${NFIG}. References: ${C.references.length}. Supplementary items: ${NSUP}.`),
+  P(LANG === "tr" ? `Türkçe okuma sürümü; İngilizce aslının birebir çevirisi. Tablo: 3. Figür: ${NFIG}. Kaynak: ${C.references.length}. Ek öğe: ${NSUP}.` : `Word count: abstract ${nAbs}; main text ${nMain} (excluding abstract, references, tables and figure legends). Tables: 3. Figures: ${NFIG}. References: ${C.references.length}. Supplementary items: ${NSUP}.`),
   P(""),
   P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
   BR(),
@@ -116,16 +116,25 @@ const body = [
     if (FORMAT === "acb") {
       const TBL = { t1: [C.tables.t1, t1rows, [1500, 600, 760, 980, 640, 980, 760, 820, 640, 700]], t2: [C.tables.t2, t2rows, [1400, 1150, 600, 650, 950, 800, 600, 600, 560, 1200, 1200]], t3: [C.tables.t3, t3rows, [1500, 700, 950, 950, 1000, 1100, 1150, 1250]] };
       const txt = ps.join(" ");
-      for (const [k, n] of [["t1", 1], ["t2", 2], ["t3", 3]]) if (new RegExp("Table " + n + "\\b").test(txt) && !PLACED.has(k)) {
+      for (const [k, n] of [["t1", 1], ["t2", 2], ["t3", 3]]) if (new RegExp((LANG === "tr" ? "Tablo " : "Table ") + n + "\\b").test(txt) && !PLACED.has(k)) {
         PLACED.add(k); const [T, rows, w] = TBL[k];
         out.push(P(""), P(T.title, { para: { spacing: { line: 240 } } }), tableWithRule(T.head, rows, w), P(T.note, { para: { spacing: { line: 240, before: 120 } } }), P(""));
       }
-      for (const n of [1, 2, 3]) if (new RegExp("(?<!Supplementary )Figure " + n + "\\b").test(txt) && !PLACED.has("f" + n)) { PLACED.add("f" + n); out.push(P(`[insert Figure ${n}.]`, { italics: true })); }
+      for (const n of [1, 2, 3]) if (new RegExp(LANG === "tr" ? "(?<!Ek )Figür " + n + "\\b" : "(?<!Supplementary )Figure " + n + "\\b").test(txt) && !PLACED.has("f" + n)) { PLACED.add("f" + n); out.push(P(LANG === "tr" ? `[Figür ${n} buraya.]` : `[insert Figure ${n}.]`, { italics: true })); }
     }
     return out;
   }),
   H1(LANG === "tr" ? "Tartışma" : "Discussion"), ...C.discussion.map((t) => P(t)),
-  ...(FORMAT === "acb" ? [
+  ...(FORMAT === "acb" ? (LANG === "tr" ? [
+  H1("Teşekkür"), P(C.acknowledgements),
+  H1("Çıkar çatışması beyanı"), P("Yazar çıkar çatışması bulunmadığını beyan eder."),
+  H1("Finansman"), P("Bu araştırma kamu, ticari ya da kâr amacı gütmeyen hiçbir kuruluştan özel bir destek almamıştır."),
+  H1("Etik onay"), P(C.ethics),
+  H1("Sorumlu yazar (guarantor)"), P(C.guarantor),
+  H1("Katkı beyanı"), P(C.contributions),
+  H1("Yapay zekâ kullanımı"), P(C.aiStatement),
+  H1("Veri erişilebilirliği"), P(C.dataAvailability),
+  ] : [
   H1("Acknowledgements"), P(C.acknowledgements),
   H1("Declaration of conflicting interests"), P("The author declares no conflicts of interest."),
   H1("Funding"), P("This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors."),
@@ -134,7 +143,7 @@ const body = [
   H1("Contributorship"), P(C.contributions),
   H1("Use of artificial intelligence"), P(C.aiStatement),
   H1("Data availability"), P(C.dataAvailability),
-  ] : [
+  ]) : [
   H1(LANG === "tr" ? "Teşekkür" : "Acknowledgements"), P(C.acknowledgements),
   H1(LANG === "tr" ? "Araştırma desteği" : "Research funding"), P(C.funding),
   H1(LANG === "tr" ? "Yazar katkıları" : "Author contributions"), P(C.contributions),
@@ -166,4 +175,4 @@ const doc = new Document({
     children: [...titlePage, ...body],
   }],
 });
-Packer.toBuffer(doc).then((b) => { fs.writeFileSync(LANG === "tr" ? "Kilinckaya_ClinChem_IQC_TR.docx" : FORMAT === "acb" ? "Kilinckaya_ClinChem_IQC_ACB.docx" : "Kilinckaya_ClinChem_IQC_CCLM.docx", b); console.log("written"); });
+Packer.toBuffer(doc).then((b) => { fs.writeFileSync(LANG === "tr" ? (FORMAT === "acb" ? "Kilinckaya_ClinChem_IQC_ACB_TR.docx" : "Kilinckaya_ClinChem_IQC_TR.docx") : FORMAT === "acb" ? "Kilinckaya_ClinChem_IQC_ACB.docx" : "Kilinckaya_ClinChem_IQC_CCLM.docx", b); console.log("written"); });
