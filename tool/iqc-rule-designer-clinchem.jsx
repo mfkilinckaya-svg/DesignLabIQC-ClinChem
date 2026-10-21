@@ -245,8 +245,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 0.5, cvg: 0.7 },
     levels: [
-      Object.assign(lvl("L1", 136.569, 1.088, 1, 2.5), { bias: 0.236, lisTarget: 136.5, lisSd: 1.365 }),
-      Object.assign(lvl("L2", 154.677, 0.726, 1, 3.1), { bias: 0.251, lisTarget: 153.5, lisSd: 1.535 }),
+      Object.assign(lvl("L1", 136.569, 1.088, 1, 3.1), { bias: 0.236, lisTarget: 136.5, lisSd: 1.365 }),
+      Object.assign(lvl("L2", 154.677, 0.726, 1, 2.5), { bias: 0.251, lisTarget: 153.5, lisSd: 1.535 }),
     ],
     note: "ISE module, four units. CV includes accepted results whose QC status was Error (sensitivity CV without them: L1 0.67%).",
   },
@@ -256,8 +256,8 @@ const DEFAULT_ANALYTES = [
     name: "Creatinine",
     pedReq: 90,
     unit: "\u00b5mol/L",
-    tea: 7.8026,
-    teaSource: "BV desirable",
+    tea: 8,
+    teaSource: "Labquality",
     teaOptions: [
       { label: "Labquality", value: 8 },
       { label: "CLIA", value: 10 },
@@ -271,8 +271,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 4.4, cvg: 16.1 },
     levels: [
-      Object.assign(lvl("L1", 99.1432, 1.903, 1, 2.6), { bias: 0.116, lisTarget: 99.2, lisSd: 2.94 }),
-      Object.assign(lvl("L2", 356.985, 1.288, 1, 2.8), { bias: 0.073, lisTarget: 361, lisSd: 5.4 }),
+      Object.assign(lvl("L1", 99.1432, 1.903, 1, 3.1), { bias: 0.116, lisTarget: 99.2, lisSd: 2.94 }),
+      Object.assign(lvl("L2", 356.985, 1.288, 1, 2.5), { bias: 0.073, lisTarget: 361, lisSd: 5.4 }),
     ],
     note: "Two c 703 units. One control lot over the period; LIS targets 99.2 and 361.",
   },
@@ -282,8 +282,8 @@ const DEFAULT_ANALYTES = [
     name: "ALT",
     pedReq: 70,
     unit: "U/L",
-    tea: 11.5,
-    teaSource: "Rili-BÄK",
+    tea: 12,
+    teaSource: "Labquality",
     teaOptions: [
       { label: "Labquality", value: 12 },
       { label: "CLIA", value: 15 },
@@ -297,8 +297,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 12.4, cvg: 29.8 },
     levels: [
-      Object.assign(lvl("L1", 53.6702, 2.446, 1, 2.6), { bias: 0.935, lisTarget: 55, lisSd: 2.2 }),
-      Object.assign(lvl("L2", 166.062, 2.171, 1, 2.8), { bias: 1.059, lisTarget: 167, lisSd: 3.34 }),
+      Object.assign(lvl("L1", 53.6702, 2.446, 1, 2.8), { bias: 0.935, lisTarget: 55, lisSd: 2.2 }),
+      Object.assign(lvl("L2", 166.062, 2.171, 1, 2.6), { bias: 1.059, lisTarget: 167, lisSd: 3.34 }),
     ],
     note: "Three c 703 units. Recalibration step of about +7% on 20\u201324 May 2025; targets re-set within the lot.",
   },
@@ -308,8 +308,8 @@ const DEFAULT_ANALYTES = [
     name: "Glucose",
     pedReq: 90,
     unit: "mmol/L",
-    tea: 9,
-    teaSource: "SEKK Dmax",
+    tea: 9.61379,
+    teaSource: "BV minimum",
     teaOptions: [
       { label: "Labquality", value: 6 },
       { label: "CLIA", value: 8 },
@@ -323,8 +323,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 4.9, cvg: 8.1 },
     levels: [
-      Object.assign(lvl("L1", 5.30429, 1.932, 1, 2.6), { bias: 0.478, lisTarget: 5.3, lisSd: 0.159 }),
-      Object.assign(lvl("L2", 14.679, 1.495, 1, 2.8), { bias: 0.322, lisTarget: 14.5, lisSd: 0.435 }),
+      Object.assign(lvl("L1", 5.30429, 1.932, 1, 2.8), { bias: 0.478, lisTarget: 5.3, lisSd: 0.159 }),
+      Object.assign(lvl("L2", 14.679, 1.495, 1, 2.6), { bias: 0.322, lisTarget: 14.5, lisSd: 0.435 }),
     ],
     note: "Two c 703 units.",
   },
@@ -334,8 +334,8 @@ const DEFAULT_ANALYTES = [
     name: "Calcium",
     pedReq: 90,
     unit: "mmol/L",
-    tea: 6,
-    teaSource: "Rili-BÄK",
+    tea: 10,
+    teaSource: "SEKK Dmax",
     teaOptions: [
       { label: "Labquality", value: 3 },
       { label: "Rili-BÄK", value: 6 },
@@ -348,8 +348,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 1.8, cvg: 2.7 },
     levels: [
-      Object.assign(lvl("L1", 2.24434, 1.190, 1, 2.6), { bias: 0.670, lisTarget: 2.24, lisSd: 0.034 }),
-      Object.assign(lvl("L2", 3.13051, 0.998, 1, 2.8), { bias: 0.476, lisTarget: 3.135, lisSd: 0.031 }),
+      Object.assign(lvl("L1", 2.24434, 1.190, 1, 3.3), { bias: 0.670, lisTarget: 2.24, lisSd: 0.034 }),
+      Object.assign(lvl("L2", 3.13051, 0.998, 1, 3.2), { bias: 0.476, lisTarget: 3.135, lisSd: 0.031 }),
     ],
     note: "Two c 703 units. Defined L2 SD (0.99%) equals the observed CV.",
   },
@@ -372,8 +372,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 17.9, cvg: 36.1 },
     levels: [
-      Object.assign(lvl("L1", 3.02944, 2.462, 1, 2.6), { bias: 0.894, lisTarget: 3.06, lisSd: 0.113 }),
-      Object.assign(lvl("L2", 10.4928, 2.287, 1, 2.8), { bias: 0.874, lisTarget: 10.6, lisSd: 0.336 }),
+      Object.assign(lvl("L1", 3.02944, 2.462, 1, 2.8), { bias: 0.894, lisTarget: 3.06, lisSd: 0.113 }),
+      Object.assign(lvl("L2", 10.4928, 2.287, 1, 2.6), { bias: 0.874, lisTarget: 10.6, lisSd: 0.336 }),
     ],
     note: "Three e 801 units. Control lot changed 24 Feb 2026.",
   },
@@ -383,8 +383,8 @@ const DEFAULT_ANALYTES = [
     name: "hs-Troponin T",
     pedReq: 90,
     unit: "ng/L",
-    tea: 17.639,
-    teaSource: "BV desirable",
+    tea: 20,
+    teaSource: "Rili-BÄK",
     teaOptions: [
       { label: "CLIA", value: 30 },
       { label: "Rili-BÄK", value: 20 },
@@ -393,8 +393,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 11.4, cvg: 30.9 },
     levels: [
-      Object.assign(lvl("L1", 18.7954, 3.013, 1, 2.8), { bias: 0.821, lisTarget: 19.4, lisSd: 0.873 }),
-      Object.assign(lvl("L2", 2134.1, 4.509, 1, 2.6), { bias: 0.402, lisTarget: 2190, lisSd: 98.55 }),
+      Object.assign(lvl("L1", 18.7954, 3.013, 1, 2.6), { bias: 0.821, lisTarget: 19.4, lisSd: 0.873 }),
+      Object.assign(lvl("L2", 2134.1, 4.509, 1, 2.8), { bias: 0.402, lisTarget: 2190, lisSd: 98.55 }),
     ],
     note: "Two e 801 units. L1 near the 99th-percentile limit (CV \u2264 10% required). Old L2 lot drifted upwards through 2025; new lot from 24 Feb 2026.",
   },
@@ -404,8 +404,8 @@ const DEFAULT_ANALYTES = [
     name: "Ferritin",
     pedReq: 70,
     unit: "\u00b5g/L",
-    tea: 12,
-    teaSource: "Labquality",
+    tea: 13.5,
+    teaSource: "Rili-BÄK",
     teaOptions: [
       { label: "Labquality", value: 12 },
       { label: "CLIA", value: 20 },
@@ -429,8 +429,8 @@ const DEFAULT_ANALYTES = [
     name: "PSA",
     pedReq: 70,
     unit: "\u00b5g/L",
-    tea: 20,
-    teaSource: "CLIA",
+    tea: 24.3701,
+    teaSource: "BV minimum",
     teaOptions: [
       { label: "CLIA", value: 20 },
       { label: "Rili-BÄK", value: 15.5 },
@@ -463,8 +463,8 @@ const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 6.8, cvg: 37.6 },
     levels: [
-      Object.assign(lvl("L1", 97.6875, 6.697, 1, 2.6), { bias: 1.798, lisTarget: 95.1, lisSd: 8.469 }),
-      Object.assign(lvl("L2", 170.797, 5.749, 1, 2.8), { bias: 0.797, lisTarget: 168, lisSd: 11.138 }),
+      Object.assign(lvl("L1", 97.6875, 6.697, 1, 2.8), { bias: 1.798, lisTarget: 95.1, lisSd: 8.469 }),
+      Object.assign(lvl("L2", 170.797, 5.749, 1, 2.6), { bias: 0.797, lisTarget: 168, lisSd: 11.138 }),
     ],
     note: "Three e 801 units. Reagent-lot change in June 2025 raised results by \u224810%.",
   },
@@ -561,13 +561,37 @@ const DEFAULT_SETTINGS = {
   qmMultiplier: 3,
   cusumK: 0.5,
   cusumH: 5,
+  // How the critical systematic error is sized: "common" — one error, in per
+  // cent, for the measurand (TEa − max over levels of |bias| + z·CV), turned
+  // into SD at each level with that level's CV; "perlevel" — each level at
+  // its own critical shift (sigma − z), the older convention.
+  critMode: "common",
 };
+
+/* Critical systematic error of a measurand under the chosen convention.
+   Returns the error in per cent (common) or NaN (per level). */
+function criticalErrorPct(levels, tea, settings) {
+  if (settings.critMode !== "common" || !(tea > 0)) return NaN;
+  let worst = -Infinity;
+  for (const l of levels) {
+    const cv = Number(l.cv); if (!(cv > 0)) return NaN;
+    worst = Math.max(worst, Math.abs(Number(l.bias) || 0) + settings.zAlpha * cv);
+  }
+  return tea - worst;
+}
+/* Shift in SD at one level for the chosen convention. */
+function criticalShiftFor(level, tea, settings, critPct) {
+  const cv = Number(level.cv); const bias = Math.abs(Number(level.bias) || 0);
+  if (!(cv > 0)) return NaN;
+  if (settings.critMode === "common") return isFinite(critPct) ? Math.max(0, (critPct - bias) / cv) : NaN;
+  return (tea - bias) / cv - settings.zAlpha;
+}
 
 /* ------------------------------------------------------------------ */
 /* Derived values                                                      */
 /* ------------------------------------------------------------------ */
 
-function computeLevel(level, tea, settings) {
+function computeLevel(level, tea, settings, critPct = NaN) {
   const cv = Number(level.cv);
   const target = Number(level.target);
   const k = Number(level.k);
@@ -577,7 +601,7 @@ function computeLevel(level, tea, settings) {
   const teaAsSd = cv > 0 ? tea / cv : NaN;
   // Sigma metric, the same quantity the literature reports: (TEa - bias) / CV.
   const sigma = cv > 0 ? (tea - Math.abs(bias)) / cv : NaN;
-  const criticalShift = sigma - settings.zAlpha;
+  const criticalShift = criticalShiftFor(level, tea, settings, critPct);
   const pfr = falseRejection(k, n);
   // The action limits are centred on the target. If the analyser's own mean sits
   // away from that target, the control distribution is off-centre and the rule
@@ -661,7 +685,8 @@ function missingInputs(analyte) {
 
 function computeAnalyte(analyte, settings) {
   const tea = effectiveTea(analyte);
-  const levels = analyte.levels.map((l) => computeLevel(l, tea, settings));
+  const critPct = criticalErrorPct(analyte.levels, tea, settings);
+  const levels = analyte.levels.map((l) => computeLevel(l, tea, settings, critPct));
   const combinedPfr = combine(levels.map((l) => l.pfr));
   const combinedPfrOffset = combine(levels.map((l) => l.pfrOffset));
   const anyOffset = levels.some((l) => l.offsetSd > 0);
@@ -684,6 +709,7 @@ function computeAnalyte(analyte, settings) {
     combinedMfrPed: complete ? combine(mfrLevels.map((l) => l.mfrPed)) : NaN,
     hasMfr: complete,
     hasLis,
+    critPct,
     anyLis: lisLevels.length > 0,
     combinedLisPfr: hasLis ? combine(lisLevels.map((l) => l.lisPfr)) : NaN,
     combinedLisPed: hasLis ? combine(lisLevels.map((l) => l.lisPed)) : NaN,
@@ -705,11 +731,11 @@ function searchRules(analyte, settings, strategy) {
   const tea = effectiveTea(analyte);
   const levels = analyte.levels;
 
+  const critPct = criticalErrorPct(levels, tea, settings);
   const precomputed = levels.map((l) => {
     const cv = Number(l.cv);
     const n = Math.max(1, Math.round(Number(l.n) || 1));
-    const shift =
-      (cv > 0 ? (tea - Math.abs(Number(l.bias) || 0)) / cv : 0) - settings.zAlpha;
+    const shift = cv > 0 ? criticalShiftFor(l, tea, settings, critPct) : 0;
     const options = l.locked
       ? [Number(l.k)]
       : K_GRID;
@@ -785,10 +811,11 @@ function combinedPedAtCv(analyte, settings, levelIndex, cv, useBestK) {
   }
   // fixed K: combine each level's Ped at its current K
   let miss = 1;
+  const critPct = criticalErrorPct(trial.levels, tea, settings);
   trial.levels.forEach((l) => {
     const c = Number(l.cv);
     const n = Math.max(1, Math.round(Number(l.n) || 1));
-    const shift = (c > 0 ? (tea - Math.abs(Number(l.bias) || 0)) / c : 0) - z;
+    const shift = c > 0 ? criticalShiftFor(l, tea, settings, critPct) : 0;
     const ped = shift > 0 ? errorDetection(Number(l.k), n, shift) : 0;
     miss *= 1 - ped;
   });
@@ -946,7 +973,7 @@ function PowerCurves({ analyte, settings }) {
   }, [analyte, settings, unit, maxPct]);
 
   const colors = ["#0f766e", "#0891b2", "#7c3aed", "#b45309"];
-  const critPct = isFinite(tea) ? tea - 1.65 * Math.max(...analyte.levels.map((l) => Number(l.cv) || 0)) : NaN;
+  const critPct = isFinite(analyte.critPct) ? analyte.critPct : isFinite(tea) ? tea - Math.max(...analyte.levels.map((l) => Math.abs(Number(l.bias) || 0) + settings.zAlpha * (Number(l.cv) || 0))) : NaN;
 
   return (
     <div className="mt-4 border-t border-slate-200 pt-4">
@@ -1231,7 +1258,7 @@ function SourceEditor({ analyte, onChange }) {
 
 function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
   const [chart, setChart] = useState("none");
-  const [strategy, setStrategy] = useState("ends");
+  const [strategy, setStrategy] = useState("balanced");
   const [suggestion, setSuggestion] = useState(null);
 
   const setLevel = (id, patch) =>
@@ -1350,6 +1377,11 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
               </span>
             );
           })()}
+          {analyte.ready && isFinite(analyte.critPct) && (
+            <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-700" title="Critical systematic error of the measurand: TEa − max over levels of (|offset| + z·CV). One size, applied to every level.">
+              critical error {fmt(analyte.critPct, 2)}%
+            </span>
+          )}
           {analyte.ready ? (
             <>
               <Verdict ok={analyte.pfrOk}>
@@ -1810,9 +1842,9 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
             }}
             className="rounded border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900 focus:border-teal-600 focus:outline-none"
           >
+            <option value="balanced">Best combined detection</option>
             <option value="ends">Favour lowest and highest level</option>
             <option value="l1">Favour lowest level</option>
-            <option value="balanced">Best combined detection</option>
           </select>
           <button
             onClick={runSearch}
@@ -2795,6 +2827,29 @@ function MethodGuide({ settings }) {
         </p>
       </Section>
 
+      <Section title="One error, two levels: how the critical error is sized">
+        <p>
+          A systematic error has one size. If a calibration moves results by 3 %,
+          it moves both control levels by 3 %. But the two levels have different
+          CVs, so the same 3 % is a different number of SD at each: for sodium
+          2.8 SD at L1 (CV 1.09 %) and 4.1 SD at L2 (CV 0.73 %). The tool
+          therefore sizes the critical error once, in per cent, for the measurand:
+        </p>
+        <Formula>critical error = TEa − max over levels of (|offset| + z · CV)</Formula>
+        <p>
+          the smallest error that already breaks the allowable total error at
+          one of the levels, usually the level with the larger CV. That error is
+          converted into SD at each level with that level&rsquo;s own CV, the
+          detection probability is read off each level&rsquo;s rule, and the
+          probabilities are combined as 1 − Π(1 − p): the chance that at least
+          one level rejects. This is the combined probability the card reports
+          and the rule search optimises. The older convention, each level at its
+          own critical shift (sigma − z), evaluates the levels at different error
+          sizes and overstates the combined detection; it remains available in
+          the settings bar for comparison. Westgard&rsquo;s N=2 power functions
+          sit between the two: they assume the same shift in SD at both levels.
+        </p>
+      </Section>
       <Section title="Why the levels are judged together">
         <p>
           The three control levels run in the same event, so what matters is whether{" "}
@@ -3129,7 +3184,7 @@ function MethodGuide({ settings }) {
 /* App                                                                 */
 /* ------------------------------------------------------------------ */
 
-const STORE_KEY = "designlabiqc-clinchem-v3";
+const STORE_KEY = "designlabiqc-clinchem-v4";
 
 export default function IqcRuleDesigner() {
   const [analytes, setAnalytes] = useState(DEFAULT_ANALYTES);
@@ -3665,6 +3720,18 @@ export default function IqcRuleDesigner() {
               width="w-16"
               step="0.05"
             />
+          </label>
+          <label className="text-sm text-slate-600">
+            <span className="mb-1 block">Critical error</span>
+            <select
+              value={settings.critMode}
+              onChange={(e) => setSettings({ ...settings, critMode: e.target.value })}
+              className="rounded border border-slate-300 bg-white px-2 py-1 text-sm text-slate-900 focus:border-teal-600 focus:outline-none"
+              title="One error size for the measurand, converted at each level with its own CV, or each level at its own critical shift"
+            >
+              <option value="common">One size, all levels</option>
+              <option value="perlevel">Each level its own</option>
+            </select>
           </label>
           <label className="text-sm text-slate-600">
             <span className="mb-1 block">LIS rule width (SD)</span>

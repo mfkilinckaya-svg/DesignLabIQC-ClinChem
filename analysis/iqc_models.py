@@ -88,7 +88,9 @@ SETS = {"1-2s": {"12s"}, "1-3s": {"13s"}, "1-3s/2-2s/R-4s": {"13s", "22s", "R4s"
 mr = []
 for a in PANEL:
     r = R[R.analyte == a].sort_values("level")
-    shifts = [max(0.0, x.sigma - Z) for x in r.itertuples()]
+    # one critical error per measurand (per cent), converted at each level with its own CV
+    crit = r.tea.iloc[0] - max(abs(x.bias) + Z * x.cv for x in r.itertuples())
+    shifts = [max(0.0, (crit - abs(x.bias)) / x.cv) for x in r.itertuples()]
     kd = [(1 - inside(x.k_new, 0)) for x in r.itertuples()]
     row = dict(analyte=a, crit_shift_L1=round(shifts[0], 2), crit_shift_L2=round(shifts[1], 2),
                derived_pfr=round(100 * (1 - np.prod([1 - p for p in kd])), 2),

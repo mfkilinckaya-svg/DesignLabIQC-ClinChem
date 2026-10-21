@@ -6,7 +6,7 @@ Rule: chosen K per level (results/panel_rules.csv) x observed SD (worst-analyser
 Baseline: the LIS's own rule, target in force +/- 3 x defined SD.
 All control results are used, including those the LIS rejected; results carrying an instrument flag are
 counted separately (they are rejected whatever the centre)."""
-import pandas as pd, numpy as np
+import pandas as pd, numpy as np, math
 M=pd.read_csv('data/prepared/qc_measurements.csv',low_memory=False)
 R=pd.read_csv('results/panel_rules.csv')
 rows=[]
@@ -31,6 +31,16 @@ for r in R.itertuples():
         rej=abs(d.result-d[c])>K*cv*d[c]
         out[f'{name}_pct']=100*rej.mean()
         out[f'{name}_unflagged_pct']=100*rej[~d.flag].mean()
+    # (D) analyser-specific monthly mean, Gaussian expectation, and monthly drift
+    M_month = d.timestamp.str[:7]
+    mm = good.assign(month=good.timestamp.str[:7]).groupby(['lot','instrument','month']).result.mean()
+    d['c_month'] = pd.Series([mm.get((l,i,m), np.nan) for l,i,m in zip(d.lot, d.instrument, M_month)], index=d.index).fillna(d.c_inst)
+    rej = abs(d.result - d.c_month) > K*cv*d.c_month
+    out['D_analyser_month_mean_pct'] = 100*rej.mean()
+    out['design_pfr_pct'] = 100*(1 - (math.erf(K/math.sqrt(2))))
+    gm = good.assign(month=good.timestamp.str[:7])
+    drift = gm.groupby(['lot','instrument']).apply(lambda g: g.groupby('month').result.mean().std()/(cv*g.result.mean()) if g.month.nunique()>2 else np.nan)
+    out['monthly_drift_sd'] = float(drift.median()) if len(drift) else np.nan
     # offset of the LIS target from the pooled mean, in observed SD
     off=(d.c_lis-d.c_pool)/(cv*d.c_pool)
     out['lis_offset_sd_median']=float(np.median(abs(off)))
@@ -38,8 +48,8 @@ for r in R.itertuples():
 T=pd.DataFrame(rows)
 T.to_csv('results/retrospective_rejections.csv',index=False)
 pd.set_option('display.width',250)
-print(T[['analyte','level','n','n_flagged','n_lis_rejected','K','rej_lis_rule_pct','A_lis_target_pct','B_pooled_mean_pct','C_analyser_mean_pct','lis_offset_sd_median']].round(2).to_string(index=False))
+print(T[['analyte','level','n','K','design_pfr_pct','rej_lis_rule_pct','A_lis_target_pct','B_pooled_mean_pct','C_analyser_mean_pct','D_analyser_month_mean_pct','monthly_drift_sd']].round(2).to_string(index=False))
 # weighted overall
 w=T.n
-print('\nOverall (all results):  LIS rule %.2f%% | A %.2f%% | B %.2f%% | C %.2f%%'%tuple((T[c]*w).sum()/w.sum() for c in ['rej_lis_rule_pct','A_lis_target_pct','B_pooled_mean_pct','C_analyser_mean_pct']))
+print('\nOverall (all results): design %.2f%% | LIS rule %.2f%% | A %.2f%% | B %.2f%% | C %.2f%% | D %.2f%%'%tuple((T[c]*w).sum()/w.sum() for c in ['design_pfr_pct','rej_lis_rule_pct','A_lis_target_pct','B_pooled_mean_pct','C_analyser_mean_pct','D_analyser_month_mean_pct']))
 print('Overall (unflagged):    A %.2f%% | B %.2f%% | C %.2f%%'%tuple((T[c]*w).sum()/w.sum() for c in ['A_lis_target_unflagged_pct','B_pooled_mean_unflagged_pct','C_analyser_mean_unflagged_pct']))

@@ -78,7 +78,8 @@ def comb(ps):
 rows = []
 for a in order:
     r = rules[rules.analyte == a].sort_values("level")
-    shifts = [(x.tea - abs(x.bias)) / x.cv - 1.65 for x in r.itertuples()]
+    crit = r.tea.iloc[0] - max(abs(x.bias) + 1.65 * x.cv for x in r.itertuples())
+    shifts = [max(0, (crit - abs(x.bias)) / x.cv) for x in r.itertuples()]
     k_now = [3 * x.sd_lis / x.sd_observed for x in r.itertuples()]
     rows.append(dict(analyte=a, ped_now=comb([ped(k, s) for k, s in zip(k_now, shifts)]) * 100, pfr_now=comb([pfr(k) for k in k_now]) * 100,
                      ped_new=comb([ped(k, s) for k, s in zip(r.k_new, shifts)]) * 100, pfr_new=comb([pfr(k) for k in r.k_new]) * 100,
@@ -168,3 +169,28 @@ for ax, (a, lv) in zip(axs.flat, EX):
     ax.legend(frameon=False, fontsize=6, ncol=2, loc="best")
 fig.tight_layout(); save(fig, "Figure_4")
 print(agg.round(2).to_string())
+
+# ---------------- Figure 5: detection against the size of a systematic error, per cent ----------------
+fig, axs = plt.subplots(2, 5, figsize=(190 * MM, 85 * MM), sharey=True)
+for ax, a in zip(axs.flat, order):
+    r = rules[rules.analyte == a].sort_values("level"); tea = r.tea.iloc[0]
+    crit = tea - max(abs(x.bias) + 1.65 * x.cv for x in r.itertuples())
+    xs = np.linspace(0, tea * 1.15, 120)
+    comb = np.ones_like(xs)
+    for x, col, ls in zip(r.itertuples(), [OI["green"], OI["sky"]], ["-", "-"]):
+        p = np.array([ped(x.k_new, max(0, (e - abs(x.bias)) / x.cv)) for e in xs])
+        ax.plot(xs, p, color=col, lw=1, ls=ls, label=x.level)
+        comb *= 1 - p
+    ax.plot(xs, 1 - comb, color="black", lw=1.6, label="Combined")
+    ax.axvline(crit, color="#555555", lw=0.7, ls="--"); ax.axvline(tea, color=OI["verm"], lw=0.7, ls=":")
+    req = {"Sodium": 0.9, "Creatinine": 0.9, "Glucose": 0.9, "Calcium": 0.9, "hs-Troponin T": 0.9}.get(a, 0.7)
+    ax.axhline(req, color="#999999", lw=0.5, ls=":")
+    ax.set_title(a, fontsize=7.5, loc="left"); ax.set_xlim(0, tea * 1.15); ax.set_ylim(0, 1.02)
+    ax.tick_params(labelsize=6.5)
+    for sp in ["top", "right"]: ax.spines[sp].set_visible(False)
+axs[1, 0].set_xlabel("Systematic error (%)"); axs[0, 0].set_ylabel("Probability of rejection"); axs[1, 0].set_ylabel("Probability of rejection")
+for ax in axs[1]: ax.set_xlabel("Systematic error (%)")
+h = [Line2D([], [], color=OI["green"], lw=1, label="L1"), Line2D([], [], color=OI["sky"], lw=1, label="L2"), Line2D([], [], color="black", lw=1.6, label="Combined (either level)"),
+     Line2D([], [], color="#555555", lw=0.7, ls="--", label="Critical error"), Line2D([], [], color=OI["verm"], lw=0.7, ls=":", label="TEa"), Line2D([], [], color="#999999", lw=0.5, ls=":", label="Requirement")]
+fig.legend(handles=h, loc="lower center", ncol=6, frameon=False, fontsize=7, bbox_to_anchor=(0.5, -0.01))
+fig.tight_layout(rect=(0, 0.05, 1, 1)); save(fig, "Figure_5")

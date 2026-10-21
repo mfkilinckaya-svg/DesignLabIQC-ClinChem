@@ -1,0 +1,11 @@
+analyte,source,tea,K,crit_L1_pct,crit_L2_pct,A_per_level_pct,B_same_sd_pct,C_common_pct
+Sodium,SEKK Dmax,5.0,3.1 / 2.5,2.97,3.55,99.5,73.6,92.3
+Creatinine,Labquality,8.0,3.1 / 2.5,4.74,5.8,98.4,63.4,90.3
+ALT,Labquality,12.0,2.8 / 2.6,7.03,7.36,89.9,81.5,72.6
+Glucose,BV EFLM (minimum),9.6,2.8 / 2.6,5.95,6.83,99.0,87.7,94.0
+Calcium,SEKK Dmax,10.0,3.3 / 3.2,7.37,7.88,100.0,100.0,100.0
+TSH,BV EFLM (optimal),12.4,2.8 / 2.6,7.46,7.77,91.3,86.4,78.5
+hs-Troponin T,Rili-BÄK,20.0,2.6 / 2.8,14.21,12.16,99.1,75.0,92.9
+Ferritin,Rili-BÄK,13.5,2.6 / 2.8,8.76,8.61,91.1,85.2,87.1
+PSA,BV EFLM (minimum),24.4,2.8 / 2.6,14.77,15.13,97.6,96.8,84.9
+25-OH vitamin D,RfB,30.0,2.8 / 2.6,17.15,19.72,87.9,69.4,72.0

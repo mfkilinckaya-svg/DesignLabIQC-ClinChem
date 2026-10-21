@@ -37,9 +37,9 @@ for a in PANEL:
     assert m, a
     block=m.group(1); new=block
     repl='    tea: %g,\n    teaSource: %s,\n    teaOptions: %s,\n    bv: %s,'%(c['tea'],json.dumps(label,ensure_ascii=False),opts_js,bv)
-    new=re.sub(r'    tea: "",\n    teaSource: "Custom",\n    teaOptions: \[.*?\],\n    bv: \{\},', lambda m: repl, new, flags=re.S)
-    assert new!=block, a
+    new,nsub=re.subn(r'    tea: [^,\n]+,\n    teaSource: "[^"]*",\n    teaOptions: \[.*?\n    \],\n    bv: \{[^}]*\},|    tea: "",\n    teaSource: "Custom",\n    teaOptions: \[.*?\],\n    bv: \{\},', lambda m: repl, new, count=1, flags=re.S)
+    assert nsub==1, a
     for i,k in enumerate(c['ks']):
-        new,n=re.subn(r'(lvl\("L%d", [^,]+, [^,]+, 1, )3\)'%(i+1), r'\g<1>%g)'%k, new); assert n==1,(a,i)
+        new,n=re.subn(r'(lvl\("L%d", [^,]+, [^,]+, 1, )[0-9.]+\)'%(i+1), r'\g<1>%g)'%k, new); assert n==1,(a,i)
     src=src.replace(block,new)
 open(JSX,'w',encoding='utf-8').write(src); print('patched')
