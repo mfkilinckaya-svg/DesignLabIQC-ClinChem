@@ -1,4 +1,4 @@
-"""Scripted screen recording of the tool with burned-in Norwegian captions (no audio).
+"""Scripted screen recording of the tool with burned-in English captions and narration (Supplementary Video S1).
 Playwright records a webm; ffmpeg converts to mp4."""
 import subprocess, shutil, os, glob
 from playwright.sync_api import sync_playwright
@@ -66,7 +66,7 @@ def main():
         # 2 settings bar
         bar = pg.get_by_text("False alarm allowance").first
         highlight(bar.locator("xpath=ancestor::div[2]"))
-        cap('Top bar: combined false-rejection allowance (1.5% per control event), detection requirement (90%), safety margin z = 1.65, LIS rule width (3 SD) and <b>critical error: one size for all levels</b>.', 7000, 'The settings bar holds the frame: a combined false-rejection allowance of one point five per cent per control event, a detection requirement of ninety per cent, a safety margin z of one point six five, the width of the rule in the laboratory information system, three S D, and how the critical error is sized: one size in per cent, common to all levels.')
+        cap('Settings bar: combined false-rejection allowance (1.5% per control event), detection requirement (90%), safety margin z = 1.65, LIS rule width (3 SD) and <b>critical error: one size for all levels</b>.', 7000, 'The settings bar holds the frame: a combined false-rejection allowance of one point five per cent per control event, a detection requirement of ninety per cent, a safety margin z of one point six five, the width of the rule in the laboratory information system, three S D, and how the critical error is sized: one size in per cent, common to all levels.')
         highlight(bar.locator("xpath=ancestor::div[2]"), False)
         # 3 sodium card header
         sod = pg.locator("section").filter(has=pg.locator("input[value='Sodium']")).first
@@ -76,12 +76,12 @@ def main():
         strip = sod.get_by_text("Same measurement, different specification").first
         scroll_to(strip, 140)
         highlight(strip.locator("xpath=ancestor::div[1]"))
-        cap('Same measurement, 14 allowable-error sources: sigma from 0.07 (EFLM optimal) to 8.1 (Turkey). The source, not the analyser, decides whether sodium looks controllable. Adopted: SEKK Dmax 5%.', 8000, 'The same measurement under fourteen sources of allowable total error. Sigma runs from zero point zero seven with the E F L M optimal tier to eight point one with the Turkish limit. The source, not the analyser, decides whether sodium looks controllable. SEKK D max at five per cent is adopted as the most stringent source at which a rule exists.')
+        cap('Same measurement, 14 allowable-error sources: sigma from 0.07 (EFLM optimal) to 8.1 (Turkey). The source, not the analyser, decides whether sodium looks controllable. Adopted: SEKK Dmax 5%.', 8000, 'The same measurement under fourteen sources of allowable total error. Sigma runs from zero point zero seven with the E F L M optimal tier to eight point one with the Turkish limit. The source, not the analyser, decides whether sodium looks controllable. SEKK D max at five per cent is adopted, as the most stringent source at which a rule exists.')
         highlight(strip.locator("xpath=ancestor::div[1]"), False)
         # 5 level table
         tbl = sod.get_by_text("Critical shift").first
         scroll_to(tbl, 160)
-        cap('Level table: K per level, sigma, critical shift, false rejection and detection. Critical error for sodium: 2.97% (TEa 5% − max of bias + 1.65·CV). L1 CV 1.09%, L2 0.73% – the same error is 2.8 SD at L1 and 4.1 SD at L2.', 9000, 'The level table shows K per level, sigma, critical shift, false rejection and detection. The critical error for sodium is two point nine seven per cent: the allowable total error of five per cent minus the largest bias plus one point six five times C V. The levels differ in C V, one point zero nine per cent at L1 and zero point seven three at L2, so the same error is two point eight S D at L1 but four point one at L2.')
+        cap('Level table: K per level, sigma, critical shift, false rejection and detection. Critical error for sodium: 2.97% (TEa 5% − max of bias + 1.65·CV). L1 CV 1.09%, L2 0.73% – the same error is 2.8 SD at L1 and 4.1 SD at L2.', 9000, 'The level table shows K per level, sigma, critical shift, false rejection and detection. The critical error for sodium is two point nine seven per cent: the allowable total error of five per cent, minus the largest bias plus one point six five times C V. The levels differ in C V, one point zero nine per cent at L1 and zero point seven three at L2, so the same error is two point eight S D at L1 but four point one at L2.')
         # 6 power curves in %
         sel = sod.locator("select").filter(has_text="No chart").first
         scroll_to(sel, 420)
@@ -103,7 +103,7 @@ def main():
         lis = sod.get_by_text("What to enter in the LIS").first
         scroll_to(lis, 120)
         highlight(lis.locator("xpath=ancestor::div[1]"))
-        cap('What to enter in the LIS: current target and SD against recommended. L2: target 153.5 → 154.7, SD 1.535 → 0.936. Current rule: combined detection 62% – recommended: 92.3%, false rejection 1.43%.', 9000, 'This block shows what to enter in the laboratory information system: the current target and S D against the recommended ones. For L2 the target moves from one fifty-three point five to one fifty-four point seven, and the S D from one point five three five to zero point nine three six. The current rule detects the critical error with sixty-two per cent combined probability, the recommended one with ninety-two point three, at a false rejection of one point four three per cent.')
+        cap('What to enter in the LIS: current target and SD against recommended. L2: target 153.5 → 154.7, SD 1.535 → 0.936. Current rule: combined detection 62% – recommended: 92.3%, false rejection 1.43%.', 9000, 'This block shows what to enter in the laboratory information system: the current target and S D against the recommended ones. For L2 the target moves from one hundred fifty-three point five to one hundred fifty-four point seven, and the S D from one point five three five to zero point nine three six. The current rule detects the critical error with sixty-two per cent combined probability, the recommended one with ninety-two point three, at a false rejection of one point four three per cent.')
         highlight(lis.locator("xpath=ancestor::div[1]"), False)
         # 9 import ALT
         pg.evaluate("window.scrollTo({top:0, behavior:'smooth'})"); pg.wait_for_timeout(1200)
@@ -116,16 +116,16 @@ def main():
         alt = pg.locator("section").filter(has=pg.locator("input[value='ALT']")).first
         scroll_to(alt, 70)
         print("ALTCARD", alt.inner_text()[:600].replace("\n"," | "))
-        cap('ALT after import: CV and target from 14 months, sigma against Labquality 12%, critical error about 7%. Detection per level and combined as before.', 6000, 'After the import ALT has C V and target from fourteen months, and sigma is computed against Labquality at twelve per cent, with a critical error of about seven per cent. Detection is shown per level and combined, as before.')
+        cap('ALT after import: CV and target from 14 months, sigma against Labquality 12%, critical error about 7%. Detection per level and combined as before.', 6000, 'After the import, ALT has C V and target from fourteen months, and sigma is computed against Labquality at twelve per cent, with a critical error of about seven per cent. Detection is shown per level and combined, as before.')
         # 10 CUSUM
         cus = alt.locator("p:text-is('CUSUM')").first
         scroll_to(cus, 120)
         cap('CUSUM per unit: standardised results accumulate. Theory: about 2 alarms per 1,000 results – observed 30–50. The alarms are within-lot drift, which the single rule does not see.', 9000, 'The tool also has a CUSUM per unit. Standardised results accumulate, and in theory this gives about two alarms per thousand results. Here we see thirty to fifty. The alarms are drift within the lot, which the single-result rule does not catch.')
         pg.evaluate("window.scrollBy({top: 380, behavior: 'smooth'})"); pg.wait_for_timeout(1200)
-        cap("The chart shows C⁺ and −C⁻ against h = 5 SD, with alarms marked. Lot changes and alarms reset the sum. Further models (EWMA, multirule, measurement uncertainty, reagent-lot steps) are under 'More from the same data'.", 7000, 'The chart shows the positive and negative sums against the limit h of five S D, with alarms marked. Lot changes and alarms reset the sum. Further models, E W M A, multirule, measurement uncertainty and reagent-lot steps, are under More from the same data.')
+        cap("The chart shows C⁺ and −C⁻ against h = 5 SD, with alarms marked. Lot changes and alarms reset the sum. EWMA, multirule, measurement uncertainty and reagent-lot steps are under 'More from the same data'.", 7000, 'The chart shows the positive and negative sums against the limit h of five S D, with alarms marked. Lot changes and alarms reset the sum. Further models, E W M A, multirule, measurement uncertainty and reagent-lot steps, are under More from the same data.')
         # 11 outro
         pg.evaluate("window.scrollTo({top:0, behavior:'smooth'})"); pg.wait_for_timeout(1000)
-        cap("Summary: rules derived from the laboratory's own imprecision; one critical error in per cent converted per level and combined; the tool reports what to enter in the LIS. Code, data and tool: github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem", 9000, "In summary: the rules are derived from the laboratory's own imprecision, one critical error in per cent is converted to S D per level and the levels are combined, and the tool reports what to enter in the laboratory information system. Code, data and tool are open on GitHub.")
+        cap("Summary: rules derived from the laboratory's own imprecision; one critical error in per cent, converted per level and combined; the tool reports what to enter in the LIS. Code, data and tool: github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem", 9000, "In summary: the rules are derived from the laboratory's own imprecision, one critical error in per cent is converted to S D per level and the levels are combined, and the tool reports what to enter in the laboratory information system. Code, data and tool are open on GitHub.")
         ctx.close(); b.close()
     webm = glob.glob(f"{OUT}/*.webm")[0]
     mp4 = f"{OUT}/DesignLabIQC-ClinChem_Supplementary_Video_S1.mp4"
