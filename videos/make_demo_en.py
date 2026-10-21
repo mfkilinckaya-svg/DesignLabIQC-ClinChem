@@ -1,4 +1,4 @@
-"""Scripted screen recording of the tool with burned-in English captions and narration (Supplementary Video S1).
+"""Scripted screen recording with burned-in English captions and narration (Supplementary Video S1).
 Playwright records a webm; ffmpeg converts to mp4."""
 import subprocess, shutil, os, glob
 from playwright.sync_api import sync_playwright
@@ -71,7 +71,9 @@ def main():
         # 3 sodium card header
         sod = pg.locator("section").filter(has=pg.locator("input[value='Sodium']")).first
         scroll_to(sod, 70)
-        cap('Sodium. Each level has its own CV: the pooled within-lot CV of the worst ISE unit over 14 months. Target = control-lot mean; bias = largest unit offset.', 7000, 'Here is sodium. Each control level has its own C V: the pooled within-lot C V of the worst I S E unit over fourteen months. The target is the mean of the control lot, and the bias is the largest offset between units.')
+        chip = sod.get_by_text("CVI/CV").first
+        highlight(chip.locator("xpath=ancestor::span[1]"))
+        cap('Sodium. Each level has its own CV: the pooled within-lot CV of the worst ISE unit over 14 months. Target = control-lot mean; bias = largest unit offset. Header: conventional sigma 4.4, and <b>σ CVI/CV = 0.46</b> (Oosterhuis–Coskun: CVI 0.5% / CV 1.09%, no TEa, no coverage factor; benchmark 4.65).', 7000, 'Here is sodium. Each control level has its own C V: the pooled within-lot C V of the worst I S E unit over fourteen months. The target is the mean of the control lot, and the bias is the largest offset between units. The header shows two sigmas: the conventional one, T E a minus bias over C V, four point four; and beside it the T E a-free sigma of Oosterhuis and Coskun, C V I over C V, zero point four six against their benchmark of four point six five. That second sigma is reported for comparison; it does not change the rules.')
         # 4 sources strip
         strip = sod.get_by_text("Same measurement, different specification").first
         scroll_to(strip, 140)
