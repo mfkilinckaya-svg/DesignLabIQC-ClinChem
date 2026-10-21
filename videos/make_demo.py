@@ -66,7 +66,7 @@ def main():
         # 2 settings bar
         bar = pg.get_by_text("False alarm allowance").first
         highlight(bar.locator("xpath=ancestor::div[2]"))
-        cap("Øverst: tillatt samlet falsk alarm (1,5 % per kontrollhendelse), deteksjonsmål (90 %), sikkerhetsmargin z = 1,65 og LIS-regelbredde (3 SD).", 6000, "Øverst settes rammene: tillatt samlet falsk alarm på én komma fem prosent per kontrollhendelse, et deteksjonsmål på nitti prosent, en sikkerhetsmargin z på én komma sekstifem, og bredden på regelen i LIS, tre standardavvik.")
+        cap("Øverst: tillatt samlet falsk alarm (1,5 % per kontrollhendelse), deteksjonsmål (90 %), sikkerhetsmargin z = 1,65, LIS-regelbredde (3 SD) og <b>kritisk feil: én størrelse for alle nivå</b>.", 7000, "Øverst settes rammene: tillatt samlet falsk alarm på én komma fem prosent per kontrollhendelse, et deteksjonsmål på nitti prosent, en sikkerhetsmargin z på én komma sekstifem, bredden på regelen i LIS, tre standardavvik, og hvordan den kritiske feilen regnes: én størrelse i prosent, felles for alle nivå.")
         highlight(bar.locator("xpath=ancestor::div[2]"), False)
         # 3 sodium card header
         sod = pg.locator("section").filter(has=pg.locator("input[value='Sodium']")).first
@@ -81,7 +81,7 @@ def main():
         # 5 level table
         tbl = sod.get_by_text("Critical shift").first
         scroll_to(tbl, 160)
-        cap("Nivåtabellen: K per nivå, sigma, kritisk skift, falsk alarm og deteksjon. L1 har CV 1,09 %, L2 0,73 % – en feil på 3 % er 2,8 SD på L1 og 4,1 SD på L2.", 8000, "Nivåtabellen viser K per nivå, sigma, kritisk skift, falsk alarm og deteksjon. Legg merke til at nivåene har ulik CV: én komma null ni prosent på L1 og null komma sju tre på L2. En systematisk feil på tre prosent er derfor to komma åtte standardavvik på L1, men fire komma én på L2.")
+        cap("Nivåtabellen: K per nivå, sigma, kritisk skift, falsk alarm og deteksjon. Kritisk feil for natrium: 2,97 % (TEa 5 % minus største bias + 1,65·CV). L1 har CV 1,09 %, L2 0,73 % – samme feil er 2,8 SD på L1 og 4,1 SD på L2.", 9000, "Nivåtabellen viser K per nivå, sigma, kritisk skift, falsk alarm og deteksjon. Den kritiske feilen for natrium er to komma ni sju prosent: tillatt totalfeil på fem prosent minus største bias pluss én komma sekstifem ganger CV. Nivåene har ulik CV, én komma null ni prosent på L1 og null komma sju tre på L2. Samme feil er derfor to komma åtte standardavvik på L1, men fire komma én på L2.")
         # 6 power curves in %
         sel = sod.locator("select").filter(has_text="No chart").first
         scroll_to(sel, 420)
@@ -89,13 +89,13 @@ def main():
         chart = sod.get_by_text("Detection probability against").first
         scroll_to(chart, 120)
         cap("Lutz' spørsmål: <b>samlet sannsynlighet for å oppdage en systematisk feil av en viss størrelse</b>. X-aksen er feilen i prosent, lik for begge nivå.", 7000, "Så til spørsmålet om samlet sannsynlighet for å oppdage en systematisk feil av en viss størrelse. Styrkekurven har feilen i prosent langs x-aksen, og den er lik for begge nivå.")
-        cap("Tynne kurver: deteksjon per nivå med nivåets egen CV og K. Tykk kurve: samlet, 1 − Π(1 − p) – minst ett nivå avviser. Ved kritisk feil: L1 59 %, L2 96 %, samlet 98,5 %.", 9000, "De tynne kurvene er deteksjon per nivå, regnet med nivåets egen CV og K. Den tykke kurven er den samlede sannsynligheten, én minus produktet av én minus p, altså at minst ett nivå avviser. Ved den kritiske feilen er deteksjonen femtini prosent på L1, nittiseks på L2, og nittiåtte komma fem samlet.")
-        cap("Stiplet: kritisk feil (TEa − 1,65·CV) og TEa. Westgards N=2-kurver forutsetter samme skift i SD på begge nivå; her regnes nivåene hver for seg og kombineres.", 8500, "De stiplede linjene markerer den kritiske feilen og den tillatte totalfeilen. Westgards styrkefunksjoner for N lik to forutsetter samme skift i standardavvik på begge nivå. Her regnes nivåene hver for seg med sin egen CV, og kombineres etterpå.")
+        cap("Tynne kurver: deteksjon per nivå med nivåets egen CV og K. Tykk kurve: samlet, 1 − Π(1 − p) – minst ett nivå avviser. Ved kritisk feil 2,97 %: L1 28 %, L2 89 %, samlet 92,3 %.", 9000, "De tynne kurvene er deteksjon per nivå, regnet med nivåets egen CV og K. Den tykke kurven er den samlede sannsynligheten, én minus produktet av én minus p, altså at minst ett nivå avviser. Ved den kritiske feilen på to komma ni sju prosent er deteksjonen tjueåtte prosent på L1, åttini på L2, og nittito komma tre samlet. Nivået med lavest CV gjør mesteparten av jobben.")
+        cap("Stiplet: kritisk feil og TEa. Westgards N=2-kurver forutsetter samme skift i SD på begge nivå; å gi hvert nivå sitt eget kritiske skift overdriver samlet deteksjon. Her: én feil i prosent, omregnet per nivå, så kombinert.", 9500, "De stiplede linjene markerer den kritiske feilen og den tillatte totalfeilen. Westgards styrkefunksjoner for N lik to forutsetter samme skift i standardavvik på begge nivå, og å gi hvert nivå sitt eget kritiske skift overdriver den samlede deteksjonen. Her brukes én feil i prosent, omregnet til standardavvik per nivå med nivåets egen CV, og så kombinert.")
         # 7 search for rules
         btn = sod.get_by_role("button", name="Search for rules").first
         scroll_to(btn, 300)
         highlight(btn)
-        cap("Regelsøk: K per nivå fra 1,5 til 5,0 SD. Settet som holder samlet falsk alarm ≤ 1,5 % og gir best deteksjon velges – her K 2,5 på L1 og 3,1 på L2.", 6000, "Regelsøket prøver K per nivå fra én komma fem til fem standardavvik, og velger settet som holder den samlede falske alarmen under én komma fem prosent og gir best deteksjon. For natrium blir det K to komma fem på L1 og tre komma én på L2.")
+        cap("Regelsøk: K per nivå fra 1,5 til 5,0 SD. Settet som holder samlet falsk alarm ≤ 1,5 % og gir best samlet deteksjon velges – her K 3,1 på L1 og 2,5 på L2: stramt der CV er lav.", 6500, "Regelsøket prøver K per nivå fra én komma fem til fem standardavvik, og velger settet som holder den samlede falske alarmen under én komma fem prosent og gir best samlet deteksjon. For natrium blir det K tre komma én på L1 og to komma fem på L2: strammest der CV er lavest.")
         btn.click(); pg.wait_for_timeout(2500)
         highlight(btn, False)
         cap("Resultatet vises med samlet falsk alarm og deteksjon mot kravet.", 4000, "Resultatet vises med samlet falsk alarm og deteksjon mot kravet, og kan tas i bruk med ett klikk.")
@@ -103,7 +103,7 @@ def main():
         lis = sod.get_by_text("What to enter in the LIS").first
         scroll_to(lis, 120)
         highlight(lis.locator("xpath=ancestor::div[1]"))
-        cap("Hva som skal inn i LIS: nåværende mål og SD mot anbefalt. L2: mål 153,5 → 154,7, SD 1,535 → 1,160. Dagens regel: deteksjon 89 % – anbefalt: 98,5 %, falsk alarm 1,43 %.", 9000, "Dette feltet viser hva som skal inn i LIS: dagens mål og standardavvik mot det anbefalte. For L2 flyttes målet fra hundre og femtitre komma fem til hundre og femtifire komma sju, og standardavviket går fra én komma fem tre fem til én komma én seks. Dagens regel oppdager den kritiske feilen med åttini prosent sannsynlighet, den anbefalte med nittiåtte komma fem, til en falsk alarm på én komma fire tre prosent.")
+        cap("Hva som skal inn i LIS: nåværende mål og SD mot anbefalt. L2: mål 153,5 → 154,7, SD 1,535 → 0,936. Dagens regel: samlet deteksjon 62 % – anbefalt: 92,3 %, falsk alarm 1,43 %.", 9000, "Dette feltet viser hva som skal inn i LIS: dagens mål og standardavvik mot det anbefalte. For L2 flyttes målet fra hundre og femtitre komma fem til hundre og femtifire komma sju, og standardavviket går fra én komma fem tre fem til null komma ni tre seks. Dagens regel oppdager den kritiske feilen med sekstito prosent samlet sannsynlighet, den anbefalte med nittito komma tre, til en falsk alarm på én komma fire tre prosent.")
         highlight(lis.locator("xpath=ancestor::div[1]"), False)
         # 9 import ALT
         pg.evaluate("window.scrollTo({top:0, behavior:'smooth'})"); pg.wait_for_timeout(1200)
@@ -116,7 +116,7 @@ def main():
         alt = pg.locator("section").filter(has=pg.locator("input[value='ALT']")).first
         scroll_to(alt, 70)
         print("ALTCARD", alt.inner_text()[:600].replace("\n"," | "))
-        cap("ALT etter import: CV og mål fra 14 måneder, sigma mot Rili-BÄK 11,5 %. Deteksjon per nivå og samlet som før.", 6000, "Etter importen har ALAT CV og mål fra fjorten måneder, og sigma regnes mot Rili-BÄK på elleve komma fem prosent. Deteksjonen vises per nivå og samlet, som før.")
+        cap("ALT etter import: CV og mål fra 14 måneder, sigma mot Labquality 12 %, kritisk feil ca. 7 %. Deteksjon per nivå og samlet som før.", 6000, "Etter importen har ALAT CV og mål fra fjorten måneder, og sigma regnes mot Labquality på tolv prosent, med en kritisk feil på omtrent sju prosent. Deteksjonen vises per nivå og samlet, som før.")
         # 10 CUSUM
         cus = alt.locator("p:text-is('CUSUM')").first
         scroll_to(cus, 120)
@@ -125,7 +125,7 @@ def main():
         cap("Grafen viser C⁺ (grønn) og −C⁻ (blå) mot h = 5 SD, med alarmer markert. Lotbytter og alarmer nullstiller summen.", 7000, "Grafen viser den positive summen i grønt og den negative i blått, mot grensen h på fem standardavvik, med alarmene markert. Lotbytter og alarmer nullstiller summen.")
         # 11 outro
         pg.evaluate("window.scrollTo({top:0, behavior:'smooth'})"); pg.wait_for_timeout(1000)
-        cap("Oppsummert: reglene utledes fra egen impresisjon, nivåene vurderes hver for seg og kombineres, og verktøyet sier hva som skal inn i LIS. Kode, data og verktøy: github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem", 9000, "Oppsummert: reglene utledes fra laboratoriets egen impresisjon, nivåene vurderes hver for seg og kombineres, og verktøyet sier hva som skal legges inn i LIS. Kode, data og verktøy ligger åpent på GitHub. Takk for oppmerksomheten.")
+        cap("Oppsummert: reglene utledes fra egen impresisjon, én kritisk feil i prosent regnes om per nivå og nivåene kombineres, og verktøyet sier hva som skal inn i LIS. Kode, data og verktøy: github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem", 9000, "Oppsummert: reglene utledes fra laboratoriets egen impresisjon, én kritisk feil i prosent regnes om til standardavvik per nivå og nivåene kombineres, og verktøyet sier hva som skal legges inn i LIS. Kode, data og verktøy ligger åpent på GitHub. Takk for oppmerksomheten.")
         ctx.close(); b.close()
     webm = glob.glob(f"{OUT}/*.webm")[0]
     mp4 = f"{OUT}/DesignLabIQC-ClinChem_demo_no.mp4"
