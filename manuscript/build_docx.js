@@ -33,7 +33,7 @@ const BR = () => new Paragraph({ children: [new PageBreak()] });
 const fmt = (x, d) => (x === "" || x == null || isNaN(+x) ? "–" : (+x).toFixed(d));
 const sig = (x) => { const v = +x; return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2); };
 
-const SRC_LABEL = { "BV EFLM (desirable)": "BV desirable", "BV EFLM (optimal)": "BV optimal", "CLIA": "CLIA 2025", "China WS/T 403-2024": "China WS/T 403" };
+const SRC_LABEL = { "BV EFLM (desirable)": "BV desirable", "BV EFLM (optimal)": "BV optimal", "BV EFLM (minimum)": "BV minimum", "CLIA": "CLIA 2025", "China WS/T 403-2024": "China WS/T 403" };
 
 // ---------- tables ----------
 function table(head, rows, widths, fontSize = 18) {
@@ -71,7 +71,7 @@ for (const a of ORDER) for (const v of byA(a)) {
 const t2rows = ORDER.map((a) => {
   const o = R.find((x) => x.analyte === a); const c = o.chosen; const rr = rules.filter((r) => r.analyte === a).sort((x, y) => x.level.localeCompare(y.level));
   const f = f2.find((x) => x.analyte === a);
-  return [a, SRC_LABEL[c.source] || c.source, fmt(c.tea, 1), `${c.sigma[0].toFixed(1)} / ${c.sigma[1].toFixed(1)}`, `${c.ks[0].toFixed(1)} / ${c.ks[1].toFixed(1)}`,
+  return [a, SRC_LABEL[c.source] || c.source, fmt(c.tea, 1), fmt(c.crit, 2), `${c.sigma[0].toFixed(1)} / ${c.sigma[1].toFixed(1)}`, `${c.ks[0].toFixed(1)} / ${c.ks[1].toFixed(1)}`,
     fmt(c.pfr * 100, 2), fmt(c.ped * 100, 1), f.req, `${sig(rr[0].sd_for_lis)} / ${sig(rr[1].sd_for_lis)}`, `${sig(rr[0].sd_lis)} / ${sig(rr[1].sd_lis)}`];
 });
 const t3rows = ORDER.map((a) => { const r = retro.find((x) => x.analyte === a); return [a, (+r.n).toFixed(0), fmt(r.design_pfr_pct, 2), fmt(r.rej_lis_rule_pct, 2), fmt(r.A_lis_target_pct, 2), fmt(r.B_pooled_mean_pct, 2), fmt(r.C_analyser_mean_pct, 2), fmt(r.D_analyser_month_mean_pct, 2)]; });
@@ -95,7 +95,7 @@ const titlePage = [
   P(""),
   P((LANG === "tr" ? "Sorumlu yazar: " : "Corresponding author: ") + C.corresponding),
   P(""),
-  P(`Word count: abstract ${nAbs}; main text ${nMain} (excluding references, tables and figure legends). Tables: 3. Figures: 4. References: ${C.references.length}. Supplementary tables: 3.`),
+  P(LANG === "tr" ? `Türkçe okuma sürümü; İngilizce aslının birebir çevirisi. Tablo: 3. Figür: 5. Kaynak: ${C.references.length}. Ek tablo: 5.` : `Word count: abstract ${nAbs}; main text ${nMain} (excluding references, tables and figure legends). Tables: 3. Figures: 5. References: ${C.references.length}. Supplementary tables: 5.`),
   P(""),
   P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
   BR(),
@@ -122,7 +122,7 @@ const body = [
   H1(LANG === "tr" ? "Tablolar" : "Tables"),
   P(C.tables.t1.title), tableWithRule(C.tables.t1.head, t1rows, [1500, 600, 760, 980, 640, 980, 760, 820, 640, 700]), P(C.tables.t1.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
-  P(C.tables.t2.title), tableWithRule(C.tables.t2.head, t2rows, [1450, 1250, 650, 1000, 850, 650, 650, 600, 1300, 1300]), P(C.tables.t2.note, { para: { spacing: { line: 240, before: 120 } } }),
+  P(C.tables.t2.title), tableWithRule(C.tables.t2.head, t2rows, [1400, 1150, 600, 650, 950, 800, 600, 600, 560, 1200, 1200]), P(C.tables.t2.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
   P(C.tables.t3.title), tableWithRule(C.tables.t3.head, t3rows, [1500, 700, 950, 950, 1000, 1100, 1150, 1250]), P(C.tables.t3.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
