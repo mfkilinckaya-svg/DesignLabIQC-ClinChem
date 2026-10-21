@@ -107,10 +107,23 @@ const titlePage = [
   P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
   BR(),
 ];
+const PLACED = new Set();
 const body = [
   H1(LANG === "tr" ? "Giriş" : "Introduction"), ...C.introduction.map((t) => P(t)),
   H1(LANG === "tr" ? "Gereç ve yöntem" : "Methods"), ...C.methods.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
-  H1(LANG === "tr" ? "Bulgular" : "Results"), ...C.results.flatMap(([h, ...ps]) => [H2(h), ...ps.map((t) => P(t))]),
+  H1(LANG === "tr" ? "Bulgular" : "Results"), ...C.results.flatMap(([h, ...ps]) => {
+    const out = [H2(h), ...ps.map((t) => P(t))];
+    if (FORMAT === "acb") {
+      const TBL = { t1: [C.tables.t1, t1rows, [1500, 600, 760, 980, 640, 980, 760, 820, 640, 700]], t2: [C.tables.t2, t2rows, [1400, 1150, 600, 650, 950, 800, 600, 600, 560, 1200, 1200]], t3: [C.tables.t3, t3rows, [1500, 700, 950, 950, 1000, 1100, 1150, 1250]] };
+      const txt = ps.join(" ");
+      for (const [k, n] of [["t1", 1], ["t2", 2], ["t3", 3]]) if (new RegExp("Table " + n + "\\b").test(txt) && !PLACED.has(k)) {
+        PLACED.add(k); const [T, rows, w] = TBL[k];
+        out.push(P(""), P(T.title, { para: { spacing: { line: 240 } } }), tableWithRule(T.head, rows, w), P(T.note, { para: { spacing: { line: 240, before: 120 } } }), P(""));
+      }
+      for (const n of [1, 2, 3]) if (new RegExp("(?<!Supplementary )Figure " + n + "\\b").test(txt) && !PLACED.has("f" + n)) { PLACED.add("f" + n); out.push(P(`[insert Figure ${n}.]`, { italics: true })); }
+    }
+    return out;
+  }),
   H1(LANG === "tr" ? "Tartışma" : "Discussion"), ...C.discussion.map((t) => P(t)),
   ...(FORMAT === "acb" ? [
   H1("Acknowledgements"), P(C.acknowledgements),
@@ -131,6 +144,7 @@ const body = [
   ]),
   BR(),
   H1(LANG === "tr" ? "Kaynaklar" : "References"), ...C.references.map((r, i) => P(`${i + 1}. ${r}`)),
+  ...(FORMAT === "acb" ? [BR()] : [
   BR(),
   H1(LANG === "tr" ? "Tablolar" : "Tables"),
   P(C.tables.t1.title), tableWithRule(C.tables.t1.head, t1rows, [1500, 600, 760, 980, 640, 980, 760, 820, 640, 700]), P(C.tables.t1.note, { para: { spacing: { line: 240, before: 120 } } }),
@@ -138,7 +152,7 @@ const body = [
   P(C.tables.t2.title), tableWithRule(C.tables.t2.head, t2rows, [1400, 1150, 600, 650, 950, 800, 600, 600, 560, 1200, 1200]), P(C.tables.t2.note, { para: { spacing: { line: 240, before: 120 } } }),
   BR(),
   P(C.tables.t3.title), tableWithRule(C.tables.t3.head, t3rows, [1500, 700, 950, 950, 1000, 1100, 1150, 1250]), P(C.tables.t3.note, { para: { spacing: { line: 240, before: 120 } } }),
-  BR(),
+  BR(),]),
   H1(LANG === "tr" ? "Figür açıklamaları" : "Figure legends"), ...C.legends.map((t) => P(t)),
   BR(),
   H1(LANG === "tr" ? "Ek materyal" : "Supplementary material"), ...C.supplementary.map((t) => P(t)),

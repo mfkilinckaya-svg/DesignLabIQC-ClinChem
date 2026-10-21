@@ -1,0 +1,3601 @@
+analyte,level,systematic_error_pct,p_reject
+Sodium,L1,0.0,0.0
+Sodium,L1,0.0483,0.0
+Sodium,L1,0.0966,0.0
+Sodium,L1,0.145,0.0
+Sodium,L1,0.1933,0.0
+Sodium,L1,0.2416,0.0019
+Sodium,L1,0.2899,0.002
+Sodium,L1,0.3382,0.002
+Sodium,L1,0.3866,0.0021
+Sodium,L1,0.4349,0.0023
+Sodium,L1,0.4832,0.0025
+Sodium,L1,0.5315,0.0027
+Sodium,L1,0.5798,0.003
+Sodium,L1,0.6282,0.0033
+Sodium,L1,0.6765,0.0037
+Sodium,L1,0.7248,0.0042
+Sodium,L1,0.7731,0.0047
+Sodium,L1,0.8214,0.0053
+Sodium,L1,0.8697,0.006
+Sodium,L1,0.9181,0.0068
+Sodium,L1,0.9664,0.0077
+Sodium,L1,1.0147,0.0086
+Sodium,L1,1.063,0.0097
+Sodium,L1,1.1113,0.0109
+Sodium,L1,1.1597,0.0122
+Sodium,L1,1.208,0.0137
+Sodium,L1,1.2563,0.0153
+Sodium,L1,1.3046,0.0171
+Sodium,L1,1.3529,0.0191
+Sodium,L1,1.4013,0.0212
+Sodium,L1,1.4496,0.0236
+Sodium,L1,1.4979,0.0262
+Sodium,L1,1.5462,0.029
+Sodium,L1,1.5945,0.0321
+Sodium,L1,1.6429,0.0354
+Sodium,L1,1.6912,0.039
+Sodium,L1,1.7395,0.0429
+Sodium,L1,1.7878,0.0471
+Sodium,L1,1.8361,0.0516
+Sodium,L1,1.8845,0.0565
+Sodium,L1,1.9328,0.0617
+Sodium,L1,1.9811,0.0673
+Sodium,L1,2.0294,0.0733
+Sodium,L1,2.0777,0.0797
+Sodium,L1,2.1261,0.0865
+Sodium,L1,2.1744,0.0937
+Sodium,L1,2.2227,0.1013
+Sodium,L1,2.271,0.1094
+Sodium,L1,2.3193,0.118
+Sodium,L1,2.3676,0.127
+Sodium,L1,2.416,0.1365
+Sodium,L1,2.4643,0.1464
+Sodium,L1,2.5126,0.1568
+Sodium,L1,2.5609,0.1677
+Sodium,L1,2.6092,0.1791
+Sodium,L1,2.6576,0.191
+Sodium,L1,2.7059,0.2033
+Sodium,L1,2.7542,0.2161
+Sodium,L1,2.8025,0.2293
+Sodium,L1,2.8508,0.243
+Sodium,L1,2.8992,0.2571
+Sodium,L1,2.9475,0.2716
+Sodium,L1,2.9958,0.2866
+Sodium,L1,3.0441,0.3019
+Sodium,L1,3.0924,0.3175
+Sodium,L1,3.1408,0.3335
+Sodium,L1,3.1891,0.3498
+Sodium,L1,3.2374,0.3664
+Sodium,L1,3.2857,0.3833
+Sodium,L1,3.334,0.4003
+Sodium,L1,3.3824,0.4176
+Sodium,L1,3.4307,0.435
+Sodium,L1,3.479,0.4525
+Sodium,L1,3.5273,0.4701
+Sodium,L1,3.5756,0.4878
+Sodium,L1,3.6239,0.5056
+Sodium,L1,3.6723,0.5233
+Sodium,L1,3.7206,0.5409
+Sodium,L1,3.7689,0.5585
+Sodium,L1,3.8172,0.576
+Sodium,L1,3.8655,0.5933
+Sodium,L1,3.9139,0.6104
+Sodium,L1,3.9622,0.6273
+Sodium,L1,4.0105,0.644
+Sodium,L1,4.0588,0.6604
+Sodium,L1,4.1071,0.6765
+Sodium,L1,4.1555,0.6923
+Sodium,L1,4.2038,0.7078
+Sodium,L1,4.2521,0.7228
+Sodium,L1,4.3004,0.7375
+Sodium,L1,4.3487,0.7518
+Sodium,L1,4.3971,0.7656
+Sodium,L1,4.4454,0.779
+Sodium,L1,4.4937,0.792
+Sodium,L1,4.542,0.8045
+Sodium,L1,4.5903,0.8165
+Sodium,L1,4.6387,0.8281
+Sodium,L1,4.687,0.8391
+Sodium,L1,4.7353,0.8498
+Sodium,L1,4.7836,0.8599
+Sodium,L1,4.8319,0.8695
+Sodium,L1,4.8803,0.8787
+Sodium,L1,4.9286,0.8874
+Sodium,L1,4.9769,0.8957
+Sodium,L1,5.0252,0.9035
+Sodium,L1,5.0735,0.9109
+Sodium,L1,5.1218,0.9178
+Sodium,L1,5.1702,0.9244
+Sodium,L1,5.2185,0.9305
+Sodium,L1,5.2668,0.9362
+Sodium,L1,5.3151,0.9416
+Sodium,L1,5.3634,0.9466
+Sodium,L1,5.4118,0.9513
+Sodium,L1,5.4601,0.9556
+Sodium,L1,5.5084,0.9596
+Sodium,L1,5.5567,0.9633
+Sodium,L1,5.605,0.9667
+Sodium,L1,5.6534,0.9699
+Sodium,L1,5.7017,0.9728
+Sodium,L1,5.75,0.9755
+Sodium,L2,0.0,0.0
+Sodium,L2,0.0483,0.0
+Sodium,L2,0.0966,0.0
+Sodium,L2,0.145,0.0
+Sodium,L2,0.1933,0.0
+Sodium,L2,0.2416,0.0
+Sodium,L2,0.2899,0.0125
+Sodium,L2,0.3382,0.0131
+Sodium,L2,0.3866,0.014
+Sodium,L2,0.4349,0.0153
+Sodium,L2,0.4832,0.017
+Sodium,L2,0.5315,0.0192
+Sodium,L2,0.5798,0.0219
+Sodium,L2,0.6282,0.0251
+Sodium,L2,0.6765,0.0288
+Sodium,L2,0.7248,0.0332
+Sodium,L2,0.7731,0.0381
+Sodium,L2,0.8214,0.0437
+Sodium,L2,0.8697,0.0501
+Sodium,L2,0.9181,0.0572
+Sodium,L2,0.9664,0.0652
+Sodium,L2,1.0147,0.074
+Sodium,L2,1.063,0.0837
+Sodium,L2,1.1113,0.0944
+Sodium,L2,1.1597,0.106
+Sodium,L2,1.208,0.1187
+Sodium,L2,1.2563,0.1324
+Sodium,L2,1.3046,0.1472
+Sodium,L2,1.3529,0.163
+Sodium,L2,1.4013,0.18
+Sodium,L2,1.4496,0.1979
+Sodium,L2,1.4979,0.217
+Sodium,L2,1.5462,0.237
+Sodium,L2,1.5945,0.258
+Sodium,L2,1.6429,0.28
+Sodium,L2,1.6912,0.3028
+Sodium,L2,1.7395,0.3265
+Sodium,L2,1.7878,0.3508
+Sodium,L2,1.8361,0.3758
+Sodium,L2,1.8845,0.4013
+Sodium,L2,1.9328,0.4272
+Sodium,L2,1.9811,0.4534
+Sodium,L2,2.0294,0.4799
+Sodium,L2,2.0777,0.5064
+Sodium,L2,2.1261,0.533
+Sodium,L2,2.1744,0.5593
+Sodium,L2,2.2227,0.5854
+Sodium,L2,2.271,0.6112
+Sodium,L2,2.3193,0.6364
+Sodium,L2,2.3676,0.6611
+Sodium,L2,2.416,0.6851
+Sodium,L2,2.4643,0.7084
+Sodium,L2,2.5126,0.7308
+Sodium,L2,2.5609,0.7523
+Sodium,L2,2.6092,0.7729
+Sodium,L2,2.6576,0.7924
+Sodium,L2,2.7059,0.8109
+Sodium,L2,2.7542,0.8284
+Sodium,L2,2.8025,0.8448
+Sodium,L2,2.8508,0.8602
+Sodium,L2,2.8992,0.8744
+Sodium,L2,2.9475,0.8877
+Sodium,L2,2.9958,0.8999
+Sodium,L2,3.0441,0.9111
+Sodium,L2,3.0924,0.9213
+Sodium,L2,3.1408,0.9306
+Sodium,L2,3.1891,0.9391
+Sodium,L2,3.2374,0.9467
+Sodium,L2,3.2857,0.9535
+Sodium,L2,3.334,0.9596
+Sodium,L2,3.3824,0.9651
+Sodium,L2,3.4307,0.9699
+Sodium,L2,3.479,0.9742
+Sodium,L2,3.5273,0.9779
+Sodium,L2,3.5756,0.9812
+Sodium,L2,3.6239,0.9841
+Sodium,L2,3.6723,0.9865
+Sodium,L2,3.7206,0.9887
+Sodium,L2,3.7689,0.9905
+Sodium,L2,3.8172,0.9921
+Sodium,L2,3.8655,0.9934
+Sodium,L2,3.9139,0.9945
+Sodium,L2,3.9622,0.9955
+Sodium,L2,4.0105,0.9963
+Sodium,L2,4.0588,0.997
+Sodium,L2,4.1071,0.9975
+Sodium,L2,4.1555,0.998
+Sodium,L2,4.2038,0.9984
+Sodium,L2,4.2521,0.9987
+Sodium,L2,4.3004,0.999
+Sodium,L2,4.3487,0.9992
+Sodium,L2,4.3971,0.9993
+Sodium,L2,4.4454,0.9995
+Sodium,L2,4.4937,0.9996
+Sodium,L2,4.542,0.9997
+Sodium,L2,4.5903,0.9997
+Sodium,L2,4.6387,0.9998
+Sodium,L2,4.687,0.9998
+Sodium,L2,4.7353,0.9999
+Sodium,L2,4.7836,0.9999
+Sodium,L2,4.8319,0.9999
+Sodium,L2,4.8803,0.9999
+Sodium,L2,4.9286,1.0
+Sodium,L2,4.9769,1.0
+Sodium,L2,5.0252,1.0
+Sodium,L2,5.0735,1.0
+Sodium,L2,5.1218,1.0
+Sodium,L2,5.1702,1.0
+Sodium,L2,5.2185,1.0
+Sodium,L2,5.2668,1.0
+Sodium,L2,5.3151,1.0
+Sodium,L2,5.3634,1.0
+Sodium,L2,5.4118,1.0
+Sodium,L2,5.4601,1.0
+Sodium,L2,5.5084,1.0
+Sodium,L2,5.5567,1.0
+Sodium,L2,5.605,1.0
+Sodium,L2,5.6534,1.0
+Sodium,L2,5.7017,1.0
+Sodium,L2,5.75,1.0
+Sodium,combined,0.0,0.0
+Sodium,combined,0.0483,0.0
+Sodium,combined,0.0966,0.0
+Sodium,combined,0.145,0.0
+Sodium,combined,0.1933,0.0
+Sodium,combined,0.2416,0.0019
+Sodium,combined,0.2899,0.0145
+Sodium,combined,0.3382,0.0151
+Sodium,combined,0.3866,0.0161
+Sodium,combined,0.4349,0.0175
+Sodium,combined,0.4832,0.0195
+Sodium,combined,0.5315,0.0219
+Sodium,combined,0.5798,0.0248
+Sodium,combined,0.6282,0.0284
+Sodium,combined,0.6765,0.0325
+Sodium,combined,0.7248,0.0372
+Sodium,combined,0.7731,0.0427
+Sodium,combined,0.8214,0.0489
+Sodium,combined,0.8697,0.0558
+Sodium,combined,0.9181,0.0636
+Sodium,combined,0.9664,0.0723
+Sodium,combined,1.0147,0.082
+Sodium,combined,1.063,0.0926
+Sodium,combined,1.1113,0.1042
+Sodium,combined,1.1597,0.117
+Sodium,combined,1.208,0.1308
+Sodium,combined,1.2563,0.1457
+Sodium,combined,1.3046,0.1618
+Sodium,combined,1.3529,0.179
+Sodium,combined,1.4013,0.1974
+Sodium,combined,1.4496,0.2169
+Sodium,combined,1.4979,0.2375
+Sodium,combined,1.5462,0.2591
+Sodium,combined,1.5945,0.2818
+Sodium,combined,1.6429,0.3055
+Sodium,combined,1.6912,0.33
+Sodium,combined,1.7395,0.3553
+Sodium,combined,1.7878,0.3814
+Sodium,combined,1.8361,0.408
+Sodium,combined,1.8845,0.4351
+Sodium,combined,1.9328,0.4626
+Sodium,combined,1.9811,0.4902
+Sodium,combined,2.0294,0.518
+Sodium,combined,2.0777,0.5458
+Sodium,combined,2.1261,0.5733
+Sodium,combined,2.1744,0.6006
+Sodium,combined,2.2227,0.6274
+Sodium,combined,2.271,0.6537
+Sodium,combined,2.3193,0.6793
+Sodium,combined,2.3676,0.7041
+Sodium,combined,2.416,0.7281
+Sodium,combined,2.4643,0.7511
+Sodium,combined,2.5126,0.773
+Sodium,combined,2.5609,0.7938
+Sodium,combined,2.6092,0.8135
+Sodium,combined,2.6576,0.8321
+Sodium,combined,2.7059,0.8494
+Sodium,combined,2.7542,0.8655
+Sodium,combined,2.8025,0.8804
+Sodium,combined,2.8508,0.8941
+Sodium,combined,2.8992,0.9067
+Sodium,combined,2.9475,0.9182
+Sodium,combined,2.9958,0.9286
+Sodium,combined,3.0441,0.9379
+Sodium,combined,3.0924,0.9463
+Sodium,combined,3.1408,0.9538
+Sodium,combined,3.1891,0.9604
+Sodium,combined,3.2374,0.9662
+Sodium,combined,3.2857,0.9713
+Sodium,combined,3.334,0.9758
+Sodium,combined,3.3824,0.9797
+Sodium,combined,3.4307,0.983
+Sodium,combined,3.479,0.9859
+Sodium,combined,3.5273,0.9883
+Sodium,combined,3.5756,0.9904
+Sodium,combined,3.6239,0.9921
+Sodium,combined,3.6723,0.9936
+Sodium,combined,3.7206,0.9948
+Sodium,combined,3.7689,0.9958
+Sodium,combined,3.8172,0.9966
+Sodium,combined,3.8655,0.9973
+Sodium,combined,3.9139,0.9979
+Sodium,combined,3.9622,0.9983
+Sodium,combined,4.0105,0.9987
+Sodium,combined,4.0588,0.999
+Sodium,combined,4.1071,0.9992
+Sodium,combined,4.1555,0.9994
+Sodium,combined,4.2038,0.9995
+Sodium,combined,4.2521,0.9996
+Sodium,combined,4.3004,0.9997
+Sodium,combined,4.3487,0.9998
+Sodium,combined,4.3971,0.9998
+Sodium,combined,4.4454,0.9999
+Sodium,combined,4.4937,0.9999
+Sodium,combined,4.542,0.9999
+Sodium,combined,4.5903,1.0
+Sodium,combined,4.6387,1.0
+Sodium,combined,4.687,1.0
+Sodium,combined,4.7353,1.0
+Sodium,combined,4.7836,1.0
+Sodium,combined,4.8319,1.0
+Sodium,combined,4.8803,1.0
+Sodium,combined,4.9286,1.0
+Sodium,combined,4.9769,1.0
+Sodium,combined,5.0252,1.0
+Sodium,combined,5.0735,1.0
+Sodium,combined,5.1218,1.0
+Sodium,combined,5.1702,1.0
+Sodium,combined,5.2185,1.0
+Sodium,combined,5.2668,1.0
+Sodium,combined,5.3151,1.0
+Sodium,combined,5.3634,1.0
+Sodium,combined,5.4118,1.0
+Sodium,combined,5.4601,1.0
+Sodium,combined,5.5084,1.0
+Sodium,combined,5.5567,1.0
+Sodium,combined,5.605,1.0
+Sodium,combined,5.6534,1.0
+Sodium,combined,5.7017,1.0
+Sodium,combined,5.75,1.0
+Creatinine,L1,0.0,0.0
+Creatinine,L1,0.0773,0.0
+Creatinine,L1,0.1546,0.0019
+Creatinine,L1,0.2319,0.002
+Creatinine,L1,0.3092,0.002
+Creatinine,L1,0.3866,0.0021
+Creatinine,L1,0.4639,0.0023
+Creatinine,L1,0.5412,0.0025
+Creatinine,L1,0.6185,0.0027
+Creatinine,L1,0.6958,0.0029
+Creatinine,L1,0.7731,0.0032
+Creatinine,L1,0.8504,0.0036
+Creatinine,L1,0.9277,0.004
+Creatinine,L1,1.005,0.0044
+Creatinine,L1,1.0824,0.0049
+Creatinine,L1,1.1597,0.0055
+Creatinine,L1,1.237,0.0061
+Creatinine,L1,1.3143,0.0068
+Creatinine,L1,1.3916,0.0076
+Creatinine,L1,1.4689,0.0085
+Creatinine,L1,1.5462,0.0095
+Creatinine,L1,1.6235,0.0106
+Creatinine,L1,1.7008,0.0117
+Creatinine,L1,1.7782,0.013
+Creatinine,L1,1.8555,0.0144
+Creatinine,L1,1.9328,0.016
+Creatinine,L1,2.0101,0.0177
+Creatinine,L1,2.0874,0.0195
+Creatinine,L1,2.1647,0.0215
+Creatinine,L1,2.242,0.0237
+Creatinine,L1,2.3193,0.0261
+Creatinine,L1,2.3966,0.0286
+Creatinine,L1,2.4739,0.0314
+Creatinine,L1,2.5513,0.0344
+Creatinine,L1,2.6286,0.0376
+Creatinine,L1,2.7059,0.041
+Creatinine,L1,2.7832,0.0447
+Creatinine,L1,2.8605,0.0487
+Creatinine,L1,2.9378,0.0529
+Creatinine,L1,3.0151,0.0575
+Creatinine,L1,3.0924,0.0623
+Creatinine,L1,3.1697,0.0674
+Creatinine,L1,3.2471,0.0729
+Creatinine,L1,3.3244,0.0787
+Creatinine,L1,3.4017,0.0848
+Creatinine,L1,3.479,0.0913
+Creatinine,L1,3.5563,0.0981
+Creatinine,L1,3.6336,0.1054
+Creatinine,L1,3.7109,0.113
+Creatinine,L1,3.7882,0.1209
+Creatinine,L1,3.8655,0.1293
+Creatinine,L1,3.9429,0.1381
+Creatinine,L1,4.0202,0.1472
+Creatinine,L1,4.0975,0.1568
+Creatinine,L1,4.1748,0.1667
+Creatinine,L1,4.2521,0.1771
+Creatinine,L1,4.3294,0.1878
+Creatinine,L1,4.4067,0.199
+Creatinine,L1,4.484,0.2105
+Creatinine,L1,4.5613,0.2224
+Creatinine,L1,4.6387,0.2347
+Creatinine,L1,4.716,0.2474
+Creatinine,L1,4.7933,0.2604
+Creatinine,L1,4.8706,0.2737
+Creatinine,L1,4.9479,0.2874
+Creatinine,L1,5.0252,0.3014
+Creatinine,L1,5.1025,0.3157
+Creatinine,L1,5.1798,0.3303
+Creatinine,L1,5.2571,0.3452
+Creatinine,L1,5.3345,0.3603
+Creatinine,L1,5.4118,0.3756
+Creatinine,L1,5.4891,0.3911
+Creatinine,L1,5.5664,0.4068
+Creatinine,L1,5.6437,0.4226
+Creatinine,L1,5.721,0.4386
+Creatinine,L1,5.7983,0.4546
+Creatinine,L1,5.8756,0.4707
+Creatinine,L1,5.9529,0.4869
+Creatinine,L1,6.0303,0.5031
+Creatinine,L1,6.1076,0.5193
+Creatinine,L1,6.1849,0.5355
+Creatinine,L1,6.2622,0.5516
+Creatinine,L1,6.3395,0.5676
+Creatinine,L1,6.4168,0.5836
+Creatinine,L1,6.4941,0.5993
+Creatinine,L1,6.5714,0.6149
+Creatinine,L1,6.6487,0.6304
+Creatinine,L1,6.7261,0.6456
+Creatinine,L1,6.8034,0.6606
+Creatinine,L1,6.8807,0.6754
+Creatinine,L1,6.958,0.6898
+Creatinine,L1,7.0353,0.704
+Creatinine,L1,7.1126,0.7179
+Creatinine,L1,7.1899,0.7315
+Creatinine,L1,7.2672,0.7447
+Creatinine,L1,7.3445,0.7576
+Creatinine,L1,7.4218,0.7701
+Creatinine,L1,7.4992,0.7822
+Creatinine,L1,7.5765,0.794
+Creatinine,L1,7.6538,0.8054
+Creatinine,L1,7.7311,0.8164
+Creatinine,L1,7.8084,0.827
+Creatinine,L1,7.8857,0.8372
+Creatinine,L1,7.963,0.847
+Creatinine,L1,8.0403,0.8564
+Creatinine,L1,8.1176,0.8654
+Creatinine,L1,8.195,0.874
+Creatinine,L1,8.2723,0.8822
+Creatinine,L1,8.3496,0.89
+Creatinine,L1,8.4269,0.8975
+Creatinine,L1,8.5042,0.9045
+Creatinine,L1,8.5815,0.9113
+Creatinine,L1,8.6588,0.9176
+Creatinine,L1,8.7361,0.9236
+Creatinine,L1,8.8134,0.9293
+Creatinine,L1,8.8908,0.9346
+Creatinine,L1,8.9681,0.9396
+Creatinine,L1,9.0454,0.9443
+Creatinine,L1,9.1227,0.9488
+Creatinine,L1,9.2,0.9529
+Creatinine,L2,0.0,0.0
+Creatinine,L2,0.0773,0.0124
+Creatinine,L2,0.1546,0.0126
+Creatinine,L2,0.2319,0.0131
+Creatinine,L2,0.3092,0.0139
+Creatinine,L2,0.3866,0.0151
+Creatinine,L2,0.4639,0.0166
+Creatinine,L2,0.5412,0.0184
+Creatinine,L2,0.6185,0.0207
+Creatinine,L2,0.6958,0.0233
+Creatinine,L2,0.7731,0.0264
+Creatinine,L2,0.8504,0.0299
+Creatinine,L2,0.9277,0.0339
+Creatinine,L2,1.005,0.0385
+Creatinine,L2,1.0824,0.0436
+Creatinine,L2,1.1597,0.0492
+Creatinine,L2,1.237,0.0555
+Creatinine,L2,1.3143,0.0625
+Creatinine,L2,1.3916,0.0702
+Creatinine,L2,1.4689,0.0785
+Creatinine,L2,1.5462,0.0877
+Creatinine,L2,1.6235,0.0976
+Creatinine,L2,1.7008,0.1083
+Creatinine,L2,1.7782,0.1198
+Creatinine,L2,1.8555,0.1322
+Creatinine,L2,1.9328,0.1455
+Creatinine,L2,2.0101,0.1596
+Creatinine,L2,2.0874,0.1747
+Creatinine,L2,2.1647,0.1905
+Creatinine,L2,2.242,0.2073
+Creatinine,L2,2.3193,0.2248
+Creatinine,L2,2.3966,0.2432
+Creatinine,L2,2.4739,0.2624
+Creatinine,L2,2.5513,0.2824
+Creatinine,L2,2.6286,0.303
+Creatinine,L2,2.7059,0.3243
+Creatinine,L2,2.7832,0.3461
+Creatinine,L2,2.8605,0.3685
+Creatinine,L2,2.9378,0.3914
+Creatinine,L2,3.0151,0.4146
+Creatinine,L2,3.0924,0.4381
+Creatinine,L2,3.1697,0.4619
+Creatinine,L2,3.2471,0.4858
+Creatinine,L2,3.3244,0.5097
+Creatinine,L2,3.4017,0.5336
+Creatinine,L2,3.479,0.5574
+Creatinine,L2,3.5563,0.581
+Creatinine,L2,3.6336,0.6043
+Creatinine,L2,3.7109,0.6272
+Creatinine,L2,3.7882,0.6497
+Creatinine,L2,3.8655,0.6717
+Creatinine,L2,3.9429,0.6931
+Creatinine,L2,4.0202,0.7138
+Creatinine,L2,4.0975,0.7339
+Creatinine,L2,4.1748,0.7532
+Creatinine,L2,4.2521,0.7718
+Creatinine,L2,4.3294,0.7895
+Creatinine,L2,4.4067,0.8064
+Creatinine,L2,4.484,0.8224
+Creatinine,L2,4.5613,0.8376
+Creatinine,L2,4.6387,0.8519
+Creatinine,L2,4.716,0.8654
+Creatinine,L2,4.7933,0.878
+Creatinine,L2,4.8706,0.8897
+Creatinine,L2,4.9479,0.9006
+Creatinine,L2,5.0252,0.9107
+Creatinine,L2,5.1025,0.92
+Creatinine,L2,5.1798,0.9285
+Creatinine,L2,5.2571,0.9364
+Creatinine,L2,5.3345,0.9435
+Creatinine,L2,5.4118,0.95
+Creatinine,L2,5.4891,0.9559
+Creatinine,L2,5.5664,0.9612
+Creatinine,L2,5.6437,0.966
+Creatinine,L2,5.721,0.9703
+Creatinine,L2,5.7983,0.9741
+Creatinine,L2,5.8756,0.9775
+Creatinine,L2,5.9529,0.9805
+Creatinine,L2,6.0303,0.9832
+Creatinine,L2,6.1076,0.9856
+Creatinine,L2,6.1849,0.9876
+Creatinine,L2,6.2622,0.9894
+Creatinine,L2,6.3395,0.991
+Creatinine,L2,6.4168,0.9924
+Creatinine,L2,6.4941,0.9935
+Creatinine,L2,6.5714,0.9945
+Creatinine,L2,6.6487,0.9954
+Creatinine,L2,6.7261,0.9962
+Creatinine,L2,6.8034,0.9968
+Creatinine,L2,6.8807,0.9973
+Creatinine,L2,6.958,0.9978
+Creatinine,L2,7.0353,0.9982
+Creatinine,L2,7.1126,0.9985
+Creatinine,L2,7.1899,0.9988
+Creatinine,L2,7.2672,0.999
+Creatinine,L2,7.3445,0.9992
+Creatinine,L2,7.4218,0.9993
+Creatinine,L2,7.4992,0.9995
+Creatinine,L2,7.5765,0.9996
+Creatinine,L2,7.6538,0.9996
+Creatinine,L2,7.7311,0.9997
+Creatinine,L2,7.8084,0.9998
+Creatinine,L2,7.8857,0.9998
+Creatinine,L2,7.963,0.9999
+Creatinine,L2,8.0403,0.9999
+Creatinine,L2,8.1176,0.9999
+Creatinine,L2,8.195,0.9999
+Creatinine,L2,8.2723,0.9999
+Creatinine,L2,8.3496,1.0
+Creatinine,L2,8.4269,1.0
+Creatinine,L2,8.5042,1.0
+Creatinine,L2,8.5815,1.0
+Creatinine,L2,8.6588,1.0
+Creatinine,L2,8.7361,1.0
+Creatinine,L2,8.8134,1.0
+Creatinine,L2,8.8908,1.0
+Creatinine,L2,8.9681,1.0
+Creatinine,L2,9.0454,1.0
+Creatinine,L2,9.1227,1.0
+Creatinine,L2,9.2,1.0
+Creatinine,combined,0.0,0.0
+Creatinine,combined,0.0773,0.0124
+Creatinine,combined,0.1546,0.0145
+Creatinine,combined,0.2319,0.015
+Creatinine,combined,0.3092,0.0159
+Creatinine,combined,0.3866,0.0172
+Creatinine,combined,0.4639,0.0188
+Creatinine,combined,0.5412,0.0208
+Creatinine,combined,0.6185,0.0233
+Creatinine,combined,0.6958,0.0262
+Creatinine,combined,0.7731,0.0295
+Creatinine,combined,0.8504,0.0334
+Creatinine,combined,0.9277,0.0378
+Creatinine,combined,1.005,0.0427
+Creatinine,combined,1.0824,0.0483
+Creatinine,combined,1.1597,0.0545
+Creatinine,combined,1.237,0.0613
+Creatinine,combined,1.3143,0.0689
+Creatinine,combined,1.3916,0.0773
+Creatinine,combined,1.4689,0.0864
+Creatinine,combined,1.5462,0.0963
+Creatinine,combined,1.6235,0.1071
+Creatinine,combined,1.7008,0.1187
+Creatinine,combined,1.7782,0.1313
+Creatinine,combined,1.8555,0.1448
+Creatinine,combined,1.9328,0.1592
+Creatinine,combined,2.0101,0.1745
+Creatinine,combined,2.0874,0.1908
+Creatinine,combined,2.1647,0.208
+Creatinine,combined,2.242,0.2261
+Creatinine,combined,2.3193,0.2451
+Creatinine,combined,2.3966,0.2649
+Creatinine,combined,2.4739,0.2856
+Creatinine,combined,2.5513,0.307
+Creatinine,combined,2.6286,0.3292
+Creatinine,combined,2.7059,0.352
+Creatinine,combined,2.7832,0.3754
+Creatinine,combined,2.8605,0.3993
+Creatinine,combined,2.9378,0.4236
+Creatinine,combined,3.0151,0.4482
+Creatinine,combined,3.0924,0.4731
+Creatinine,combined,3.1697,0.4982
+Creatinine,combined,3.2471,0.5233
+Creatinine,combined,3.3244,0.5483
+Creatinine,combined,3.4017,0.5732
+Creatinine,combined,3.479,0.5978
+Creatinine,combined,3.5563,0.6221
+Creatinine,combined,3.6336,0.646
+Creatinine,combined,3.7109,0.6693
+Creatinine,combined,3.7882,0.6921
+Creatinine,combined,3.8655,0.7141
+Creatinine,combined,3.9429,0.7354
+Creatinine,combined,4.0202,0.756
+Creatinine,combined,4.0975,0.7756
+Creatinine,combined,4.1748,0.7944
+Creatinine,combined,4.2521,0.8122
+Creatinine,combined,4.3294,0.829
+Creatinine,combined,4.4067,0.8449
+Creatinine,combined,4.484,0.8598
+Creatinine,combined,4.5613,0.8737
+Creatinine,combined,4.6387,0.8867
+Creatinine,combined,4.716,0.8987
+Creatinine,combined,4.7933,0.9097
+Creatinine,combined,4.8706,0.9199
+Creatinine,combined,4.9479,0.9292
+Creatinine,combined,5.0252,0.9376
+Creatinine,combined,5.1025,0.9452
+Creatinine,combined,5.1798,0.9521
+Creatinine,combined,5.2571,0.9583
+Creatinine,combined,5.3345,0.9639
+Creatinine,combined,5.4118,0.9688
+Creatinine,combined,5.4891,0.9731
+Creatinine,combined,5.5664,0.977
+Creatinine,combined,5.6437,0.9804
+Creatinine,combined,5.721,0.9833
+Creatinine,combined,5.7983,0.9859
+Creatinine,combined,5.8756,0.9881
+Creatinine,combined,5.9529,0.99
+Creatinine,combined,6.0303,0.9917
+Creatinine,combined,6.1076,0.9931
+Creatinine,combined,6.1849,0.9943
+Creatinine,combined,6.2622,0.9953
+Creatinine,combined,6.3395,0.9961
+Creatinine,combined,6.4168,0.9968
+Creatinine,combined,6.4941,0.9974
+Creatinine,combined,6.5714,0.9979
+Creatinine,combined,6.6487,0.9983
+Creatinine,combined,6.7261,0.9986
+Creatinine,combined,6.8034,0.9989
+Creatinine,combined,6.8807,0.9991
+Creatinine,combined,6.958,0.9993
+Creatinine,combined,7.0353,0.9995
+Creatinine,combined,7.1126,0.9996
+Creatinine,combined,7.1899,0.9997
+Creatinine,combined,7.2672,0.9997
+Creatinine,combined,7.3445,0.9998
+Creatinine,combined,7.4218,0.9998
+Creatinine,combined,7.4992,0.9999
+Creatinine,combined,7.5765,0.9999
+Creatinine,combined,7.6538,0.9999
+Creatinine,combined,7.7311,0.9999
+Creatinine,combined,7.8084,1.0
+Creatinine,combined,7.8857,1.0
+Creatinine,combined,7.963,1.0
+Creatinine,combined,8.0403,1.0
+Creatinine,combined,8.1176,1.0
+Creatinine,combined,8.195,1.0
+Creatinine,combined,8.2723,1.0
+Creatinine,combined,8.3496,1.0
+Creatinine,combined,8.4269,1.0
+Creatinine,combined,8.5042,1.0
+Creatinine,combined,8.5815,1.0
+Creatinine,combined,8.6588,1.0
+Creatinine,combined,8.7361,1.0
+Creatinine,combined,8.8134,1.0
+Creatinine,combined,8.8908,1.0
+Creatinine,combined,8.9681,1.0
+Creatinine,combined,9.0454,1.0
+Creatinine,combined,9.1227,1.0
+Creatinine,combined,9.2,1.0
+ALT,L1,0.0,0.0
+ALT,L1,0.116,0.0
+ALT,L1,0.2319,0.0
+ALT,L1,0.3479,0.0
+ALT,L1,0.4639,0.0
+ALT,L1,0.5798,0.0
+ALT,L1,0.6958,0.0
+ALT,L1,0.8118,0.0
+ALT,L1,0.9277,0.0
+ALT,L1,1.0437,0.0052
+ALT,L1,1.1597,0.0053
+ALT,L1,1.2756,0.0055
+ALT,L1,1.3916,0.0059
+ALT,L1,1.5076,0.0064
+ALT,L1,1.6235,0.0069
+ALT,L1,1.7395,0.0076
+ALT,L1,1.8555,0.0084
+ALT,L1,1.9714,0.0094
+ALT,L1,2.0874,0.0105
+ALT,L1,2.2034,0.0117
+ALT,L1,2.3193,0.0131
+ALT,L1,2.4353,0.0147
+ALT,L1,2.5513,0.0165
+ALT,L1,2.6672,0.0185
+ALT,L1,2.7832,0.0206
+ALT,L1,2.8992,0.0231
+ALT,L1,3.0151,0.0257
+ALT,L1,3.1311,0.0287
+ALT,L1,3.2471,0.0319
+ALT,L1,3.363,0.0354
+ALT,L1,3.479,0.0393
+ALT,L1,3.595,0.0435
+ALT,L1,3.7109,0.048
+ALT,L1,3.8269,0.0529
+ALT,L1,3.9429,0.0582
+ALT,L1,4.0588,0.0639
+ALT,L1,4.1748,0.0701
+ALT,L1,4.2908,0.0767
+ALT,L1,4.4067,0.0837
+ALT,L1,4.5227,0.0912
+ALT,L1,4.6387,0.0993
+ALT,L1,4.7546,0.1078
+ALT,L1,4.8706,0.1168
+ALT,L1,4.9866,0.1264
+ALT,L1,5.1025,0.1365
+ALT,L1,5.2185,0.1471
+ALT,L1,5.3345,0.1583
+ALT,L1,5.4504,0.1701
+ALT,L1,5.5664,0.1823
+ALT,L1,5.6824,0.1951
+ALT,L1,5.7983,0.2085
+ALT,L1,5.9143,0.2223
+ALT,L1,6.0303,0.2367
+ALT,L1,6.1462,0.2516
+ALT,L1,6.2622,0.2669
+ALT,L1,6.3782,0.2828
+ALT,L1,6.4941,0.299
+ALT,L1,6.6101,0.3157
+ALT,L1,6.7261,0.3327
+ALT,L1,6.842,0.3501
+ALT,L1,6.958,0.3678
+ALT,L1,7.0739,0.3858
+ALT,L1,7.1899,0.4041
+ALT,L1,7.3059,0.4225
+ALT,L1,7.4218,0.4412
+ALT,L1,7.5378,0.4599
+ALT,L1,7.6538,0.4788
+ALT,L1,7.7697,0.4977
+ALT,L1,7.8857,0.5166
+ALT,L1,8.0017,0.5355
+ALT,L1,8.1176,0.5543
+ALT,L1,8.2336,0.573
+ALT,L1,8.3496,0.5915
+ALT,L1,8.4655,0.6098
+ALT,L1,8.5815,0.6278
+ALT,L1,8.6975,0.6456
+ALT,L1,8.8134,0.6631
+ALT,L1,8.9294,0.6802
+ALT,L1,9.0454,0.697
+ALT,L1,9.1613,0.7133
+ALT,L1,9.2773,0.7293
+ALT,L1,9.3933,0.7447
+ALT,L1,9.5092,0.7597
+ALT,L1,9.6252,0.7742
+ALT,L1,9.7412,0.7882
+ALT,L1,9.8571,0.8017
+ALT,L1,9.9731,0.8146
+ALT,L1,10.0891,0.827
+ALT,L1,10.205,0.8389
+ALT,L1,10.321,0.8502
+ALT,L1,10.437,0.861
+ALT,L1,10.5529,0.8712
+ALT,L1,10.6689,0.8809
+ALT,L1,10.7849,0.8901
+ALT,L1,10.9008,0.8987
+ALT,L1,11.0168,0.9069
+ALT,L1,11.1328,0.9145
+ALT,L1,11.2487,0.9217
+ALT,L1,11.3647,0.9284
+ALT,L1,11.4807,0.9347
+ALT,L1,11.5966,0.9405
+ALT,L1,11.7126,0.9459
+ALT,L1,11.8286,0.9509
+ALT,L1,11.9445,0.9555
+ALT,L1,12.0605,0.9598
+ALT,L1,12.1765,0.9637
+ALT,L1,12.2924,0.9674
+ALT,L1,12.4084,0.9707
+ALT,L1,12.5244,0.9737
+ALT,L1,12.6403,0.9765
+ALT,L1,12.7563,0.979
+ALT,L1,12.8723,0.9813
+ALT,L1,12.9882,0.9833
+ALT,L1,13.1042,0.9852
+ALT,L1,13.2202,0.9869
+ALT,L1,13.3361,0.9884
+ALT,L1,13.4521,0.9898
+ALT,L1,13.5681,0.991
+ALT,L1,13.684,0.9921
+ALT,L1,13.8,0.993
+ALT,L2,0.0,0.0
+ALT,L2,0.116,0.0
+ALT,L2,0.2319,0.0
+ALT,L2,0.3479,0.0
+ALT,L2,0.4639,0.0
+ALT,L2,0.5798,0.0
+ALT,L2,0.6958,0.0
+ALT,L2,0.8118,0.0
+ALT,L2,0.9277,0.0
+ALT,L2,1.0437,0.0
+ALT,L2,1.1597,0.0094
+ALT,L2,1.2756,0.0097
+ALT,L2,1.3916,0.0102
+ALT,L2,1.5076,0.0109
+ALT,L2,1.6235,0.0118
+ALT,L2,1.7395,0.0129
+ALT,L2,1.8555,0.0143
+ALT,L2,1.9714,0.0159
+ALT,L2,2.0874,0.0178
+ALT,L2,2.2034,0.02
+ALT,L2,2.3193,0.0225
+ALT,L2,2.4353,0.0253
+ALT,L2,2.5513,0.0284
+ALT,L2,2.6672,0.0319
+ALT,L2,2.7832,0.0358
+ALT,L2,2.8992,0.0401
+ALT,L2,3.0151,0.0449
+ALT,L2,3.1311,0.0501
+ALT,L2,3.2471,0.0558
+ALT,L2,3.363,0.0621
+ALT,L2,3.479,0.0688
+ALT,L2,3.595,0.0762
+ALT,L2,3.7109,0.0841
+ALT,L2,3.8269,0.0926
+ALT,L2,3.9429,0.1018
+ALT,L2,4.0588,0.1116
+ALT,L2,4.1748,0.1221
+ALT,L2,4.2908,0.1332
+ALT,L2,4.4067,0.145
+ALT,L2,4.5227,0.1576
+ALT,L2,4.6387,0.1708
+ALT,L2,4.7546,0.1847
+ALT,L2,4.8706,0.1993
+ALT,L2,4.9866,0.2145
+ALT,L2,5.1025,0.2304
+ALT,L2,5.2185,0.247
+ALT,L2,5.3345,0.2641
+ALT,L2,5.4504,0.2819
+ALT,L2,5.5664,0.3002
+ALT,L2,5.6824,0.319
+ALT,L2,5.7983,0.3383
+ALT,L2,5.9143,0.3581
+ALT,L2,6.0303,0.3782
+ALT,L2,6.1462,0.3987
+ALT,L2,6.2622,0.4194
+ALT,L2,6.3782,0.4404
+ALT,L2,6.4941,0.4616
+ALT,L2,6.6101,0.4828
+ALT,L2,6.7261,0.5041
+ALT,L2,6.842,0.5254
+ALT,L2,6.958,0.5466
+ALT,L2,7.0739,0.5677
+ALT,L2,7.1899,0.5886
+ALT,L2,7.3059,0.6093
+ALT,L2,7.4218,0.6296
+ALT,L2,7.5378,0.6496
+ALT,L2,7.6538,0.6692
+ALT,L2,7.7697,0.6883
+ALT,L2,7.8857,0.707
+ALT,L2,8.0017,0.7251
+ALT,L2,8.1176,0.7426
+ALT,L2,8.2336,0.7595
+ALT,L2,8.3496,0.7758
+ALT,L2,8.4655,0.7915
+ALT,L2,8.5815,0.8065
+ALT,L2,8.6975,0.8208
+ALT,L2,8.8134,0.8344
+ALT,L2,8.9294,0.8474
+ALT,L2,9.0454,0.8596
+ALT,L2,9.1613,0.8712
+ALT,L2,9.2773,0.8821
+ALT,L2,9.3933,0.8923
+ALT,L2,9.5092,0.9019
+ALT,L2,9.6252,0.9108
+ALT,L2,9.7412,0.9191
+ALT,L2,9.8571,0.9268
+ALT,L2,9.9731,0.934
+ALT,L2,10.0891,0.9406
+ALT,L2,10.205,0.9466
+ALT,L2,10.321,0.9522
+ALT,L2,10.437,0.9573
+ALT,L2,10.5529,0.9619
+ALT,L2,10.6689,0.9661
+ALT,L2,10.7849,0.9699
+ALT,L2,10.9008,0.9734
+ALT,L2,11.0168,0.9765
+ALT,L2,11.1328,0.9793
+ALT,L2,11.2487,0.9819
+ALT,L2,11.3647,0.9841
+ALT,L2,11.4807,0.9861
+ALT,L2,11.5966,0.9879
+ALT,L2,11.7126,0.9895
+ALT,L2,11.8286,0.9909
+ALT,L2,11.9445,0.9921
+ALT,L2,12.0605,0.9932
+ALT,L2,12.1765,0.9941
+ALT,L2,12.2924,0.995
+ALT,L2,12.4084,0.9957
+ALT,L2,12.5244,0.9963
+ALT,L2,12.6403,0.9969
+ALT,L2,12.7563,0.9973
+ALT,L2,12.8723,0.9978
+ALT,L2,12.9882,0.9981
+ALT,L2,13.1042,0.9984
+ALT,L2,13.2202,0.9987
+ALT,L2,13.3361,0.9989
+ALT,L2,13.4521,0.9991
+ALT,L2,13.5681,0.9992
+ALT,L2,13.684,0.9993
+ALT,L2,13.8,0.9995
+ALT,combined,0.0,0.0
+ALT,combined,0.116,0.0
+ALT,combined,0.2319,0.0
+ALT,combined,0.3479,0.0
+ALT,combined,0.4639,0.0
+ALT,combined,0.5798,0.0
+ALT,combined,0.6958,0.0
+ALT,combined,0.8118,0.0
+ALT,combined,0.9277,0.0
+ALT,combined,1.0437,0.0052
+ALT,combined,1.1597,0.0146
+ALT,combined,1.2756,0.0152
+ALT,combined,1.3916,0.016
+ALT,combined,1.5076,0.0171
+ALT,combined,1.6235,0.0186
+ALT,combined,1.7395,0.0204
+ALT,combined,1.8555,0.0226
+ALT,combined,1.9714,0.0251
+ALT,combined,2.0874,0.0281
+ALT,combined,2.2034,0.0315
+ALT,combined,2.3193,0.0353
+ALT,combined,2.4353,0.0396
+ALT,combined,2.5513,0.0444
+ALT,combined,2.6672,0.0498
+ALT,combined,2.7832,0.0557
+ALT,combined,2.8992,0.0623
+ALT,combined,3.0151,0.0695
+ALT,combined,3.1311,0.0774
+ALT,combined,3.2471,0.086
+ALT,combined,3.363,0.0953
+ALT,combined,3.479,0.1054
+ALT,combined,3.595,0.1163
+ALT,combined,3.7109,0.128
+ALT,combined,3.8269,0.1406
+ALT,combined,3.9429,0.1541
+ALT,combined,4.0588,0.1684
+ALT,combined,4.1748,0.1836
+ALT,combined,4.2908,0.1997
+ALT,combined,4.4067,0.2166
+ALT,combined,4.5227,0.2344
+ALT,combined,4.6387,0.2531
+ALT,combined,4.7546,0.2726
+ALT,combined,4.8706,0.2928
+ALT,combined,4.9866,0.3138
+ALT,combined,5.1025,0.3355
+ALT,combined,5.2185,0.3578
+ALT,combined,5.3345,0.3806
+ALT,combined,5.4504,0.404
+ALT,combined,5.5664,0.4278
+ALT,combined,5.6824,0.4519
+ALT,combined,5.7983,0.4763
+ALT,combined,5.9143,0.5008
+ALT,combined,6.0303,0.5254
+ALT,combined,6.1462,0.55
+ALT,combined,6.2622,0.5744
+ALT,combined,6.3782,0.5986
+ALT,combined,6.4941,0.6226
+ALT,combined,6.6101,0.6461
+ALT,combined,6.7261,0.6691
+ALT,combined,6.842,0.6916
+ALT,combined,6.958,0.7134
+ALT,combined,7.0739,0.7345
+ALT,combined,7.1899,0.7549
+ALT,combined,7.3059,0.7744
+ALT,combined,7.4218,0.793
+ALT,combined,7.5378,0.8108
+ALT,combined,7.6538,0.8276
+ALT,combined,7.7697,0.8434
+ALT,combined,7.8857,0.8583
+ALT,combined,8.0017,0.8723
+ALT,combined,8.1176,0.8853
+ALT,combined,8.2336,0.8973
+ALT,combined,8.3496,0.9084
+ALT,combined,8.4655,0.9186
+ALT,combined,8.5815,0.928
+ALT,combined,8.6975,0.9365
+ALT,combined,8.8134,0.9442
+ALT,combined,8.9294,0.9512
+ALT,combined,9.0454,0.9575
+ALT,combined,9.1613,0.9631
+ALT,combined,9.2773,0.9681
+ALT,combined,9.3933,0.9725
+ALT,combined,9.5092,0.9764
+ALT,combined,9.6252,0.9799
+ALT,combined,9.7412,0.9829
+ALT,combined,9.8571,0.9855
+ALT,combined,9.9731,0.9878
+ALT,combined,10.0891,0.9897
+ALT,combined,10.205,0.9914
+ALT,combined,10.321,0.9928
+ALT,combined,10.437,0.9941
+ALT,combined,10.5529,0.9951
+ALT,combined,10.6689,0.996
+ALT,combined,10.7849,0.9967
+ALT,combined,10.9008,0.9973
+ALT,combined,11.0168,0.9978
+ALT,combined,11.1328,0.9982
+ALT,combined,11.2487,0.9986
+ALT,combined,11.3647,0.9989
+ALT,combined,11.4807,0.9991
+ALT,combined,11.5966,0.9993
+ALT,combined,11.7126,0.9994
+ALT,combined,11.8286,0.9996
+ALT,combined,11.9445,0.9996
+ALT,combined,12.0605,0.9997
+ALT,combined,12.1765,0.9998
+ALT,combined,12.2924,0.9998
+ALT,combined,12.4084,0.9999
+ALT,combined,12.5244,0.9999
+ALT,combined,12.6403,0.9999
+ALT,combined,12.7563,0.9999
+ALT,combined,12.8723,1.0
+ALT,combined,12.9882,1.0
+ALT,combined,13.1042,1.0
+ALT,combined,13.2202,1.0
+ALT,combined,13.3361,1.0
+ALT,combined,13.4521,1.0
+ALT,combined,13.5681,1.0
+ALT,combined,13.684,1.0
+ALT,combined,13.8,1.0
+Glucose,L1,0.0,0.0
+Glucose,L1,0.0929,0.0
+Glucose,L1,0.1858,0.0
+Glucose,L1,0.2787,0.0
+Glucose,L1,0.3716,0.0
+Glucose,L1,0.4645,0.0
+Glucose,L1,0.5574,0.0051
+Glucose,L1,0.6503,0.0053
+Glucose,L1,0.7433,0.0055
+Glucose,L1,0.8362,0.0059
+Glucose,L1,0.9291,0.0063
+Glucose,L1,1.022,0.0069
+Glucose,L1,1.1149,0.0076
+Glucose,L1,1.2078,0.0085
+Glucose,L1,1.3007,0.0094
+Glucose,L1,1.3936,0.0105
+Glucose,L1,1.4865,0.0118
+Glucose,L1,1.5794,0.0133
+Glucose,L1,1.6723,0.0149
+Glucose,L1,1.7652,0.0167
+Glucose,L1,1.8581,0.0187
+Glucose,L1,1.951,0.021
+Glucose,L1,2.0439,0.0235
+Glucose,L1,2.1368,0.0262
+Glucose,L1,2.2298,0.0293
+Glucose,L1,2.3227,0.0326
+Glucose,L1,2.4156,0.0362
+Glucose,L1,2.5085,0.0402
+Glucose,L1,2.6014,0.0445
+Glucose,L1,2.6943,0.0492
+Glucose,L1,2.7872,0.0543
+Glucose,L1,2.8801,0.0598
+Glucose,L1,2.973,0.0657
+Glucose,L1,3.0659,0.0721
+Glucose,L1,3.1588,0.0789
+Glucose,L1,3.2517,0.0862
+Glucose,L1,3.3446,0.0941
+Glucose,L1,3.4375,0.1024
+Glucose,L1,3.5304,0.1112
+Glucose,L1,3.6234,0.1206
+Glucose,L1,3.7163,0.1305
+Glucose,L1,3.8092,0.141
+Glucose,L1,3.9021,0.152
+Glucose,L1,3.995,0.1636
+Glucose,L1,4.0879,0.1758
+Glucose,L1,4.1808,0.1885
+Glucose,L1,4.2737,0.2018
+Glucose,L1,4.3666,0.2156
+Glucose,L1,4.4595,0.2299
+Glucose,L1,4.5524,0.2448
+Glucose,L1,4.6453,0.2601
+Glucose,L1,4.7382,0.276
+Glucose,L1,4.8311,0.2922
+Glucose,L1,4.924,0.309
+Glucose,L1,5.0169,0.3261
+Glucose,L1,5.1099,0.3436
+Glucose,L1,5.2028,0.3615
+Glucose,L1,5.2957,0.3797
+Glucose,L1,5.3886,0.3981
+Glucose,L1,5.4815,0.4168
+Glucose,L1,5.5744,0.4356
+Glucose,L1,5.6673,0.4546
+Glucose,L1,5.7602,0.4737
+Glucose,L1,5.8531,0.4929
+Glucose,L1,5.946,0.5121
+Glucose,L1,6.0389,0.5312
+Glucose,L1,6.1318,0.5503
+Glucose,L1,6.2247,0.5693
+Glucose,L1,6.3176,0.5881
+Glucose,L1,6.4105,0.6067
+Glucose,L1,6.5034,0.625
+Glucose,L1,6.5964,0.6431
+Glucose,L1,6.6893,0.6609
+Glucose,L1,6.7822,0.6783
+Glucose,L1,6.8751,0.6954
+Glucose,L1,6.968,0.712
+Glucose,L1,7.0609,0.7282
+Glucose,L1,7.1538,0.7439
+Glucose,L1,7.2467,0.7591
+Glucose,L1,7.3396,0.7738
+Glucose,L1,7.4325,0.788
+Glucose,L1,7.5254,0.8017
+Glucose,L1,7.6183,0.8148
+Glucose,L1,7.7112,0.8274
+Glucose,L1,7.8041,0.8394
+Glucose,L1,7.897,0.8508
+Glucose,L1,7.99,0.8617
+Glucose,L1,8.0829,0.8721
+Glucose,L1,8.1758,0.8819
+Glucose,L1,8.2687,0.8911
+Glucose,L1,8.3616,0.8998
+Glucose,L1,8.4545,0.908
+Glucose,L1,8.5474,0.9157
+Glucose,L1,8.6403,0.9229
+Glucose,L1,8.7332,0.9296
+Glucose,L1,8.8261,0.9359
+Glucose,L1,8.919,0.9417
+Glucose,L1,9.0119,0.9471
+Glucose,L1,9.1048,0.9521
+Glucose,L1,9.1977,0.9567
+Glucose,L1,9.2906,0.9609
+Glucose,L1,9.3835,0.9648
+Glucose,L1,9.4765,0.9684
+Glucose,L1,9.5694,0.9717
+Glucose,L1,9.6623,0.9746
+Glucose,L1,9.7552,0.9773
+Glucose,L1,9.8481,0.9798
+Glucose,L1,9.941,0.982
+Glucose,L1,10.0339,0.9841
+Glucose,L1,10.1268,0.9859
+Glucose,L1,10.2197,0.9875
+Glucose,L1,10.3126,0.989
+Glucose,L1,10.4055,0.9903
+Glucose,L1,10.4984,0.9915
+Glucose,L1,10.5913,0.9925
+Glucose,L1,10.6842,0.9935
+Glucose,L1,10.7771,0.9943
+Glucose,L1,10.8701,0.995
+Glucose,L1,10.963,0.9957
+Glucose,L1,11.0559,0.9963
+Glucose,L2,0.0,0.0
+Glucose,L2,0.0929,0.0
+Glucose,L2,0.1858,0.0
+Glucose,L2,0.2787,0.0
+Glucose,L2,0.3716,0.0094
+Glucose,L2,0.4645,0.0096
+Glucose,L2,0.5574,0.0102
+Glucose,L2,0.6503,0.0111
+Glucose,L2,0.7433,0.0122
+Glucose,L2,0.8362,0.0137
+Glucose,L2,0.9291,0.0154
+Glucose,L2,1.022,0.0176
+Glucose,L2,1.1149,0.0201
+Glucose,L2,1.2078,0.0231
+Glucose,L2,1.3007,0.0264
+Glucose,L2,1.3936,0.0303
+Glucose,L2,1.4865,0.0347
+Glucose,L2,1.5794,0.0396
+Glucose,L2,1.6723,0.0451
+Glucose,L2,1.7652,0.0512
+Glucose,L2,1.8581,0.0581
+Glucose,L2,1.951,0.0656
+Glucose,L2,2.0439,0.0739
+Glucose,L2,2.1368,0.0829
+Glucose,L2,2.2298,0.0928
+Glucose,L2,2.3227,0.1036
+Glucose,L2,2.4156,0.1152
+Glucose,L2,2.5085,0.1277
+Glucose,L2,2.6014,0.1411
+Glucose,L2,2.6943,0.1555
+Glucose,L2,2.7872,0.1708
+Glucose,L2,2.8801,0.187
+Glucose,L2,2.973,0.2042
+Glucose,L2,3.0659,0.2223
+Glucose,L2,3.1588,0.2412
+Glucose,L2,3.2517,0.261
+Glucose,L2,3.3446,0.2816
+Glucose,L2,3.4375,0.3029
+Glucose,L2,3.5304,0.325
+Glucose,L2,3.6234,0.3476
+Glucose,L2,3.7163,0.3709
+Glucose,L2,3.8092,0.3946
+Glucose,L2,3.9021,0.4187
+Glucose,L2,3.995,0.4431
+Glucose,L2,4.0879,0.4677
+Glucose,L2,4.1808,0.4925
+Glucose,L2,4.2737,0.5173
+Glucose,L2,4.3666,0.542
+Glucose,L2,4.4595,0.5665
+Glucose,L2,4.5524,0.5908
+Glucose,L2,4.6453,0.6148
+Glucose,L2,4.7382,0.6383
+Glucose,L2,4.8311,0.6613
+Glucose,L2,4.924,0.6838
+Glucose,L2,5.0169,0.7056
+Glucose,L2,5.1099,0.7266
+Glucose,L2,5.2028,0.7469
+Glucose,L2,5.2957,0.7663
+Glucose,L2,5.3886,0.7849
+Glucose,L2,5.4815,0.8027
+Glucose,L2,5.5744,0.8195
+Glucose,L2,5.6673,0.8353
+Glucose,L2,5.7602,0.8503
+Glucose,L2,5.8531,0.8643
+Glucose,L2,5.946,0.8774
+Glucose,L2,6.0389,0.8895
+Glucose,L2,6.1318,0.9008
+Glucose,L2,6.2247,0.9112
+Glucose,L2,6.3176,0.9208
+Glucose,L2,6.4105,0.9296
+Glucose,L2,6.5034,0.9376
+Glucose,L2,6.5964,0.9449
+Glucose,L2,6.6893,0.9514
+Glucose,L2,6.7822,0.9574
+Glucose,L2,6.8751,0.9627
+Glucose,L2,6.968,0.9675
+Glucose,L2,7.0609,0.9718
+Glucose,L2,7.1538,0.9756
+Glucose,L2,7.2467,0.9789
+Glucose,L2,7.3396,0.9819
+Glucose,L2,7.4325,0.9845
+Glucose,L2,7.5254,0.9867
+Glucose,L2,7.6183,0.9887
+Glucose,L2,7.7112,0.9904
+Glucose,L2,7.8041,0.9919
+Glucose,L2,7.897,0.9932
+Glucose,L2,7.99,0.9943
+Glucose,L2,8.0829,0.9952
+Glucose,L2,8.1758,0.996
+Glucose,L2,8.2687,0.9967
+Glucose,L2,8.3616,0.9973
+Glucose,L2,8.4545,0.9977
+Glucose,L2,8.5474,0.9981
+Glucose,L2,8.6403,0.9985
+Glucose,L2,8.7332,0.9988
+Glucose,L2,8.8261,0.999
+Glucose,L2,8.919,0.9992
+Glucose,L2,9.0119,0.9993
+Glucose,L2,9.1048,0.9995
+Glucose,L2,9.1977,0.9996
+Glucose,L2,9.2906,0.9997
+Glucose,L2,9.3835,0.9997
+Glucose,L2,9.4765,0.9998
+Glucose,L2,9.5694,0.9998
+Glucose,L2,9.6623,0.9999
+Glucose,L2,9.7552,0.9999
+Glucose,L2,9.8481,0.9999
+Glucose,L2,9.941,0.9999
+Glucose,L2,10.0339,1.0
+Glucose,L2,10.1268,1.0
+Glucose,L2,10.2197,1.0
+Glucose,L2,10.3126,1.0
+Glucose,L2,10.4055,1.0
+Glucose,L2,10.4984,1.0
+Glucose,L2,10.5913,1.0
+Glucose,L2,10.6842,1.0
+Glucose,L2,10.7771,1.0
+Glucose,L2,10.8701,1.0
+Glucose,L2,10.963,1.0
+Glucose,L2,11.0559,1.0
+Glucose,combined,0.0,0.0
+Glucose,combined,0.0929,0.0
+Glucose,combined,0.1858,0.0
+Glucose,combined,0.2787,0.0
+Glucose,combined,0.3716,0.0094
+Glucose,combined,0.4645,0.0096
+Glucose,combined,0.5574,0.0153
+Glucose,combined,0.6503,0.0163
+Glucose,combined,0.7433,0.0177
+Glucose,combined,0.8362,0.0195
+Glucose,combined,0.9291,0.0217
+Glucose,combined,1.022,0.0244
+Glucose,combined,1.1149,0.0276
+Glucose,combined,1.2078,0.0313
+Glucose,combined,1.3007,0.0356
+Glucose,combined,1.3936,0.0405
+Glucose,combined,1.4865,0.0461
+Glucose,combined,1.5794,0.0523
+Glucose,combined,1.6723,0.0593
+Glucose,combined,1.7652,0.0671
+Glucose,combined,1.8581,0.0757
+Glucose,combined,1.951,0.0852
+Glucose,combined,2.0439,0.0956
+Glucose,combined,2.1368,0.107
+Glucose,combined,2.2298,0.1194
+Glucose,combined,2.3227,0.1328
+Glucose,combined,2.4156,0.1472
+Glucose,combined,2.5085,0.1628
+Glucose,combined,2.6014,0.1794
+Glucose,combined,2.6943,0.1971
+Glucose,combined,2.7872,0.2158
+Glucose,combined,2.8801,0.2357
+Glucose,combined,2.973,0.2565
+Glucose,combined,3.0659,0.2783
+Glucose,combined,3.1588,0.3011
+Glucose,combined,3.2517,0.3247
+Glucose,combined,3.3446,0.3491
+Glucose,combined,3.4375,0.3743
+Glucose,combined,3.5304,0.4
+Glucose,combined,3.6234,0.4263
+Glucose,combined,3.7163,0.453
+Glucose,combined,3.8092,0.4799
+Glucose,combined,3.9021,0.5071
+Glucose,combined,3.995,0.5342
+Glucose,combined,4.0879,0.5613
+Glucose,combined,4.1808,0.5881
+Glucose,combined,4.2737,0.6147
+Glucose,combined,4.3666,0.6407
+Glucose,combined,4.4595,0.6662
+Glucose,combined,4.5524,0.691
+Glucose,combined,4.6453,0.715
+Glucose,combined,4.7382,0.7381
+Glucose,combined,4.8311,0.7603
+Glucose,combined,4.924,0.7815
+Glucose,combined,5.0169,0.8016
+Glucose,combined,5.1099,0.8206
+Glucose,combined,5.2028,0.8384
+Glucose,combined,5.2957,0.8551
+Glucose,combined,5.3886,0.8706
+Glucose,combined,5.4815,0.8849
+Glucose,combined,5.5744,0.8981
+Glucose,combined,5.6673,0.9102
+Glucose,combined,5.7602,0.9212
+Glucose,combined,5.8531,0.9312
+Glucose,combined,5.946,0.9402
+Glucose,combined,6.0389,0.9482
+Glucose,combined,6.1318,0.9554
+Glucose,combined,6.2247,0.9618
+Glucose,combined,6.3176,0.9674
+Glucose,combined,6.4105,0.9723
+Glucose,combined,6.5034,0.9766
+Glucose,combined,6.5964,0.9803
+Glucose,combined,6.6893,0.9835
+Glucose,combined,6.7822,0.9863
+Glucose,combined,6.8751,0.9886
+Glucose,combined,6.968,0.9906
+Glucose,combined,7.0609,0.9923
+Glucose,combined,7.1538,0.9937
+Glucose,combined,7.2467,0.9949
+Glucose,combined,7.3396,0.9959
+Glucose,combined,7.4325,0.9967
+Glucose,combined,7.5254,0.9974
+Glucose,combined,7.6183,0.9979
+Glucose,combined,7.7112,0.9983
+Glucose,combined,7.8041,0.9987
+Glucose,combined,7.897,0.999
+Glucose,combined,7.99,0.9992
+Glucose,combined,8.0829,0.9994
+Glucose,combined,8.1758,0.9995
+Glucose,combined,8.2687,0.9996
+Glucose,combined,8.3616,0.9997
+Glucose,combined,8.4545,0.9998
+Glucose,combined,8.5474,0.9998
+Glucose,combined,8.6403,0.9999
+Glucose,combined,8.7332,0.9999
+Glucose,combined,8.8261,0.9999
+Glucose,combined,8.919,1.0
+Glucose,combined,9.0119,1.0
+Glucose,combined,9.1048,1.0
+Glucose,combined,9.1977,1.0
+Glucose,combined,9.2906,1.0
+Glucose,combined,9.3835,1.0
+Glucose,combined,9.4765,1.0
+Glucose,combined,9.5694,1.0
+Glucose,combined,9.6623,1.0
+Glucose,combined,9.7552,1.0
+Glucose,combined,9.8481,1.0
+Glucose,combined,9.941,1.0
+Glucose,combined,10.0339,1.0
+Glucose,combined,10.1268,1.0
+Glucose,combined,10.2197,1.0
+Glucose,combined,10.3126,1.0
+Glucose,combined,10.4055,1.0
+Glucose,combined,10.4984,1.0
+Glucose,combined,10.5913,1.0
+Glucose,combined,10.6842,1.0
+Glucose,combined,10.7771,1.0
+Glucose,combined,10.8701,1.0
+Glucose,combined,10.963,1.0
+Glucose,combined,11.0559,1.0
+Calcium,L1,0.0,0.0
+Calcium,L1,0.0966,0.0
+Calcium,L1,0.1933,0.0
+Calcium,L1,0.2899,0.0
+Calcium,L1,0.3866,0.0
+Calcium,L1,0.4832,0.0
+Calcium,L1,0.5798,0.0
+Calcium,L1,0.6765,0.001
+Calcium,L1,0.7731,0.001
+Calcium,L1,0.8697,0.0011
+Calcium,L1,0.9664,0.0013
+Calcium,L1,1.063,0.0016
+Calcium,L1,1.1597,0.002
+Calcium,L1,1.2563,0.0026
+Calcium,L1,1.3529,0.0033
+Calcium,L1,1.4496,0.0041
+Calcium,L1,1.5462,0.0052
+Calcium,L1,1.6429,0.0065
+Calcium,L1,1.7395,0.0082
+Calcium,L1,1.8361,0.0102
+Calcium,L1,1.9328,0.0126
+Calcium,L1,2.0294,0.0155
+Calcium,L1,2.1261,0.0189
+Calcium,L1,2.2227,0.023
+Calcium,L1,2.3193,0.0278
+Calcium,L1,2.416,0.0334
+Calcium,L1,2.5126,0.0399
+Calcium,L1,2.6092,0.0474
+Calcium,L1,2.7059,0.056
+Calcium,L1,2.8025,0.0658
+Calcium,L1,2.8992,0.0768
+Calcium,L1,2.9958,0.0892
+Calcium,L1,3.0924,0.1031
+Calcium,L1,3.1891,0.1184
+Calcium,L1,3.2857,0.1352
+Calcium,L1,3.3824,0.1537
+Calcium,L1,3.479,0.1737
+Calcium,L1,3.5756,0.1954
+Calcium,L1,3.6723,0.2186
+Calcium,L1,3.7689,0.2433
+Calcium,L1,3.8655,0.2694
+Calcium,L1,3.9622,0.2969
+Calcium,L1,4.0588,0.3255
+Calcium,L1,4.1555,0.3553
+Calcium,L1,4.2521,0.386
+Calcium,L1,4.3487,0.4174
+Calcium,L1,4.4454,0.4493
+Calcium,L1,4.542,0.4816
+Calcium,L1,4.6387,0.514
+Calcium,L1,4.7353,0.5463
+Calcium,L1,4.8319,0.5783
+Calcium,L1,4.9286,0.6097
+Calcium,L1,5.0252,0.6405
+Calcium,L1,5.1218,0.6704
+Calcium,L1,5.2185,0.6993
+Calcium,L1,5.3151,0.7269
+Calcium,L1,5.4118,0.7532
+Calcium,L1,5.5084,0.7781
+Calcium,L1,5.605,0.8015
+Calcium,L1,5.7017,0.8234
+Calcium,L1,5.7983,0.8436
+Calcium,L1,5.895,0.8623
+Calcium,L1,5.9916,0.8794
+Calcium,L1,6.0882,0.8949
+Calcium,L1,6.1849,0.909
+Calcium,L1,6.2815,0.9215
+Calcium,L1,6.3782,0.9328
+Calcium,L1,6.4748,0.9427
+Calcium,L1,6.5714,0.9515
+Calcium,L1,6.6681,0.9591
+Calcium,L1,6.7647,0.9657
+Calcium,L1,6.8613,0.9715
+Calcium,L1,6.958,0.9764
+Calcium,L1,7.0546,0.9805
+Calcium,L1,7.1513,0.9841
+Calcium,L1,7.2479,0.987
+Calcium,L1,7.3445,0.9895
+Calcium,L1,7.4412,0.9916
+Calcium,L1,7.5378,0.9933
+Calcium,L1,7.6345,0.9947
+Calcium,L1,7.7311,0.9958
+Calcium,L1,7.8277,0.9967
+Calcium,L1,7.9244,0.9974
+Calcium,L1,8.021,0.998
+Calcium,L1,8.1176,0.9985
+Calcium,L1,8.2143,0.9988
+Calcium,L1,8.3109,0.9991
+Calcium,L1,8.4076,0.9993
+Calcium,L1,8.5042,0.9995
+Calcium,L1,8.6008,0.9996
+Calcium,L1,8.6975,0.9997
+Calcium,L1,8.7941,0.9998
+Calcium,L1,8.8908,0.9998
+Calcium,L1,8.9874,0.9999
+Calcium,L1,9.084,0.9999
+Calcium,L1,9.1807,0.9999
+Calcium,L1,9.2773,1.0
+Calcium,L1,9.3739,1.0
+Calcium,L1,9.4706,1.0
+Calcium,L1,9.5672,1.0
+Calcium,L1,9.6639,1.0
+Calcium,L1,9.7605,1.0
+Calcium,L1,9.8571,1.0
+Calcium,L1,9.9538,1.0
+Calcium,L1,10.0504,1.0
+Calcium,L1,10.1471,1.0
+Calcium,L1,10.2437,1.0
+Calcium,L1,10.3403,1.0
+Calcium,L1,10.437,1.0
+Calcium,L1,10.5336,1.0
+Calcium,L1,10.6303,1.0
+Calcium,L1,10.7269,1.0
+Calcium,L1,10.8235,1.0
+Calcium,L1,10.9202,1.0
+Calcium,L1,11.0168,1.0
+Calcium,L1,11.1134,1.0
+Calcium,L1,11.2101,1.0
+Calcium,L1,11.3067,1.0
+Calcium,L1,11.4034,1.0
+Calcium,L1,11.5,1.0
+Calcium,L2,0.0,0.0
+Calcium,L2,0.0966,0.0
+Calcium,L2,0.1933,0.0
+Calcium,L2,0.2899,0.0
+Calcium,L2,0.3866,0.0
+Calcium,L2,0.4832,0.0014
+Calcium,L2,0.5798,0.0015
+Calcium,L2,0.6765,0.0017
+Calcium,L2,0.7731,0.0021
+Calcium,L2,0.8697,0.0027
+Calcium,L2,0.9664,0.0035
+Calcium,L2,1.063,0.0046
+Calcium,L2,1.1597,0.006
+Calcium,L2,1.2563,0.0078
+Calcium,L2,1.3529,0.0102
+Calcium,L2,1.4496,0.0131
+Calcium,L2,1.5462,0.0167
+Calcium,L2,1.6429,0.0211
+Calcium,L2,1.7395,0.0266
+Calcium,L2,1.8361,0.0331
+Calcium,L2,1.9328,0.0409
+Calcium,L2,2.0294,0.0501
+Calcium,L2,2.1261,0.061
+Calcium,L2,2.2227,0.0736
+Calcium,L2,2.3193,0.088
+Calcium,L2,2.416,0.1045
+Calcium,L2,2.5126,0.1232
+Calcium,L2,2.6092,0.144
+Calcium,L2,2.7059,0.1671
+Calcium,L2,2.8025,0.1925
+Calcium,L2,2.8992,0.2201
+Calcium,L2,2.9958,0.2498
+Calcium,L2,3.0924,0.2815
+Calcium,L2,3.1891,0.3151
+Calcium,L2,3.2857,0.3502
+Calcium,L2,3.3824,0.3867
+Calcium,L2,3.479,0.4243
+Calcium,L2,3.5756,0.4625
+Calcium,L2,3.6723,0.5011
+Calcium,L2,3.7689,0.5396
+Calcium,L2,3.8655,0.5778
+Calcium,L2,3.9622,0.6153
+Calcium,L2,4.0588,0.6517
+Calcium,L2,4.1555,0.6868
+Calcium,L2,4.2521,0.7203
+Calcium,L2,4.3487,0.7519
+Calcium,L2,4.4454,0.7815
+Calcium,L2,4.542,0.809
+Calcium,L2,4.6387,0.8342
+Calcium,L2,4.7353,0.8572
+Calcium,L2,4.8319,0.8779
+Calcium,L2,4.9286,0.8964
+Calcium,L2,5.0252,0.9128
+Calcium,L2,5.1218,0.9272
+Calcium,L2,5.2185,0.9397
+Calcium,L2,5.3151,0.9504
+Calcium,L2,5.4118,0.9596
+Calcium,L2,5.5084,0.9673
+Calcium,L2,5.605,0.9738
+Calcium,L2,5.7017,0.9791
+Calcium,L2,5.7983,0.9835
+Calcium,L2,5.895,0.9871
+Calcium,L2,5.9916,0.99
+Calcium,L2,6.0882,0.9923
+Calcium,L2,6.1849,0.9941
+Calcium,L2,6.2815,0.9956
+Calcium,L2,6.3782,0.9967
+Calcium,L2,6.4748,0.9975
+Calcium,L2,6.5714,0.9982
+Calcium,L2,6.6681,0.9987
+Calcium,L2,6.7647,0.999
+Calcium,L2,6.8613,0.9993
+Calcium,L2,6.958,0.9995
+Calcium,L2,7.0546,0.9997
+Calcium,L2,7.1513,0.9998
+Calcium,L2,7.2479,0.9998
+Calcium,L2,7.3445,0.9999
+Calcium,L2,7.4412,0.9999
+Calcium,L2,7.5378,0.9999
+Calcium,L2,7.6345,1.0
+Calcium,L2,7.7311,1.0
+Calcium,L2,7.8277,1.0
+Calcium,L2,7.9244,1.0
+Calcium,L2,8.021,1.0
+Calcium,L2,8.1176,1.0
+Calcium,L2,8.2143,1.0
+Calcium,L2,8.3109,1.0
+Calcium,L2,8.4076,1.0
+Calcium,L2,8.5042,1.0
+Calcium,L2,8.6008,1.0
+Calcium,L2,8.6975,1.0
+Calcium,L2,8.7941,1.0
+Calcium,L2,8.8908,1.0
+Calcium,L2,8.9874,1.0
+Calcium,L2,9.084,1.0
+Calcium,L2,9.1807,1.0
+Calcium,L2,9.2773,1.0
+Calcium,L2,9.3739,1.0
+Calcium,L2,9.4706,1.0
+Calcium,L2,9.5672,1.0
+Calcium,L2,9.6639,1.0
+Calcium,L2,9.7605,1.0
+Calcium,L2,9.8571,1.0
+Calcium,L2,9.9538,1.0
+Calcium,L2,10.0504,1.0
+Calcium,L2,10.1471,1.0
+Calcium,L2,10.2437,1.0
+Calcium,L2,10.3403,1.0
+Calcium,L2,10.437,1.0
+Calcium,L2,10.5336,1.0
+Calcium,L2,10.6303,1.0
+Calcium,L2,10.7269,1.0
+Calcium,L2,10.8235,1.0
+Calcium,L2,10.9202,1.0
+Calcium,L2,11.0168,1.0
+Calcium,L2,11.1134,1.0
+Calcium,L2,11.2101,1.0
+Calcium,L2,11.3067,1.0
+Calcium,L2,11.4034,1.0
+Calcium,L2,11.5,1.0
+Calcium,combined,0.0,0.0
+Calcium,combined,0.0966,0.0
+Calcium,combined,0.1933,0.0
+Calcium,combined,0.2899,0.0
+Calcium,combined,0.3866,0.0
+Calcium,combined,0.4832,0.0014
+Calcium,combined,0.5798,0.0015
+Calcium,combined,0.6765,0.0027
+Calcium,combined,0.7731,0.0031
+Calcium,combined,0.8697,0.0038
+Calcium,combined,0.9664,0.0048
+Calcium,combined,1.063,0.0062
+Calcium,combined,1.1597,0.008
+Calcium,combined,1.2563,0.0104
+Calcium,combined,1.3529,0.0134
+Calcium,combined,1.4496,0.0171
+Calcium,combined,1.5462,0.0218
+Calcium,combined,1.6429,0.0275
+Calcium,combined,1.7395,0.0345
+Calcium,combined,1.8361,0.0429
+Calcium,combined,1.9328,0.053
+Calcium,combined,2.0294,0.0648
+Calcium,combined,2.1261,0.0788
+Calcium,combined,2.2227,0.0949
+Calcium,combined,2.3193,0.1134
+Calcium,combined,2.416,0.1345
+Calcium,combined,2.5126,0.1582
+Calcium,combined,2.6092,0.1846
+Calcium,combined,2.7059,0.2138
+Calcium,combined,2.8025,0.2456
+Calcium,combined,2.8992,0.28
+Calcium,combined,2.9958,0.3167
+Calcium,combined,3.0924,0.3556
+Calcium,combined,3.1891,0.3962
+Calcium,combined,3.2857,0.4381
+Calcium,combined,3.3824,0.481
+Calcium,combined,3.479,0.5243
+Calcium,combined,3.5756,0.5675
+Calcium,combined,3.6723,0.6101
+Calcium,combined,3.7689,0.6516
+Calcium,combined,3.8655,0.6916
+Calcium,combined,3.9622,0.7295
+Calcium,combined,4.0588,0.7651
+Calcium,combined,4.1555,0.7981
+Calcium,combined,4.2521,0.8282
+Calcium,combined,4.3487,0.8555
+Calcium,combined,4.4454,0.8797
+Calcium,combined,4.542,0.901
+Calcium,combined,4.6387,0.9194
+Calcium,combined,4.7353,0.9352
+Calcium,combined,4.8319,0.9485
+Calcium,combined,4.9286,0.9596
+Calcium,combined,5.0252,0.9687
+Calcium,combined,5.1218,0.976
+Calcium,combined,5.2185,0.9819
+Calcium,combined,5.3151,0.9865
+Calcium,combined,5.4118,0.99
+Calcium,combined,5.5084,0.9927
+Calcium,combined,5.605,0.9948
+Calcium,combined,5.7017,0.9963
+Calcium,combined,5.7983,0.9974
+Calcium,combined,5.895,0.9982
+Calcium,combined,5.9916,0.9988
+Calcium,combined,6.0882,0.9992
+Calcium,combined,6.1849,0.9995
+Calcium,combined,6.2815,0.9997
+Calcium,combined,6.3782,0.9998
+Calcium,combined,6.4748,0.9999
+Calcium,combined,6.5714,0.9999
+Calcium,combined,6.6681,0.9999
+Calcium,combined,6.7647,1.0
+Calcium,combined,6.8613,1.0
+Calcium,combined,6.958,1.0
+Calcium,combined,7.0546,1.0
+Calcium,combined,7.1513,1.0
+Calcium,combined,7.2479,1.0
+Calcium,combined,7.3445,1.0
+Calcium,combined,7.4412,1.0
+Calcium,combined,7.5378,1.0
+Calcium,combined,7.6345,1.0
+Calcium,combined,7.7311,1.0
+Calcium,combined,7.8277,1.0
+Calcium,combined,7.9244,1.0
+Calcium,combined,8.021,1.0
+Calcium,combined,8.1176,1.0
+Calcium,combined,8.2143,1.0
+Calcium,combined,8.3109,1.0
+Calcium,combined,8.4076,1.0
+Calcium,combined,8.5042,1.0
+Calcium,combined,8.6008,1.0
+Calcium,combined,8.6975,1.0
+Calcium,combined,8.7941,1.0
+Calcium,combined,8.8908,1.0
+Calcium,combined,8.9874,1.0
+Calcium,combined,9.084,1.0
+Calcium,combined,9.1807,1.0
+Calcium,combined,9.2773,1.0
+Calcium,combined,9.3739,1.0
+Calcium,combined,9.4706,1.0
+Calcium,combined,9.5672,1.0
+Calcium,combined,9.6639,1.0
+Calcium,combined,9.7605,1.0
+Calcium,combined,9.8571,1.0
+Calcium,combined,9.9538,1.0
+Calcium,combined,10.0504,1.0
+Calcium,combined,10.1471,1.0
+Calcium,combined,10.2437,1.0
+Calcium,combined,10.3403,1.0
+Calcium,combined,10.437,1.0
+Calcium,combined,10.5336,1.0
+Calcium,combined,10.6303,1.0
+Calcium,combined,10.7269,1.0
+Calcium,combined,10.8235,1.0
+Calcium,combined,10.9202,1.0
+Calcium,combined,11.0168,1.0
+Calcium,combined,11.1134,1.0
+Calcium,combined,11.2101,1.0
+Calcium,combined,11.3067,1.0
+Calcium,combined,11.4034,1.0
+Calcium,combined,11.5,1.0
+TSH,L1,0.0,0.0
+TSH,L1,0.12,0.0
+TSH,L1,0.2401,0.0
+TSH,L1,0.3601,0.0
+TSH,L1,0.4801,0.0
+TSH,L1,0.6002,0.0
+TSH,L1,0.7202,0.0
+TSH,L1,0.8402,0.0
+TSH,L1,0.9602,0.0051
+TSH,L1,1.0803,0.0052
+TSH,L1,1.2003,0.0055
+TSH,L1,1.3203,0.0058
+TSH,L1,1.4404,0.0062
+TSH,L1,1.5604,0.0068
+TSH,L1,1.6804,0.0075
+TSH,L1,1.8005,0.0083
+TSH,L1,1.9205,0.0092
+TSH,L1,2.0405,0.0103
+TSH,L1,2.1605,0.0116
+TSH,L1,2.2806,0.013
+TSH,L1,2.4006,0.0147
+TSH,L1,2.5206,0.0165
+TSH,L1,2.6407,0.0185
+TSH,L1,2.7607,0.0208
+TSH,L1,2.8807,0.0233
+TSH,L1,3.0008,0.0261
+TSH,L1,3.1208,0.0291
+TSH,L1,3.2408,0.0325
+TSH,L1,3.3608,0.0362
+TSH,L1,3.4809,0.0402
+TSH,L1,3.6009,0.0446
+TSH,L1,3.7209,0.0493
+TSH,L1,3.841,0.0545
+TSH,L1,3.961,0.0601
+TSH,L1,4.081,0.0661
+TSH,L1,4.2011,0.0726
+TSH,L1,4.3211,0.0796
+TSH,L1,4.4411,0.087
+TSH,L1,4.5611,0.095
+TSH,L1,4.6812,0.1035
+TSH,L1,4.8012,0.1126
+TSH,L1,4.9212,0.1222
+TSH,L1,5.0413,0.1323
+TSH,L1,5.1613,0.143
+TSH,L1,5.2813,0.1543
+TSH,L1,5.4014,0.1662
+TSH,L1,5.5214,0.1787
+TSH,L1,5.6414,0.1917
+TSH,L1,5.7615,0.2053
+TSH,L1,5.8815,0.2194
+TSH,L1,6.0015,0.2341
+TSH,L1,6.1215,0.2493
+TSH,L1,6.2416,0.265
+TSH,L1,6.3616,0.2812
+TSH,L1,6.4816,0.2979
+TSH,L1,6.6017,0.315
+TSH,L1,6.7217,0.3325
+TSH,L1,6.8417,0.3504
+TSH,L1,6.9618,0.3686
+TSH,L1,7.0818,0.3872
+TSH,L1,7.2018,0.406
+TSH,L1,7.3218,0.425
+TSH,L1,7.4419,0.4442
+TSH,L1,7.5619,0.4635
+TSH,L1,7.6819,0.4829
+TSH,L1,7.802,0.5023
+TSH,L1,7.922,0.5218
+TSH,L1,8.042,0.5412
+TSH,L1,8.1621,0.5604
+TSH,L1,8.2821,0.5796
+TSH,L1,8.4021,0.5986
+TSH,L1,8.5221,0.6173
+TSH,L1,8.6422,0.6357
+TSH,L1,8.7622,0.6539
+TSH,L1,8.8822,0.6717
+TSH,L1,9.0023,0.6891
+TSH,L1,9.1223,0.7061
+TSH,L1,9.2423,0.7227
+TSH,L1,9.3624,0.7388
+TSH,L1,9.4824,0.7544
+TSH,L1,9.6024,0.7695
+TSH,L1,9.7224,0.784
+TSH,L1,9.8425,0.798
+TSH,L1,9.9625,0.8115
+TSH,L1,10.0825,0.8244
+TSH,L1,10.2026,0.8367
+TSH,L1,10.3226,0.8484
+TSH,L1,10.4426,0.8596
+TSH,L1,10.5627,0.8702
+TSH,L1,10.6827,0.8802
+TSH,L1,10.8027,0.8896
+TSH,L1,10.9228,0.8986
+TSH,L1,11.0428,0.9069
+TSH,L1,11.1628,0.9148
+TSH,L1,11.2828,0.9221
+TSH,L1,11.4029,0.929
+TSH,L1,11.5229,0.9354
+TSH,L1,11.6429,0.9413
+TSH,L1,11.763,0.9468
+TSH,L1,11.883,0.9519
+TSH,L1,12.003,0.9566
+TSH,L1,12.1231,0.9609
+TSH,L1,12.2431,0.9648
+TSH,L1,12.3631,0.9684
+TSH,L1,12.4831,0.9718
+TSH,L1,12.6032,0.9748
+TSH,L1,12.7232,0.9775
+TSH,L1,12.8432,0.98
+TSH,L1,12.9633,0.9822
+TSH,L1,13.0833,0.9843
+TSH,L1,13.2033,0.9861
+TSH,L1,13.3234,0.9877
+TSH,L1,13.4434,0.9892
+TSH,L1,13.5634,0.9905
+TSH,L1,13.6834,0.9917
+TSH,L1,13.8035,0.9927
+TSH,L1,13.9235,0.9937
+TSH,L1,14.0435,0.9945
+TSH,L1,14.1636,0.9952
+TSH,L1,14.2836,0.9958
+TSH,L2,0.0,0.0
+TSH,L2,0.12,0.0
+TSH,L2,0.2401,0.0
+TSH,L2,0.3601,0.0
+TSH,L2,0.4801,0.0
+TSH,L2,0.6002,0.0
+TSH,L2,0.7202,0.0
+TSH,L2,0.8402,0.0
+TSH,L2,0.9602,0.0094
+TSH,L2,1.0803,0.0096
+TSH,L2,1.2003,0.01
+TSH,L2,1.3203,0.0107
+TSH,L2,1.4404,0.0115
+TSH,L2,1.5604,0.0126
+TSH,L2,1.6804,0.0139
+TSH,L2,1.8005,0.0154
+TSH,L2,1.9205,0.0172
+TSH,L2,2.0405,0.0192
+TSH,L2,2.1605,0.0216
+TSH,L2,2.2806,0.0242
+TSH,L2,2.4006,0.0272
+TSH,L2,2.5206,0.0305
+TSH,L2,2.6407,0.0342
+TSH,L2,2.7607,0.0383
+TSH,L2,2.8807,0.0427
+TSH,L2,3.0008,0.0477
+TSH,L2,3.1208,0.053
+TSH,L2,3.2408,0.0589
+TSH,L2,3.3608,0.0653
+TSH,L2,3.4809,0.0722
+TSH,L2,3.6009,0.0797
+TSH,L2,3.7209,0.0877
+TSH,L2,3.841,0.0964
+TSH,L2,3.961,0.1057
+TSH,L2,4.081,0.1155
+TSH,L2,4.2011,0.1261
+TSH,L2,4.3211,0.1373
+TSH,L2,4.4411,0.1491
+TSH,L2,4.5611,0.1616
+TSH,L2,4.6812,0.1748
+TSH,L2,4.8012,0.1887
+TSH,L2,4.9212,0.2032
+TSH,L2,5.0413,0.2183
+TSH,L2,5.1613,0.2341
+TSH,L2,5.2813,0.2505
+TSH,L2,5.4014,0.2675
+TSH,L2,5.5214,0.2851
+TSH,L2,5.6414,0.3031
+TSH,L2,5.7615,0.3217
+TSH,L2,5.8815,0.3407
+TSH,L2,6.0015,0.3602
+TSH,L2,6.1215,0.38
+TSH,L2,6.2416,0.4001
+TSH,L2,6.3616,0.4205
+TSH,L2,6.4816,0.4412
+TSH,L2,6.6017,0.4619
+TSH,L2,6.7217,0.4828
+TSH,L2,6.8417,0.5038
+TSH,L2,6.9618,0.5247
+TSH,L2,7.0818,0.5455
+TSH,L2,7.2018,0.5663
+TSH,L2,7.3218,0.5868
+TSH,L2,7.4419,0.6071
+TSH,L2,7.5619,0.6271
+TSH,L2,7.6819,0.6468
+TSH,L2,7.802,0.6661
+TSH,L2,7.922,0.685
+TSH,L2,8.042,0.7034
+TSH,L2,8.1621,0.7213
+TSH,L2,8.2821,0.7387
+TSH,L2,8.4021,0.7554
+TSH,L2,8.5221,0.7716
+TSH,L2,8.6422,0.7872
+TSH,L2,8.7622,0.8021
+TSH,L2,8.8822,0.8164
+TSH,L2,9.0023,0.83
+TSH,L2,9.1223,0.8429
+TSH,L2,9.2423,0.8552
+TSH,L2,9.3624,0.8668
+TSH,L2,9.4824,0.8778
+TSH,L2,9.6024,0.8881
+TSH,L2,9.7224,0.8978
+TSH,L2,9.8425,0.9068
+TSH,L2,9.9625,0.9153
+TSH,L2,10.0825,0.9231
+TSH,L2,10.2026,0.9304
+TSH,L2,10.3226,0.9372
+TSH,L2,10.4426,0.9434
+TSH,L2,10.5627,0.9491
+TSH,L2,10.6827,0.9544
+TSH,L2,10.8027,0.9592
+TSH,L2,10.9228,0.9636
+TSH,L2,11.0428,0.9676
+TSH,L2,11.1628,0.9712
+TSH,L2,11.2828,0.9745
+TSH,L2,11.4029,0.9775
+TSH,L2,11.5229,0.9801
+TSH,L2,11.6429,0.9825
+TSH,L2,11.763,0.9847
+TSH,L2,11.883,0.9866
+TSH,L2,12.003,0.9883
+TSH,L2,12.1231,0.9898
+TSH,L2,12.2431,0.9911
+TSH,L2,12.3631,0.9923
+TSH,L2,12.4831,0.9934
+TSH,L2,12.6032,0.9943
+TSH,L2,12.7232,0.9951
+TSH,L2,12.8432,0.9958
+TSH,L2,12.9633,0.9964
+TSH,L2,13.0833,0.9969
+TSH,L2,13.2033,0.9974
+TSH,L2,13.3234,0.9978
+TSH,L2,13.4434,0.9981
+TSH,L2,13.5634,0.9984
+TSH,L2,13.6834,0.9987
+TSH,L2,13.8035,0.9989
+TSH,L2,13.9235,0.9991
+TSH,L2,14.0435,0.9992
+TSH,L2,14.1636,0.9993
+TSH,L2,14.2836,0.9994
+TSH,combined,0.0,0.0
+TSH,combined,0.12,0.0
+TSH,combined,0.2401,0.0
+TSH,combined,0.3601,0.0
+TSH,combined,0.4801,0.0
+TSH,combined,0.6002,0.0
+TSH,combined,0.7202,0.0
+TSH,combined,0.8402,0.0
+TSH,combined,0.9602,0.0145
+TSH,combined,1.0803,0.0148
+TSH,combined,1.2003,0.0154
+TSH,combined,1.3203,0.0164
+TSH,combined,1.4404,0.0177
+TSH,combined,1.5604,0.0193
+TSH,combined,1.6804,0.0212
+TSH,combined,1.8005,0.0236
+TSH,combined,1.9205,0.0263
+TSH,combined,2.0405,0.0294
+TSH,combined,2.1605,0.0329
+TSH,combined,2.2806,0.0369
+TSH,combined,2.4006,0.0414
+TSH,combined,2.5206,0.0465
+TSH,combined,2.6407,0.0521
+TSH,combined,2.7607,0.0582
+TSH,combined,2.8807,0.065
+TSH,combined,3.0008,0.0725
+TSH,combined,3.1208,0.0806
+TSH,combined,3.2408,0.0895
+TSH,combined,3.3608,0.0991
+TSH,combined,3.4809,0.1095
+TSH,combined,3.6009,0.1207
+TSH,combined,3.7209,0.1327
+TSH,combined,3.841,0.1456
+TSH,combined,3.961,0.1594
+TSH,combined,4.081,0.174
+TSH,combined,4.2011,0.1895
+TSH,combined,4.3211,0.2059
+TSH,combined,4.4411,0.2232
+TSH,combined,4.5611,0.2413
+TSH,combined,4.6812,0.2603
+TSH,combined,4.8012,0.28
+TSH,combined,4.9212,0.3005
+TSH,combined,5.0413,0.3218
+TSH,combined,5.1613,0.3437
+TSH,combined,5.2813,0.3662
+TSH,combined,5.4014,0.3893
+TSH,combined,5.5214,0.4128
+TSH,combined,5.6414,0.4367
+TSH,combined,5.7615,0.4609
+TSH,combined,5.8815,0.4854
+TSH,combined,6.0015,0.51
+TSH,combined,6.1215,0.5346
+TSH,combined,6.2416,0.5591
+TSH,combined,6.3616,0.5835
+TSH,combined,6.4816,0.6076
+TSH,combined,6.6017,0.6314
+TSH,combined,6.7217,0.6548
+TSH,combined,6.8417,0.6776
+TSH,combined,6.9618,0.6999
+TSH,combined,7.0818,0.7215
+TSH,combined,7.2018,0.7423
+TSH,combined,7.3218,0.7624
+TSH,combined,7.4419,0.7816
+TSH,combined,7.5619,0.8
+TSH,combined,7.6819,0.8174
+TSH,combined,7.802,0.8338
+TSH,combined,7.922,0.8494
+TSH,combined,8.042,0.8639
+TSH,combined,8.1621,0.8775
+TSH,combined,8.2821,0.8901
+TSH,combined,8.4021,0.9018
+TSH,combined,8.5221,0.9126
+TSH,combined,8.6422,0.9225
+TSH,combined,8.7622,0.9315
+TSH,combined,8.8822,0.9397
+TSH,combined,9.0023,0.9471
+TSH,combined,9.1223,0.9538
+TSH,combined,9.2423,0.9599
+TSH,combined,9.3624,0.9652
+TSH,combined,9.4824,0.97
+TSH,combined,9.6024,0.9742
+TSH,combined,9.7224,0.9779
+TSH,combined,9.8425,0.9812
+TSH,combined,9.9625,0.984
+TSH,combined,10.0825,0.9865
+TSH,combined,10.2026,0.9886
+TSH,combined,10.3226,0.9905
+TSH,combined,10.4426,0.9921
+TSH,combined,10.5627,0.9934
+TSH,combined,10.6827,0.9945
+TSH,combined,10.8027,0.9955
+TSH,combined,10.9228,0.9963
+TSH,combined,11.0428,0.997
+TSH,combined,11.1628,0.9975
+TSH,combined,11.2828,0.998
+TSH,combined,11.4029,0.9984
+TSH,combined,11.5229,0.9987
+TSH,combined,11.6429,0.999
+TSH,combined,11.763,0.9992
+TSH,combined,11.883,0.9994
+TSH,combined,12.003,0.9995
+TSH,combined,12.1231,0.9996
+TSH,combined,12.2431,0.9997
+TSH,combined,12.3631,0.9998
+TSH,combined,12.4831,0.9998
+TSH,combined,12.6032,0.9999
+TSH,combined,12.7232,0.9999
+TSH,combined,12.8432,0.9999
+TSH,combined,12.9633,0.9999
+TSH,combined,13.0833,1.0
+TSH,combined,13.2033,1.0
+TSH,combined,13.3234,1.0
+TSH,combined,13.4434,1.0
+TSH,combined,13.5634,1.0
+TSH,combined,13.6834,1.0
+TSH,combined,13.8035,1.0
+TSH,combined,13.9235,1.0
+TSH,combined,14.0435,1.0
+TSH,combined,14.1636,1.0
+TSH,combined,14.2836,1.0
+hs-Troponin T,L1,0.0,0.0
+hs-Troponin T,L1,0.1933,0.0
+hs-Troponin T,L1,0.3866,0.0
+hs-Troponin T,L1,0.5798,0.0
+hs-Troponin T,L1,0.7731,0.0
+hs-Troponin T,L1,0.9664,0.0094
+hs-Troponin T,L1,1.1597,0.0098
+hs-Troponin T,L1,1.3529,0.0104
+hs-Troponin T,L1,1.5462,0.0114
+hs-Troponin T,L1,1.7395,0.0127
+hs-Troponin T,L1,1.9328,0.0143
+hs-Troponin T,L1,2.1261,0.0163
+hs-Troponin T,L1,2.3193,0.0187
+hs-Troponin T,L1,2.5126,0.0215
+hs-Troponin T,L1,2.7059,0.0248
+hs-Troponin T,L1,2.8992,0.0286
+hs-Troponin T,L1,3.0924,0.0328
+hs-Troponin T,L1,3.2857,0.0377
+hs-Troponin T,L1,3.479,0.0432
+hs-Troponin T,L1,3.6723,0.0493
+hs-Troponin T,L1,3.8655,0.0561
+hs-Troponin T,L1,4.0588,0.0637
+hs-Troponin T,L1,4.2521,0.0721
+hs-Troponin T,L1,4.4454,0.0813
+hs-Troponin T,L1,4.6387,0.0913
+hs-Troponin T,L1,4.8319,0.1023
+hs-Troponin T,L1,5.0252,0.1142
+hs-Troponin T,L1,5.2185,0.1271
+hs-Troponin T,L1,5.4118,0.1409
+hs-Troponin T,L1,5.605,0.1557
+hs-Troponin T,L1,5.7983,0.1716
+hs-Troponin T,L1,5.9916,0.1884
+hs-Troponin T,L1,6.1849,0.2062
+hs-Troponin T,L1,6.3782,0.2249
+hs-Troponin T,L1,6.5714,0.2446
+hs-Troponin T,L1,6.7647,0.2652
+hs-Troponin T,L1,6.958,0.2867
+hs-Troponin T,L1,7.1513,0.3089
+hs-Troponin T,L1,7.3445,0.3318
+hs-Troponin T,L1,7.5378,0.3554
+hs-Troponin T,L1,7.7311,0.3796
+hs-Troponin T,L1,7.9244,0.4042
+hs-Troponin T,L1,8.1176,0.4293
+hs-Troponin T,L1,8.3109,0.4546
+hs-Troponin T,L1,8.5042,0.4801
+hs-Troponin T,L1,8.6975,0.5057
+hs-Troponin T,L1,8.8908,0.5312
+hs-Troponin T,L1,9.084,0.5566
+hs-Troponin T,L1,9.2773,0.5818
+hs-Troponin T,L1,9.4706,0.6067
+hs-Troponin T,L1,9.6639,0.6312
+hs-Troponin T,L1,9.8571,0.6551
+hs-Troponin T,L1,10.0504,0.6784
+hs-Troponin T,L1,10.2437,0.701
+hs-Troponin T,L1,10.437,0.7229
+hs-Troponin T,L1,10.6303,0.744
+hs-Troponin T,L1,10.8235,0.7642
+hs-Troponin T,L1,11.0168,0.7835
+hs-Troponin T,L1,11.2101,0.8018
+hs-Troponin T,L1,11.4034,0.8192
+hs-Troponin T,L1,11.5966,0.8356
+hs-Troponin T,L1,11.7899,0.851
+hs-Troponin T,L1,11.9832,0.8654
+hs-Troponin T,L1,12.1765,0.8788
+hs-Troponin T,L1,12.3697,0.8912
+hs-Troponin T,L1,12.563,0.9027
+hs-Troponin T,L1,12.7563,0.9133
+hs-Troponin T,L1,12.9496,0.923
+hs-Troponin T,L1,13.1429,0.9318
+hs-Troponin T,L1,13.3361,0.9399
+hs-Troponin T,L1,13.5294,0.9472
+hs-Troponin T,L1,13.7227,0.9537
+hs-Troponin T,L1,13.916,0.9596
+hs-Troponin T,L1,14.1092,0.9649
+hs-Troponin T,L1,14.3025,0.9696
+hs-Troponin T,L1,14.4958,0.9737
+hs-Troponin T,L1,14.6891,0.9774
+hs-Troponin T,L1,14.8824,0.9806
+hs-Troponin T,L1,15.0756,0.9835
+hs-Troponin T,L1,15.2689,0.9859
+hs-Troponin T,L1,15.4622,0.9881
+hs-Troponin T,L1,15.6555,0.9899
+hs-Troponin T,L1,15.8487,0.9915
+hs-Troponin T,L1,16.042,0.9929
+hs-Troponin T,L1,16.2353,0.9941
+hs-Troponin T,L1,16.4286,0.9951
+hs-Troponin T,L1,16.6218,0.9959
+hs-Troponin T,L1,16.8151,0.9966
+hs-Troponin T,L1,17.0084,0.9972
+hs-Troponin T,L1,17.2017,0.9977
+hs-Troponin T,L1,17.395,0.9981
+hs-Troponin T,L1,17.5882,0.9985
+hs-Troponin T,L1,17.7815,0.9988
+hs-Troponin T,L1,17.9748,0.999
+hs-Troponin T,L1,18.1681,0.9992
+hs-Troponin T,L1,18.3613,0.9994
+hs-Troponin T,L1,18.5546,0.9995
+hs-Troponin T,L1,18.7479,0.9996
+hs-Troponin T,L1,18.9412,0.9997
+hs-Troponin T,L1,19.1345,0.9997
+hs-Troponin T,L1,19.3277,0.9998
+hs-Troponin T,L1,19.521,0.9998
+hs-Troponin T,L1,19.7143,0.9999
+hs-Troponin T,L1,19.9076,0.9999
+hs-Troponin T,L1,20.1008,0.9999
+hs-Troponin T,L1,20.2941,0.9999
+hs-Troponin T,L1,20.4874,1.0
+hs-Troponin T,L1,20.6807,1.0
+hs-Troponin T,L1,20.8739,1.0
+hs-Troponin T,L1,21.0672,1.0
+hs-Troponin T,L1,21.2605,1.0
+hs-Troponin T,L1,21.4538,1.0
+hs-Troponin T,L1,21.6471,1.0
+hs-Troponin T,L1,21.8403,1.0
+hs-Troponin T,L1,22.0336,1.0
+hs-Troponin T,L1,22.2269,1.0
+hs-Troponin T,L1,22.4202,1.0
+hs-Troponin T,L1,22.6134,1.0
+hs-Troponin T,L1,22.8067,1.0
+hs-Troponin T,L1,23.0,1.0
+hs-Troponin T,L2,0.0,0.0
+hs-Troponin T,L2,0.1933,0.0
+hs-Troponin T,L2,0.3866,0.0
+hs-Troponin T,L2,0.5798,0.0051
+hs-Troponin T,L2,0.7731,0.0053
+hs-Troponin T,L2,0.9664,0.0055
+hs-Troponin T,L2,1.1597,0.0057
+hs-Troponin T,L2,1.3529,0.0061
+hs-Troponin T,L2,1.5462,0.0066
+hs-Troponin T,L2,1.7395,0.0071
+hs-Troponin T,L2,1.9328,0.0078
+hs-Troponin T,L2,2.1261,0.0085
+hs-Troponin T,L2,2.3193,0.0094
+hs-Troponin T,L2,2.5126,0.0104
+hs-Troponin T,L2,2.7059,0.0115
+hs-Troponin T,L2,2.8992,0.0127
+hs-Troponin T,L2,3.0924,0.0141
+hs-Troponin T,L2,3.2857,0.0157
+hs-Troponin T,L2,3.479,0.0174
+hs-Troponin T,L2,3.6723,0.0192
+hs-Troponin T,L2,3.8655,0.0213
+hs-Troponin T,L2,4.0588,0.0235
+hs-Troponin T,L2,4.2521,0.0259
+hs-Troponin T,L2,4.4454,0.0286
+hs-Troponin T,L2,4.6387,0.0315
+hs-Troponin T,L2,4.8319,0.0346
+hs-Troponin T,L2,5.0252,0.038
+hs-Troponin T,L2,5.2185,0.0417
+hs-Troponin T,L2,5.4118,0.0457
+hs-Troponin T,L2,5.605,0.0499
+hs-Troponin T,L2,5.7983,0.0545
+hs-Troponin T,L2,5.9916,0.0594
+hs-Troponin T,L2,6.1849,0.0646
+hs-Troponin T,L2,6.3782,0.0702
+hs-Troponin T,L2,6.5714,0.0761
+hs-Troponin T,L2,6.7647,0.0824
+hs-Troponin T,L2,6.958,0.0892
+hs-Troponin T,L2,7.1513,0.0963
+hs-Troponin T,L2,7.3445,0.1038
+hs-Troponin T,L2,7.5378,0.1117
+hs-Troponin T,L2,7.7311,0.1201
+hs-Troponin T,L2,7.9244,0.1289
+hs-Troponin T,L2,8.1176,0.1381
+hs-Troponin T,L2,8.3109,0.1478
+hs-Troponin T,L2,8.5042,0.1579
+hs-Troponin T,L2,8.6975,0.1685
+hs-Troponin T,L2,8.8908,0.1795
+hs-Troponin T,L2,9.084,0.1909
+hs-Troponin T,L2,9.2773,0.2028
+hs-Troponin T,L2,9.4706,0.2151
+hs-Troponin T,L2,9.6639,0.2279
+hs-Troponin T,L2,9.8571,0.241
+hs-Troponin T,L2,10.0504,0.2546
+hs-Troponin T,L2,10.2437,0.2685
+hs-Troponin T,L2,10.437,0.2828
+hs-Troponin T,L2,10.6303,0.2975
+hs-Troponin T,L2,10.8235,0.3125
+hs-Troponin T,L2,11.0168,0.3278
+hs-Troponin T,L2,11.2101,0.3435
+hs-Troponin T,L2,11.4034,0.3594
+hs-Troponin T,L2,11.5966,0.3755
+hs-Troponin T,L2,11.7899,0.3919
+hs-Troponin T,L2,11.9832,0.4084
+hs-Troponin T,L2,12.1765,0.4252
+hs-Troponin T,L2,12.3697,0.442
+hs-Troponin T,L2,12.563,0.459
+hs-Troponin T,L2,12.7563,0.476
+hs-Troponin T,L2,12.9496,0.4931
+hs-Troponin T,L2,13.1429,0.5102
+hs-Troponin T,L2,13.3361,0.5273
+hs-Troponin T,L2,13.5294,0.5443
+hs-Troponin T,L2,13.7227,0.5613
+hs-Troponin T,L2,13.916,0.5781
+hs-Troponin T,L2,14.1092,0.5948
+hs-Troponin T,L2,14.3025,0.6113
+hs-Troponin T,L2,14.4958,0.6277
+hs-Troponin T,L2,14.6891,0.6438
+hs-Troponin T,L2,14.8824,0.6596
+hs-Troponin T,L2,15.0756,0.6752
+hs-Troponin T,L2,15.2689,0.6905
+hs-Troponin T,L2,15.4622,0.7054
+hs-Troponin T,L2,15.6555,0.72
+hs-Troponin T,L2,15.8487,0.7343
+hs-Troponin T,L2,16.042,0.7481
+hs-Troponin T,L2,16.2353,0.7616
+hs-Troponin T,L2,16.4286,0.7747
+hs-Troponin T,L2,16.6218,0.7873
+hs-Troponin T,L2,16.8151,0.7996
+hs-Troponin T,L2,17.0084,0.8114
+hs-Troponin T,L2,17.2017,0.8227
+hs-Troponin T,L2,17.395,0.8336
+hs-Troponin T,L2,17.5882,0.8441
+hs-Troponin T,L2,17.7815,0.8542
+hs-Troponin T,L2,17.9748,0.8637
+hs-Troponin T,L2,18.1681,0.8729
+hs-Troponin T,L2,18.3613,0.8816
+hs-Troponin T,L2,18.5546,0.8899
+hs-Troponin T,L2,18.7479,0.8977
+hs-Troponin T,L2,18.9412,0.9052
+hs-Troponin T,L2,19.1345,0.9122
+hs-Troponin T,L2,19.3277,0.9188
+hs-Troponin T,L2,19.521,0.9251
+hs-Troponin T,L2,19.7143,0.931
+hs-Troponin T,L2,19.9076,0.9365
+hs-Troponin T,L2,20.1008,0.9417
+hs-Troponin T,L2,20.2941,0.9465
+hs-Troponin T,L2,20.4874,0.951
+hs-Troponin T,L2,20.6807,0.9552
+hs-Troponin T,L2,20.8739,0.9591
+hs-Troponin T,L2,21.0672,0.9627
+hs-Troponin T,L2,21.2605,0.9661
+hs-Troponin T,L2,21.4538,0.9692
+hs-Troponin T,L2,21.6471,0.972
+hs-Troponin T,L2,21.8403,0.9747
+hs-Troponin T,L2,22.0336,0.9771
+hs-Troponin T,L2,22.2269,0.9793
+hs-Troponin T,L2,22.4202,0.9814
+hs-Troponin T,L2,22.6134,0.9832
+hs-Troponin T,L2,22.8067,0.985
+hs-Troponin T,L2,23.0,0.9865
+hs-Troponin T,combined,0.0,0.0
+hs-Troponin T,combined,0.1933,0.0
+hs-Troponin T,combined,0.3866,0.0
+hs-Troponin T,combined,0.5798,0.0051
+hs-Troponin T,combined,0.7731,0.0053
+hs-Troponin T,combined,0.9664,0.0148
+hs-Troponin T,combined,1.1597,0.0155
+hs-Troponin T,combined,1.3529,0.0165
+hs-Troponin T,combined,1.5462,0.0179
+hs-Troponin T,combined,1.7395,0.0197
+hs-Troponin T,combined,1.9328,0.022
+hs-Troponin T,combined,2.1261,0.0247
+hs-Troponin T,combined,2.3193,0.028
+hs-Troponin T,combined,2.5126,0.0317
+hs-Troponin T,combined,2.7059,0.036
+hs-Troponin T,combined,2.8992,0.0409
+hs-Troponin T,combined,3.0924,0.0465
+hs-Troponin T,combined,3.2857,0.0528
+hs-Troponin T,combined,3.479,0.0598
+hs-Troponin T,combined,3.6723,0.0676
+hs-Troponin T,combined,3.8655,0.0762
+hs-Troponin T,combined,4.0588,0.0857
+hs-Troponin T,combined,4.2521,0.0961
+hs-Troponin T,combined,4.4454,0.1076
+hs-Troponin T,combined,4.6387,0.12
+hs-Troponin T,combined,4.8319,0.1334
+hs-Troponin T,combined,5.0252,0.1479
+hs-Troponin T,combined,5.2185,0.1635
+hs-Troponin T,combined,5.4118,0.1801
+hs-Troponin T,combined,5.605,0.1979
+hs-Troponin T,combined,5.7983,0.2167
+hs-Troponin T,combined,5.9916,0.2366
+hs-Troponin T,combined,6.1849,0.2575
+hs-Troponin T,combined,6.3782,0.2793
+hs-Troponin T,combined,6.5714,0.3021
+hs-Troponin T,combined,6.7647,0.3258
+hs-Troponin T,combined,6.958,0.3503
+hs-Troponin T,combined,7.1513,0.3754
+hs-Troponin T,combined,7.3445,0.4012
+hs-Troponin T,combined,7.5378,0.4274
+hs-Troponin T,combined,7.7311,0.4541
+hs-Troponin T,combined,7.9244,0.481
+hs-Troponin T,combined,8.1176,0.5081
+hs-Troponin T,combined,8.3109,0.5352
+hs-Troponin T,combined,8.5042,0.5622
+hs-Troponin T,combined,8.6975,0.5889
+hs-Troponin T,combined,8.8908,0.6153
+hs-Troponin T,combined,9.084,0.6413
+hs-Troponin T,combined,9.2773,0.6666
+hs-Troponin T,combined,9.4706,0.6913
+hs-Troponin T,combined,9.6639,0.7152
+hs-Troponin T,combined,9.8571,0.7382
+hs-Troponin T,combined,10.0504,0.7603
+hs-Troponin T,combined,10.2437,0.7813
+hs-Troponin T,combined,10.437,0.8013
+hs-Troponin T,combined,10.6303,0.8201
+hs-Troponin T,combined,10.8235,0.8379
+hs-Troponin T,combined,11.0168,0.8545
+hs-Troponin T,combined,11.2101,0.8699
+hs-Troponin T,combined,11.4034,0.8842
+hs-Troponin T,combined,11.5966,0.8973
+hs-Troponin T,combined,11.7899,0.9094
+hs-Troponin T,combined,11.9832,0.9203
+hs-Troponin T,combined,12.1765,0.9303
+hs-Troponin T,combined,12.3697,0.9393
+hs-Troponin T,combined,12.563,0.9474
+hs-Troponin T,combined,12.7563,0.9546
+hs-Troponin T,combined,12.9496,0.961
+hs-Troponin T,combined,13.1429,0.9666
+hs-Troponin T,combined,13.3361,0.9716
+hs-Troponin T,combined,13.5294,0.9759
+hs-Troponin T,combined,13.7227,0.9797
+hs-Troponin T,combined,13.916,0.983
+hs-Troponin T,combined,14.1092,0.9858
+hs-Troponin T,combined,14.3025,0.9882
+hs-Troponin T,combined,14.4958,0.9902
+hs-Troponin T,combined,14.6891,0.9919
+hs-Troponin T,combined,14.8824,0.9934
+hs-Troponin T,combined,15.0756,0.9946
+hs-Troponin T,combined,15.2689,0.9956
+hs-Troponin T,combined,15.4622,0.9965
+hs-Troponin T,combined,15.6555,0.9972
+hs-Troponin T,combined,15.8487,0.9977
+hs-Troponin T,combined,16.042,0.9982
+hs-Troponin T,combined,16.2353,0.9986
+hs-Troponin T,combined,16.4286,0.9989
+hs-Troponin T,combined,16.6218,0.9991
+hs-Troponin T,combined,16.8151,0.9993
+hs-Troponin T,combined,17.0084,0.9995
+hs-Troponin T,combined,17.2017,0.9996
+hs-Troponin T,combined,17.395,0.9997
+hs-Troponin T,combined,17.5882,0.9998
+hs-Troponin T,combined,17.7815,0.9998
+hs-Troponin T,combined,17.9748,0.9999
+hs-Troponin T,combined,18.1681,0.9999
+hs-Troponin T,combined,18.3613,0.9999
+hs-Troponin T,combined,18.5546,0.9999
+hs-Troponin T,combined,18.7479,1.0
+hs-Troponin T,combined,18.9412,1.0
+hs-Troponin T,combined,19.1345,1.0
+hs-Troponin T,combined,19.3277,1.0
+hs-Troponin T,combined,19.521,1.0
+hs-Troponin T,combined,19.7143,1.0
+hs-Troponin T,combined,19.9076,1.0
+hs-Troponin T,combined,20.1008,1.0
+hs-Troponin T,combined,20.2941,1.0
+hs-Troponin T,combined,20.4874,1.0
+hs-Troponin T,combined,20.6807,1.0
+hs-Troponin T,combined,20.8739,1.0
+hs-Troponin T,combined,21.0672,1.0
+hs-Troponin T,combined,21.2605,1.0
+hs-Troponin T,combined,21.4538,1.0
+hs-Troponin T,combined,21.6471,1.0
+hs-Troponin T,combined,21.8403,1.0
+hs-Troponin T,combined,22.0336,1.0
+hs-Troponin T,combined,22.2269,1.0
+hs-Troponin T,combined,22.4202,1.0
+hs-Troponin T,combined,22.6134,1.0
+hs-Troponin T,combined,22.8067,1.0
+hs-Troponin T,combined,23.0,1.0
+Ferritin,L1,0.0,0.0
+Ferritin,L1,0.1305,0.0
+Ferritin,L1,0.2609,0.0
+Ferritin,L1,0.3914,0.0
+Ferritin,L1,0.5218,0.0093
+Ferritin,L1,0.6523,0.0094
+Ferritin,L1,0.7828,0.0098
+Ferritin,L1,0.9132,0.0102
+Ferritin,L1,1.0437,0.0109
+Ferritin,L1,1.1742,0.0118
+Ferritin,L1,1.3046,0.0129
+Ferritin,L1,1.4351,0.0142
+Ferritin,L1,1.5655,0.0157
+Ferritin,L1,1.696,0.0175
+Ferritin,L1,1.8265,0.0195
+Ferritin,L1,1.9569,0.0218
+Ferritin,L1,2.0874,0.0244
+Ferritin,L1,2.2179,0.0273
+Ferritin,L1,2.3483,0.0305
+Ferritin,L1,2.4788,0.034
+Ferritin,L1,2.6092,0.0379
+Ferritin,L1,2.7397,0.0422
+Ferritin,L1,2.8702,0.0469
+Ferritin,L1,3.0006,0.052
+Ferritin,L1,3.1311,0.0576
+Ferritin,L1,3.2616,0.0637
+Ferritin,L1,3.392,0.0702
+Ferritin,L1,3.5225,0.0773
+Ferritin,L1,3.6529,0.0849
+Ferritin,L1,3.7834,0.0931
+Ferritin,L1,3.9139,0.1018
+Ferritin,L1,4.0443,0.1111
+Ferritin,L1,4.1748,0.121
+Ferritin,L1,4.3053,0.1315
+Ferritin,L1,4.4357,0.1426
+Ferritin,L1,4.5662,0.1543
+Ferritin,L1,4.6966,0.1667
+Ferritin,L1,4.8271,0.1797
+Ferritin,L1,4.9576,0.1933
+Ferritin,L1,5.088,0.2075
+Ferritin,L1,5.2185,0.2223
+Ferritin,L1,5.3489,0.2377
+Ferritin,L1,5.4794,0.2537
+Ferritin,L1,5.6099,0.2702
+Ferritin,L1,5.7403,0.2873
+Ferritin,L1,5.8708,0.3048
+Ferritin,L1,6.0013,0.3228
+Ferritin,L1,6.1317,0.3412
+Ferritin,L1,6.2622,0.36
+Ferritin,L1,6.3926,0.3792
+Ferritin,L1,6.5231,0.3986
+Ferritin,L1,6.6536,0.4183
+Ferritin,L1,6.784,0.4382
+Ferritin,L1,6.9145,0.4583
+Ferritin,L1,7.045,0.4785
+Ferritin,L1,7.1754,0.4987
+Ferritin,L1,7.3059,0.519
+Ferritin,L1,7.4363,0.5392
+Ferritin,L1,7.5668,0.5592
+Ferritin,L1,7.6973,0.5792
+Ferritin,L1,7.8277,0.5989
+Ferritin,L1,7.9582,0.6184
+Ferritin,L1,8.0887,0.6376
+Ferritin,L1,8.2191,0.6564
+Ferritin,L1,8.3496,0.6749
+Ferritin,L1,8.48,0.693
+Ferritin,L1,8.6105,0.7106
+Ferritin,L1,8.741,0.7277
+Ferritin,L1,8.8714,0.7442
+Ferritin,L1,9.0019,0.7603
+Ferritin,L1,9.1324,0.7758
+Ferritin,L1,9.2628,0.7907
+Ferritin,L1,9.3933,0.805
+Ferritin,L1,9.5237,0.8186
+Ferritin,L1,9.6542,0.8317
+Ferritin,L1,9.7847,0.8442
+Ferritin,L1,9.9151,0.856
+Ferritin,L1,10.0456,0.8672
+Ferritin,L1,10.1761,0.8778
+Ferritin,L1,10.3065,0.8878
+Ferritin,L1,10.437,0.8971
+Ferritin,L1,10.5674,0.9059
+Ferritin,L1,10.6979,0.9142
+Ferritin,L1,10.8284,0.9219
+Ferritin,L1,10.9588,0.929
+Ferritin,L1,11.0893,0.9356
+Ferritin,L1,11.2197,0.9418
+Ferritin,L1,11.3502,0.9475
+Ferritin,L1,11.4807,0.9527
+Ferritin,L1,11.6111,0.9575
+Ferritin,L1,11.7416,0.9619
+Ferritin,L1,11.8721,0.9659
+Ferritin,L1,12.0025,0.9696
+Ferritin,L1,12.133,0.9729
+Ferritin,L1,12.2634,0.9759
+Ferritin,L1,12.3939,0.9786
+Ferritin,L1,12.5244,0.9811
+Ferritin,L1,12.6548,0.9833
+Ferritin,L1,12.7853,0.9853
+Ferritin,L1,12.9158,0.9871
+Ferritin,L1,13.0462,0.9887
+Ferritin,L1,13.1767,0.9901
+Ferritin,L1,13.3071,0.9914
+Ferritin,L1,13.4376,0.9925
+Ferritin,L1,13.5681,0.9935
+Ferritin,L1,13.6985,0.9944
+Ferritin,L1,13.829,0.9951
+Ferritin,L1,13.9595,0.9958
+Ferritin,L1,14.0899,0.9964
+Ferritin,L1,14.2204,0.9969
+Ferritin,L1,14.3508,0.9973
+Ferritin,L1,14.4813,0.9977
+Ferritin,L1,14.6118,0.9981
+Ferritin,L1,14.7422,0.9984
+Ferritin,L1,14.8727,0.9986
+Ferritin,L1,15.0032,0.9988
+Ferritin,L1,15.1336,0.999
+Ferritin,L1,15.2641,0.9992
+Ferritin,L1,15.3945,0.9993
+Ferritin,L1,15.525,0.9994
+Ferritin,L2,0.0,0.0
+Ferritin,L2,0.1305,0.0
+Ferritin,L2,0.2609,0.0051
+Ferritin,L2,0.3914,0.0053
+Ferritin,L2,0.5218,0.0055
+Ferritin,L2,0.6523,0.0058
+Ferritin,L2,0.7828,0.0062
+Ferritin,L2,0.9132,0.0067
+Ferritin,L2,1.0437,0.0074
+Ferritin,L2,1.1742,0.0081
+Ferritin,L2,1.3046,0.009
+Ferritin,L2,1.4351,0.0099
+Ferritin,L2,1.5655,0.011
+Ferritin,L2,1.696,0.0123
+Ferritin,L2,1.8265,0.0137
+Ferritin,L2,1.9569,0.0153
+Ferritin,L2,2.0874,0.0171
+Ferritin,L2,2.2179,0.019
+Ferritin,L2,2.3483,0.0212
+Ferritin,L2,2.4788,0.0235
+Ferritin,L2,2.6092,0.0261
+Ferritin,L2,2.7397,0.0289
+Ferritin,L2,2.8702,0.032
+Ferritin,L2,3.0006,0.0354
+Ferritin,L2,3.1311,0.0391
+Ferritin,L2,3.2616,0.0431
+Ferritin,L2,3.392,0.0474
+Ferritin,L2,3.5225,0.052
+Ferritin,L2,3.6529,0.057
+Ferritin,L2,3.7834,0.0624
+Ferritin,L2,3.9139,0.0681
+Ferritin,L2,4.0443,0.0743
+Ferritin,L2,4.1748,0.0809
+Ferritin,L2,4.3053,0.0879
+Ferritin,L2,4.4357,0.0953
+Ferritin,L2,4.5662,0.1032
+Ferritin,L2,4.6966,0.1116
+Ferritin,L2,4.8271,0.1204
+Ferritin,L2,4.9576,0.1298
+Ferritin,L2,5.088,0.1396
+Ferritin,L2,5.2185,0.1499
+Ferritin,L2,5.3489,0.1607
+Ferritin,L2,5.4794,0.172
+Ferritin,L2,5.6099,0.1838
+Ferritin,L2,5.7403,0.1961
+Ferritin,L2,5.8708,0.2089
+Ferritin,L2,6.0013,0.2222
+Ferritin,L2,6.1317,0.2359
+Ferritin,L2,6.2622,0.2501
+Ferritin,L2,6.3926,0.2647
+Ferritin,L2,6.5231,0.2798
+Ferritin,L2,6.6536,0.2952
+Ferritin,L2,6.784,0.3111
+Ferritin,L2,6.9145,0.3273
+Ferritin,L2,7.045,0.3438
+Ferritin,L2,7.1754,0.3606
+Ferritin,L2,7.3059,0.3777
+Ferritin,L2,7.4363,0.3951
+Ferritin,L2,7.5668,0.4126
+Ferritin,L2,7.6973,0.4303
+Ferritin,L2,7.8277,0.4482
+Ferritin,L2,7.9582,0.4662
+Ferritin,L2,8.0887,0.4842
+Ferritin,L2,8.2191,0.5023
+Ferritin,L2,8.3496,0.5204
+Ferritin,L2,8.48,0.5384
+Ferritin,L2,8.6105,0.5564
+Ferritin,L2,8.741,0.5742
+Ferritin,L2,8.8714,0.5919
+Ferritin,L2,9.0019,0.6094
+Ferritin,L2,9.1324,0.6267
+Ferritin,L2,9.2628,0.6437
+Ferritin,L2,9.3933,0.6605
+Ferritin,L2,9.5237,0.6769
+Ferritin,L2,9.6542,0.693
+Ferritin,L2,9.7847,0.7088
+Ferritin,L2,9.9151,0.7241
+Ferritin,L2,10.0456,0.7391
+Ferritin,L2,10.1761,0.7536
+Ferritin,L2,10.3065,0.7676
+Ferritin,L2,10.437,0.7813
+Ferritin,L2,10.5674,0.7944
+Ferritin,L2,10.6979,0.8071
+Ferritin,L2,10.8284,0.8192
+Ferritin,L2,10.9588,0.8309
+Ferritin,L2,11.0893,0.8421
+Ferritin,L2,11.2197,0.8528
+Ferritin,L2,11.3502,0.863
+Ferritin,L2,11.4807,0.8727
+Ferritin,L2,11.6111,0.8819
+Ferritin,L2,11.7416,0.8906
+Ferritin,L2,11.8721,0.8989
+Ferritin,L2,12.0025,0.9066
+Ferritin,L2,12.133,0.914
+Ferritin,L2,12.2634,0.9209
+Ferritin,L2,12.3939,0.9274
+Ferritin,L2,12.5244,0.9334
+Ferritin,L2,12.6548,0.9391
+Ferritin,L2,12.7853,0.9444
+Ferritin,L2,12.9158,0.9493
+Ferritin,L2,13.0462,0.9538
+Ferritin,L2,13.1767,0.958
+Ferritin,L2,13.3071,0.9619
+Ferritin,L2,13.4376,0.9655
+Ferritin,L2,13.5681,0.9689
+Ferritin,L2,13.6985,0.9719
+Ferritin,L2,13.829,0.9747
+Ferritin,L2,13.9595,0.9773
+Ferritin,L2,14.0899,0.9796
+Ferritin,L2,14.2204,0.9817
+Ferritin,L2,14.3508,0.9837
+Ferritin,L2,14.4813,0.9854
+Ferritin,L2,14.6118,0.987
+Ferritin,L2,14.7422,0.9885
+Ferritin,L2,14.8727,0.9898
+Ferritin,L2,15.0032,0.9909
+Ferritin,L2,15.1336,0.992
+Ferritin,L2,15.2641,0.9929
+Ferritin,L2,15.3945,0.9938
+Ferritin,L2,15.525,0.9945
+Ferritin,combined,0.0,0.0
+Ferritin,combined,0.1305,0.0
+Ferritin,combined,0.2609,0.0051
+Ferritin,combined,0.3914,0.0053
+Ferritin,combined,0.5218,0.0148
+Ferritin,combined,0.6523,0.0152
+Ferritin,combined,0.7828,0.0159
+Ferritin,combined,0.9132,0.0169
+Ferritin,combined,1.0437,0.0182
+Ferritin,combined,1.1742,0.0198
+Ferritin,combined,1.3046,0.0217
+Ferritin,combined,1.4351,0.024
+Ferritin,combined,1.5655,0.0266
+Ferritin,combined,1.696,0.0296
+Ferritin,combined,1.8265,0.033
+Ferritin,combined,1.9569,0.0368
+Ferritin,combined,2.0874,0.041
+Ferritin,combined,2.2179,0.0457
+Ferritin,combined,2.3483,0.051
+Ferritin,combined,2.4788,0.0567
+Ferritin,combined,2.6092,0.063
+Ferritin,combined,2.7397,0.0699
+Ferritin,combined,2.8702,0.0775
+Ferritin,combined,3.0006,0.0856
+Ferritin,combined,3.1311,0.0945
+Ferritin,combined,3.2616,0.104
+Ferritin,combined,3.392,0.1143
+Ferritin,combined,3.5225,0.1253
+Ferritin,combined,3.6529,0.1371
+Ferritin,combined,3.7834,0.1496
+Ferritin,combined,3.9139,0.163
+Ferritin,combined,4.0443,0.1771
+Ferritin,combined,4.1748,0.192
+Ferritin,combined,4.3053,0.2078
+Ferritin,combined,4.4357,0.2243
+Ferritin,combined,4.5662,0.2416
+Ferritin,combined,4.6966,0.2597
+Ferritin,combined,4.8271,0.2785
+Ferritin,combined,4.9576,0.298
+Ferritin,combined,5.088,0.3181
+Ferritin,combined,5.2185,0.3389
+Ferritin,combined,5.3489,0.3603
+Ferritin,combined,5.4794,0.3821
+Ferritin,combined,5.6099,0.4044
+Ferritin,combined,5.7403,0.4271
+Ferritin,combined,5.8708,0.4501
+Ferritin,combined,6.0013,0.4733
+Ferritin,combined,6.1317,0.4966
+Ferritin,combined,6.2622,0.5201
+Ferritin,combined,6.3926,0.5435
+Ferritin,combined,6.5231,0.5669
+Ferritin,combined,6.6536,0.5901
+Ferritin,combined,6.784,0.613
+Ferritin,combined,6.9145,0.6356
+Ferritin,combined,7.045,0.6578
+Ferritin,combined,7.1754,0.6795
+Ferritin,combined,7.3059,0.7007
+Ferritin,combined,7.4363,0.7212
+Ferritin,combined,7.5668,0.7411
+Ferritin,combined,7.6973,0.7603
+Ferritin,combined,7.8277,0.7787
+Ferritin,combined,7.9582,0.7963
+Ferritin,combined,8.0887,0.8131
+Ferritin,combined,8.2191,0.829
+Ferritin,combined,8.3496,0.8441
+Ferritin,combined,8.48,0.8583
+Ferritin,combined,8.6105,0.8716
+Ferritin,combined,8.741,0.884
+Ferritin,combined,8.8714,0.8956
+Ferritin,combined,9.0019,0.9064
+Ferritin,combined,9.1324,0.9163
+Ferritin,combined,9.2628,0.9254
+Ferritin,combined,9.3933,0.9338
+Ferritin,combined,9.5237,0.9414
+Ferritin,combined,9.6542,0.9483
+Ferritin,combined,9.7847,0.9546
+Ferritin,combined,9.9151,0.9603
+Ferritin,combined,10.0456,0.9653
+Ferritin,combined,10.1761,0.9699
+Ferritin,combined,10.3065,0.9739
+Ferritin,combined,10.437,0.9775
+Ferritin,combined,10.5674,0.9807
+Ferritin,combined,10.6979,0.9834
+Ferritin,combined,10.8284,0.9859
+Ferritin,combined,10.9588,0.988
+Ferritin,combined,11.0893,0.9898
+Ferritin,combined,11.2197,0.9914
+Ferritin,combined,11.3502,0.9928
+Ferritin,combined,11.4807,0.994
+Ferritin,combined,11.6111,0.995
+Ferritin,combined,11.7416,0.9958
+Ferritin,combined,11.8721,0.9966
+Ferritin,combined,12.0025,0.9972
+Ferritin,combined,12.133,0.9977
+Ferritin,combined,12.2634,0.9981
+Ferritin,combined,12.3939,0.9984
+Ferritin,combined,12.5244,0.9987
+Ferritin,combined,12.6548,0.999
+Ferritin,combined,12.7853,0.9992
+Ferritin,combined,12.9158,0.9993
+Ferritin,combined,13.0462,0.9995
+Ferritin,combined,13.1767,0.9996
+Ferritin,combined,13.3071,0.9997
+Ferritin,combined,13.4376,0.9997
+Ferritin,combined,13.5681,0.9998
+Ferritin,combined,13.6985,0.9998
+Ferritin,combined,13.829,0.9999
+Ferritin,combined,13.9595,0.9999
+Ferritin,combined,14.0899,0.9999
+Ferritin,combined,14.2204,0.9999
+Ferritin,combined,14.3508,1.0
+Ferritin,combined,14.4813,1.0
+Ferritin,combined,14.6118,1.0
+Ferritin,combined,14.7422,1.0
+Ferritin,combined,14.8727,1.0
+Ferritin,combined,15.0032,1.0
+Ferritin,combined,15.1336,1.0
+Ferritin,combined,15.2641,1.0
+Ferritin,combined,15.3945,1.0
+Ferritin,combined,15.525,1.0
+PSA,L1,0.0,0.0
+PSA,L1,0.2355,0.0
+PSA,L1,0.471,0.0
+PSA,L1,0.7065,0.0
+PSA,L1,0.942,0.0
+PSA,L1,1.1775,0.0
+PSA,L1,1.4131,0.0
+PSA,L1,1.6486,0.0
+PSA,L1,1.8841,0.0
+PSA,L1,2.1196,0.0
+PSA,L1,2.3551,0.0
+PSA,L1,2.5906,0.0
+PSA,L1,2.8261,0.0
+PSA,L1,3.0616,0.0052
+PSA,L1,3.2971,0.0054
+PSA,L1,3.5326,0.0057
+PSA,L1,3.7681,0.0062
+PSA,L1,4.0037,0.0069
+PSA,L1,4.2392,0.0078
+PSA,L1,4.4747,0.0088
+PSA,L1,4.7102,0.01
+PSA,L1,4.9457,0.0115
+PSA,L1,5.1812,0.0132
+PSA,L1,5.4167,0.0151
+PSA,L1,5.6522,0.0174
+PSA,L1,5.8877,0.0199
+PSA,L1,6.1232,0.0228
+PSA,L1,6.3588,0.0261
+PSA,L1,6.5943,0.0297
+PSA,L1,6.8298,0.0338
+PSA,L1,7.0653,0.0383
+PSA,L1,7.3008,0.0434
+PSA,L1,7.5363,0.0489
+PSA,L1,7.7718,0.055
+PSA,L1,8.0073,0.0617
+PSA,L1,8.2428,0.0691
+PSA,L1,8.4783,0.077
+PSA,L1,8.7138,0.0857
+PSA,L1,8.9494,0.0951
+PSA,L1,9.1849,0.1052
+PSA,L1,9.4204,0.1161
+PSA,L1,9.6559,0.1277
+PSA,L1,9.8914,0.1401
+PSA,L1,10.1269,0.1534
+PSA,L1,10.3624,0.1674
+PSA,L1,10.5979,0.1822
+PSA,L1,10.8334,0.1979
+PSA,L1,11.0689,0.2143
+PSA,L1,11.3044,0.2314
+PSA,L1,11.54,0.2494
+PSA,L1,11.7755,0.268
+PSA,L1,12.011,0.2873
+PSA,L1,12.2465,0.3073
+PSA,L1,12.482,0.3278
+PSA,L1,12.7175,0.3488
+PSA,L1,12.953,0.3704
+PSA,L1,13.1885,0.3923
+PSA,L1,13.424,0.4147
+PSA,L1,13.6595,0.4372
+PSA,L1,13.895,0.46
+PSA,L1,14.1306,0.4829
+PSA,L1,14.3661,0.5059
+PSA,L1,14.6016,0.5289
+PSA,L1,14.8371,0.5517
+PSA,L1,15.0726,0.5744
+PSA,L1,15.3081,0.5969
+PSA,L1,15.5436,0.619
+PSA,L1,15.7791,0.6408
+PSA,L1,16.0146,0.6621
+PSA,L1,16.2501,0.6829
+PSA,L1,16.4857,0.7031
+PSA,L1,16.7212,0.7227
+PSA,L1,16.9567,0.7417
+PSA,L1,17.1922,0.76
+PSA,L1,17.4277,0.7775
+PSA,L1,17.6632,0.7943
+PSA,L1,17.8987,0.8103
+PSA,L1,18.1342,0.8255
+PSA,L1,18.3697,0.8399
+PSA,L1,18.6052,0.8536
+PSA,L1,18.8407,0.8664
+PSA,L1,19.0763,0.8784
+PSA,L1,19.3118,0.8896
+PSA,L1,19.5473,0.9001
+PSA,L1,19.7828,0.9099
+PSA,L1,20.0183,0.9189
+PSA,L1,20.2538,0.9272
+PSA,L1,20.4893,0.9348
+PSA,L1,20.7248,0.9418
+PSA,L1,20.9603,0.9482
+PSA,L1,21.1958,0.9541
+PSA,L1,21.4313,0.9593
+PSA,L1,21.6669,0.9641
+PSA,L1,21.9024,0.9684
+PSA,L1,22.1379,0.9723
+PSA,L1,22.3734,0.9758
+PSA,L1,22.6089,0.9789
+PSA,L1,22.8444,0.9816
+PSA,L1,23.0799,0.9841
+PSA,L1,23.3154,0.9862
+PSA,L1,23.5509,0.9881
+PSA,L1,23.7864,0.9898
+PSA,L1,24.0219,0.9913
+PSA,L1,24.2575,0.9925
+PSA,L1,24.493,0.9936
+PSA,L1,24.7285,0.9946
+PSA,L1,24.964,0.9954
+PSA,L1,25.1995,0.9961
+PSA,L1,25.435,0.9968
+PSA,L1,25.6705,0.9973
+PSA,L1,25.906,0.9977
+PSA,L1,26.1415,0.9981
+PSA,L1,26.377,0.9984
+PSA,L1,26.6126,0.9987
+PSA,L1,26.8481,0.9989
+PSA,L1,27.0836,0.9991
+PSA,L1,27.3191,0.9993
+PSA,L1,27.5546,0.9994
+PSA,L1,27.7901,0.9995
+PSA,L1,28.0256,0.9996
+PSA,L2,0.0,0.0
+PSA,L2,0.2355,0.0
+PSA,L2,0.471,0.0
+PSA,L2,0.7065,0.0
+PSA,L2,0.942,0.0
+PSA,L2,1.1775,0.0
+PSA,L2,1.4131,0.0
+PSA,L2,1.6486,0.0
+PSA,L2,1.8841,0.0
+PSA,L2,2.1196,0.0
+PSA,L2,2.3551,0.0
+PSA,L2,2.5906,0.0
+PSA,L2,2.8261,0.0094
+PSA,L2,3.0616,0.0097
+PSA,L2,3.2971,0.0102
+PSA,L2,3.5326,0.0111
+PSA,L2,3.7681,0.0121
+PSA,L2,4.0037,0.0135
+PSA,L2,4.2392,0.0152
+PSA,L2,4.4747,0.0172
+PSA,L2,4.7102,0.0195
+PSA,L2,4.9457,0.0221
+PSA,L2,5.1812,0.0252
+PSA,L2,5.4167,0.0287
+PSA,L2,5.6522,0.0327
+PSA,L2,5.8877,0.0371
+PSA,L2,6.1232,0.042
+PSA,L2,6.3588,0.0475
+PSA,L2,6.5943,0.0536
+PSA,L2,6.8298,0.0603
+PSA,L2,7.0653,0.0676
+PSA,L2,7.3008,0.0756
+PSA,L2,7.5363,0.0844
+PSA,L2,7.7718,0.0938
+PSA,L2,8.0073,0.1041
+PSA,L2,8.2428,0.1152
+PSA,L2,8.4783,0.127
+PSA,L2,8.7138,0.1397
+PSA,L2,8.9494,0.1532
+PSA,L2,9.1849,0.1676
+PSA,L2,9.4204,0.1828
+PSA,L2,9.6559,0.1988
+PSA,L2,9.8914,0.2157
+PSA,L2,10.1269,0.2334
+PSA,L2,10.3624,0.2518
+PSA,L2,10.5979,0.271
+PSA,L2,10.8334,0.2909
+PSA,L2,11.0689,0.3114
+PSA,L2,11.3044,0.3326
+PSA,L2,11.54,0.3543
+PSA,L2,11.7755,0.3765
+PSA,L2,12.011,0.399
+PSA,L2,12.2465,0.422
+PSA,L2,12.482,0.4452
+PSA,L2,12.7175,0.4686
+PSA,L2,12.953,0.4921
+PSA,L2,13.1885,0.5156
+PSA,L2,13.424,0.5391
+PSA,L2,13.6595,0.5624
+PSA,L2,13.895,0.5856
+PSA,L2,14.1306,0.6084
+PSA,L2,14.3661,0.6309
+PSA,L2,14.6016,0.6529
+PSA,L2,14.8371,0.6744
+PSA,L2,15.0726,0.6954
+PSA,L2,15.3081,0.7157
+PSA,L2,15.5436,0.7354
+PSA,L2,15.7791,0.7543
+PSA,L2,16.0146,0.7725
+PSA,L2,16.2501,0.7899
+PSA,L2,16.4857,0.8065
+PSA,L2,16.7212,0.8223
+PSA,L2,16.9567,0.8372
+PSA,L2,17.1922,0.8513
+PSA,L2,17.4277,0.8646
+PSA,L2,17.6632,0.877
+PSA,L2,17.8987,0.8886
+PSA,L2,18.1342,0.8994
+PSA,L2,18.3697,0.9094
+PSA,L2,18.6052,0.9187
+PSA,L2,18.8407,0.9272
+PSA,L2,19.0763,0.935
+PSA,L2,19.3118,0.9421
+PSA,L2,19.5473,0.9487
+PSA,L2,19.7828,0.9546
+PSA,L2,20.0183,0.9599
+PSA,L2,20.2538,0.9648
+PSA,L2,20.4893,0.9691
+PSA,L2,20.7248,0.973
+PSA,L2,20.9603,0.9765
+PSA,L2,21.1958,0.9796
+PSA,L2,21.4313,0.9823
+PSA,L2,21.6669,0.9847
+PSA,L2,21.9024,0.9869
+PSA,L2,22.1379,0.9887
+PSA,L2,22.3734,0.9904
+PSA,L2,22.6089,0.9918
+PSA,L2,22.8444,0.993
+PSA,L2,23.0799,0.9941
+PSA,L2,23.3154,0.995
+PSA,L2,23.5509,0.9958
+PSA,L2,23.7864,0.9965
+PSA,L2,24.0219,0.997
+PSA,L2,24.2575,0.9975
+PSA,L2,24.493,0.998
+PSA,L2,24.7285,0.9983
+PSA,L2,24.964,0.9986
+PSA,L2,25.1995,0.9988
+PSA,L2,25.435,0.9991
+PSA,L2,25.6705,0.9992
+PSA,L2,25.906,0.9994
+PSA,L2,26.1415,0.9995
+PSA,L2,26.377,0.9996
+PSA,L2,26.6126,0.9997
+PSA,L2,26.8481,0.9997
+PSA,L2,27.0836,0.9998
+PSA,L2,27.3191,0.9998
+PSA,L2,27.5546,0.9999
+PSA,L2,27.7901,0.9999
+PSA,L2,28.0256,0.9999
+PSA,combined,0.0,0.0
+PSA,combined,0.2355,0.0
+PSA,combined,0.471,0.0
+PSA,combined,0.7065,0.0
+PSA,combined,0.942,0.0
+PSA,combined,1.1775,0.0
+PSA,combined,1.4131,0.0
+PSA,combined,1.6486,0.0
+PSA,combined,1.8841,0.0
+PSA,combined,2.1196,0.0
+PSA,combined,2.3551,0.0
+PSA,combined,2.5906,0.0
+PSA,combined,2.8261,0.0094
+PSA,combined,3.0616,0.0148
+PSA,combined,3.2971,0.0156
+PSA,combined,3.5326,0.0167
+PSA,combined,3.7681,0.0183
+PSA,combined,4.0037,0.0203
+PSA,combined,4.2392,0.0228
+PSA,combined,4.4747,0.0258
+PSA,combined,4.7102,0.0293
+PSA,combined,4.9457,0.0334
+PSA,combined,5.1812,0.0381
+PSA,combined,5.4167,0.0434
+PSA,combined,5.6522,0.0495
+PSA,combined,5.8877,0.0563
+PSA,combined,6.1232,0.0639
+PSA,combined,6.3588,0.0723
+PSA,combined,6.5943,0.0817
+PSA,combined,6.8298,0.092
+PSA,combined,7.0653,0.1033
+PSA,combined,7.3008,0.1157
+PSA,combined,7.5363,0.1292
+PSA,combined,7.7718,0.1437
+PSA,combined,8.0073,0.1594
+PSA,combined,8.2428,0.1763
+PSA,combined,8.4783,0.1943
+PSA,combined,8.7138,0.2134
+PSA,combined,8.9494,0.2337
+PSA,combined,9.1849,0.2552
+PSA,combined,9.4204,0.2776
+PSA,combined,9.6559,0.3012
+PSA,combined,9.8914,0.3256
+PSA,combined,10.1269,0.3509
+PSA,combined,10.3624,0.3771
+PSA,combined,10.5979,0.4038
+PSA,combined,10.8334,0.4312
+PSA,combined,11.0689,0.459
+PSA,combined,11.3044,0.4871
+PSA,combined,11.54,0.5153
+PSA,combined,11.7755,0.5436
+PSA,combined,12.011,0.5717
+PSA,combined,12.2465,0.5996
+PSA,combined,12.482,0.627
+PSA,combined,12.7175,0.654
+PSA,combined,12.953,0.6802
+PSA,combined,13.1885,0.7057
+PSA,combined,13.424,0.7302
+PSA,combined,13.6595,0.7538
+PSA,combined,13.895,0.7762
+PSA,combined,14.1306,0.7975
+PSA,combined,14.3661,0.8176
+PSA,combined,14.6016,0.8365
+PSA,combined,14.8371,0.8541
+PSA,combined,15.0726,0.8704
+PSA,combined,15.3081,0.8854
+PSA,combined,15.5436,0.8992
+PSA,combined,15.7791,0.9117
+PSA,combined,16.0146,0.9231
+PSA,combined,16.2501,0.9334
+PSA,combined,16.4857,0.9426
+PSA,combined,16.7212,0.9507
+PSA,combined,16.9567,0.958
+PSA,combined,17.1922,0.9643
+PSA,combined,17.4277,0.9699
+PSA,combined,17.6632,0.9747
+PSA,combined,17.8987,0.9789
+PSA,combined,18.1342,0.9824
+PSA,combined,18.3697,0.9855
+PSA,combined,18.6052,0.9881
+PSA,combined,18.8407,0.9903
+PSA,combined,19.0763,0.9921
+PSA,combined,19.3118,0.9936
+PSA,combined,19.5473,0.9949
+PSA,combined,19.7828,0.9959
+PSA,combined,20.0183,0.9967
+PSA,combined,20.2538,0.9974
+PSA,combined,20.4893,0.998
+PSA,combined,20.7248,0.9984
+PSA,combined,20.9603,0.9988
+PSA,combined,21.1958,0.9991
+PSA,combined,21.4313,0.9993
+PSA,combined,21.6669,0.9995
+PSA,combined,21.9024,0.9996
+PSA,combined,22.1379,0.9997
+PSA,combined,22.3734,0.9998
+PSA,combined,22.6089,0.9998
+PSA,combined,22.8444,0.9999
+PSA,combined,23.0799,0.9999
+PSA,combined,23.3154,0.9999
+PSA,combined,23.5509,1.0
+PSA,combined,23.7864,1.0
+PSA,combined,24.0219,1.0
+PSA,combined,24.2575,1.0
+PSA,combined,24.493,1.0
+PSA,combined,24.7285,1.0
+PSA,combined,24.964,1.0
+PSA,combined,25.1995,1.0
+PSA,combined,25.435,1.0
+PSA,combined,25.6705,1.0
+PSA,combined,25.906,1.0
+PSA,combined,26.1415,1.0
+PSA,combined,26.377,1.0
+PSA,combined,26.6126,1.0
+PSA,combined,26.8481,1.0
+PSA,combined,27.0836,1.0
+PSA,combined,27.3191,1.0
+PSA,combined,27.5546,1.0
+PSA,combined,27.7901,1.0
+PSA,combined,28.0256,1.0
+25-OH vitamin D,L1,0.0,0.0
+25-OH vitamin D,L1,0.2899,0.0
+25-OH vitamin D,L1,0.5798,0.0
+25-OH vitamin D,L1,0.8697,0.0
+25-OH vitamin D,L1,1.1597,0.0
+25-OH vitamin D,L1,1.4496,0.0
+25-OH vitamin D,L1,1.7395,0.0
+25-OH vitamin D,L1,2.0294,0.0051
+25-OH vitamin D,L1,2.3193,0.0052
+25-OH vitamin D,L1,2.6092,0.0054
+25-OH vitamin D,L1,2.8992,0.0057
+25-OH vitamin D,L1,3.1891,0.0061
+25-OH vitamin D,L1,3.479,0.0065
+25-OH vitamin D,L1,3.7689,0.0071
+25-OH vitamin D,L1,4.0588,0.0078
+25-OH vitamin D,L1,4.3487,0.0085
+25-OH vitamin D,L1,4.6387,0.0094
+25-OH vitamin D,L1,4.9286,0.0104
+25-OH vitamin D,L1,5.2185,0.0115
+25-OH vitamin D,L1,5.5084,0.0128
+25-OH vitamin D,L1,5.7983,0.0141
+25-OH vitamin D,L1,6.0882,0.0157
+25-OH vitamin D,L1,6.3782,0.0174
+25-OH vitamin D,L1,6.6681,0.0193
+25-OH vitamin D,L1,6.958,0.0214
+25-OH vitamin D,L1,7.2479,0.0237
+25-OH vitamin D,L1,7.5378,0.0261
+25-OH vitamin D,L1,7.8277,0.0288
+25-OH vitamin D,L1,8.1176,0.0318
+25-OH vitamin D,L1,8.4076,0.035
+25-OH vitamin D,L1,8.6975,0.0384
+25-OH vitamin D,L1,8.9874,0.0422
+25-OH vitamin D,L1,9.2773,0.0462
+25-OH vitamin D,L1,9.5672,0.0506
+25-OH vitamin D,L1,9.8571,0.0552
+25-OH vitamin D,L1,10.1471,0.0602
+25-OH vitamin D,L1,10.437,0.0655
+25-OH vitamin D,L1,10.7269,0.0712
+25-OH vitamin D,L1,11.0168,0.0773
+25-OH vitamin D,L1,11.3067,0.0838
+25-OH vitamin D,L1,11.5966,0.0906
+25-OH vitamin D,L1,11.8866,0.0979
+25-OH vitamin D,L1,12.1765,0.1056
+25-OH vitamin D,L1,12.4664,0.1137
+25-OH vitamin D,L1,12.7563,0.1223
+25-OH vitamin D,L1,13.0462,0.1313
+25-OH vitamin D,L1,13.3361,0.1407
+25-OH vitamin D,L1,13.6261,0.1506
+25-OH vitamin D,L1,13.916,0.161
+25-OH vitamin D,L1,14.2059,0.1718
+25-OH vitamin D,L1,14.4958,0.183
+25-OH vitamin D,L1,14.7857,0.1947
+25-OH vitamin D,L1,15.0756,0.2069
+25-OH vitamin D,L1,15.3655,0.2194
+25-OH vitamin D,L1,15.6555,0.2325
+25-OH vitamin D,L1,15.9454,0.2459
+25-OH vitamin D,L1,16.2353,0.2597
+25-OH vitamin D,L1,16.5252,0.2739
+25-OH vitamin D,L1,16.8151,0.2885
+25-OH vitamin D,L1,17.105,0.3035
+25-OH vitamin D,L1,17.395,0.3188
+25-OH vitamin D,L1,17.6849,0.3344
+25-OH vitamin D,L1,17.9748,0.3503
+25-OH vitamin D,L1,18.2647,0.3665
+25-OH vitamin D,L1,18.5546,0.3829
+25-OH vitamin D,L1,18.8445,0.3995
+25-OH vitamin D,L1,19.1345,0.4163
+25-OH vitamin D,L1,19.4244,0.4333
+25-OH vitamin D,L1,19.7143,0.4504
+25-OH vitamin D,L1,20.0042,0.4675
+25-OH vitamin D,L1,20.2941,0.4848
+25-OH vitamin D,L1,20.584,0.5021
+25-OH vitamin D,L1,20.8739,0.5193
+25-OH vitamin D,L1,21.1639,0.5365
+25-OH vitamin D,L1,21.4538,0.5537
+25-OH vitamin D,L1,21.7437,0.5708
+25-OH vitamin D,L1,22.0336,0.5877
+25-OH vitamin D,L1,22.3235,0.6045
+25-OH vitamin D,L1,22.6134,0.621
+25-OH vitamin D,L1,22.9034,0.6374
+25-OH vitamin D,L1,23.1933,0.6535
+25-OH vitamin D,L1,23.4832,0.6693
+25-OH vitamin D,L1,23.7731,0.6849
+25-OH vitamin D,L1,24.063,0.7001
+25-OH vitamin D,L1,24.3529,0.715
+25-OH vitamin D,L1,24.6429,0.7295
+25-OH vitamin D,L1,24.9328,0.7436
+25-OH vitamin D,L1,25.2227,0.7573
+25-OH vitamin D,L1,25.5126,0.7707
+25-OH vitamin D,L1,25.8025,0.7836
+25-OH vitamin D,L1,26.0924,0.7961
+25-OH vitamin D,L1,26.3824,0.8081
+25-OH vitamin D,L1,26.6723,0.8197
+25-OH vitamin D,L1,26.9622,0.8309
+25-OH vitamin D,L1,27.2521,0.8415
+25-OH vitamin D,L1,27.542,0.8518
+25-OH vitamin D,L1,27.8319,0.8616
+25-OH vitamin D,L1,28.1218,0.8709
+25-OH vitamin D,L1,28.4118,0.8798
+25-OH vitamin D,L1,28.7017,0.8882
+25-OH vitamin D,L1,28.9916,0.8963
+25-OH vitamin D,L1,29.2815,0.9039
+25-OH vitamin D,L1,29.5714,0.911
+25-OH vitamin D,L1,29.8613,0.9178
+25-OH vitamin D,L1,30.1513,0.9242
+25-OH vitamin D,L1,30.4412,0.9302
+25-OH vitamin D,L1,30.7311,0.9358
+25-OH vitamin D,L1,31.021,0.941
+25-OH vitamin D,L1,31.3109,0.946
+25-OH vitamin D,L1,31.6008,0.9505
+25-OH vitamin D,L1,31.8908,0.9548
+25-OH vitamin D,L1,32.1807,0.9588
+25-OH vitamin D,L1,32.4706,0.9625
+25-OH vitamin D,L1,32.7605,0.9659
+25-OH vitamin D,L1,33.0504,0.969
+25-OH vitamin D,L1,33.3403,0.9719
+25-OH vitamin D,L1,33.6303,0.9746
+25-OH vitamin D,L1,33.9202,0.9771
+25-OH vitamin D,L1,34.2101,0.9793
+25-OH vitamin D,L1,34.5,0.9814
+25-OH vitamin D,L2,0.0,0.0
+25-OH vitamin D,L2,0.2899,0.0
+25-OH vitamin D,L2,0.5798,0.0
+25-OH vitamin D,L2,0.8697,0.0093
+25-OH vitamin D,L2,1.1597,0.0095
+25-OH vitamin D,L2,1.4496,0.0098
+25-OH vitamin D,L2,1.7395,0.0103
+25-OH vitamin D,L2,2.0294,0.011
+25-OH vitamin D,L2,2.3193,0.0119
+25-OH vitamin D,L2,2.6092,0.0129
+25-OH vitamin D,L2,2.8992,0.0142
+25-OH vitamin D,L2,3.1891,0.0158
+25-OH vitamin D,L2,3.479,0.0175
+25-OH vitamin D,L2,3.7689,0.0195
+25-OH vitamin D,L2,4.0588,0.0218
+25-OH vitamin D,L2,4.3487,0.0244
+25-OH vitamin D,L2,4.6387,0.0272
+25-OH vitamin D,L2,4.9286,0.0304
+25-OH vitamin D,L2,5.2185,0.0339
+25-OH vitamin D,L2,5.5084,0.0378
+25-OH vitamin D,L2,5.7983,0.0421
+25-OH vitamin D,L2,6.0882,0.0467
+25-OH vitamin D,L2,6.3782,0.0518
+25-OH vitamin D,L2,6.6681,0.0573
+25-OH vitamin D,L2,6.958,0.0633
+25-OH vitamin D,L2,7.2479,0.0698
+25-OH vitamin D,L2,7.5378,0.0768
+25-OH vitamin D,L2,7.8277,0.0843
+25-OH vitamin D,L2,8.1176,0.0924
+25-OH vitamin D,L2,8.4076,0.101
+25-OH vitamin D,L2,8.6975,0.1102
+25-OH vitamin D,L2,8.9874,0.12
+25-OH vitamin D,L2,9.2773,0.1303
+25-OH vitamin D,L2,9.5672,0.1413
+25-OH vitamin D,L2,9.8571,0.1529
+25-OH vitamin D,L2,10.1471,0.1651
+25-OH vitamin D,L2,10.437,0.178
+25-OH vitamin D,L2,10.7269,0.1914
+25-OH vitamin D,L2,11.0168,0.2054
+25-OH vitamin D,L2,11.3067,0.2201
+25-OH vitamin D,L2,11.5966,0.2353
+25-OH vitamin D,L2,11.8866,0.2511
+25-OH vitamin D,L2,12.1765,0.2674
+25-OH vitamin D,L2,12.4664,0.2843
+25-OH vitamin D,L2,12.7563,0.3016
+25-OH vitamin D,L2,13.0462,0.3194
+25-OH vitamin D,L2,13.3361,0.3376
+25-OH vitamin D,L2,13.6261,0.3563
+25-OH vitamin D,L2,13.916,0.3752
+25-OH vitamin D,L2,14.2059,0.3945
+25-OH vitamin D,L2,14.4958,0.414
+25-OH vitamin D,L2,14.7857,0.4338
+25-OH vitamin D,L2,15.0756,0.4537
+25-OH vitamin D,L2,15.3655,0.4737
+25-OH vitamin D,L2,15.6555,0.4938
+25-OH vitamin D,L2,15.9454,0.5139
+25-OH vitamin D,L2,16.2353,0.534
+25-OH vitamin D,L2,16.5252,0.554
+25-OH vitamin D,L2,16.8151,0.5739
+25-OH vitamin D,L2,17.105,0.5935
+25-OH vitamin D,L2,17.395,0.613
+25-OH vitamin D,L2,17.6849,0.6321
+25-OH vitamin D,L2,17.9748,0.651
+25-OH vitamin D,L2,18.2647,0.6694
+25-OH vitamin D,L2,18.5546,0.6875
+25-OH vitamin D,L2,18.8445,0.7051
+25-OH vitamin D,L2,19.1345,0.7223
+25-OH vitamin D,L2,19.4244,0.7389
+25-OH vitamin D,L2,19.7143,0.7551
+25-OH vitamin D,L2,20.0042,0.7706
+25-OH vitamin D,L2,20.2941,0.7856
+25-OH vitamin D,L2,20.584,0.8001
+25-OH vitamin D,L2,20.8739,0.8139
+25-OH vitamin D,L2,21.1639,0.8271
+25-OH vitamin D,L2,21.4538,0.8397
+25-OH vitamin D,L2,21.7437,0.8517
+25-OH vitamin D,L2,22.0336,0.863
+25-OH vitamin D,L2,22.3235,0.8738
+25-OH vitamin D,L2,22.6134,0.8839
+25-OH vitamin D,L2,22.9034,0.8935
+25-OH vitamin D,L2,23.1933,0.9025
+25-OH vitamin D,L2,23.4832,0.9109
+25-OH vitamin D,L2,23.7731,0.9187
+25-OH vitamin D,L2,24.063,0.926
+25-OH vitamin D,L2,24.3529,0.9329
+25-OH vitamin D,L2,24.6429,0.9392
+25-OH vitamin D,L2,24.9328,0.945
+25-OH vitamin D,L2,25.2227,0.9504
+25-OH vitamin D,L2,25.5126,0.9554
+25-OH vitamin D,L2,25.8025,0.9599
+25-OH vitamin D,L2,26.0924,0.9641
+25-OH vitamin D,L2,26.3824,0.9679
+25-OH vitamin D,L2,26.6723,0.9713
+25-OH vitamin D,L2,26.9622,0.9745
+25-OH vitamin D,L2,27.2521,0.9773
+25-OH vitamin D,L2,27.542,0.9799
+25-OH vitamin D,L2,27.8319,0.9822
+25-OH vitamin D,L2,28.1218,0.9843
+25-OH vitamin D,L2,28.4118,0.9862
+25-OH vitamin D,L2,28.7017,0.9879
+25-OH vitamin D,L2,28.9916,0.9894
+25-OH vitamin D,L2,29.2815,0.9907
+25-OH vitamin D,L2,29.5714,0.9919
+25-OH vitamin D,L2,29.8613,0.993
+25-OH vitamin D,L2,30.1513,0.9939
+25-OH vitamin D,L2,30.4412,0.9947
+25-OH vitamin D,L2,30.7311,0.9954
+25-OH vitamin D,L2,31.021,0.9961
+25-OH vitamin D,L2,31.3109,0.9966
+25-OH vitamin D,L2,31.6008,0.9971
+25-OH vitamin D,L2,31.8908,0.9975
+25-OH vitamin D,L2,32.1807,0.9979
+25-OH vitamin D,L2,32.4706,0.9982
+25-OH vitamin D,L2,32.7605,0.9985
+25-OH vitamin D,L2,33.0504,0.9987
+25-OH vitamin D,L2,33.3403,0.9989
+25-OH vitamin D,L2,33.6303,0.9991
+25-OH vitamin D,L2,33.9202,0.9992
+25-OH vitamin D,L2,34.2101,0.9993
+25-OH vitamin D,L2,34.5,0.9994
+25-OH vitamin D,combined,0.0,0.0
+25-OH vitamin D,combined,0.2899,0.0
+25-OH vitamin D,combined,0.5798,0.0
+25-OH vitamin D,combined,0.8697,0.0093
+25-OH vitamin D,combined,1.1597,0.0095
+25-OH vitamin D,combined,1.4496,0.0098
+25-OH vitamin D,combined,1.7395,0.0103
+25-OH vitamin D,combined,2.0294,0.016
+25-OH vitamin D,combined,2.3193,0.017
+25-OH vitamin D,combined,2.6092,0.0183
+25-OH vitamin D,combined,2.8992,0.0199
+25-OH vitamin D,combined,3.1891,0.0218
+25-OH vitamin D,combined,3.479,0.024
+25-OH vitamin D,combined,3.7689,0.0265
+25-OH vitamin D,combined,4.0588,0.0294
+25-OH vitamin D,combined,4.3487,0.0327
+25-OH vitamin D,combined,4.6387,0.0364
+25-OH vitamin D,combined,4.9286,0.0405
+25-OH vitamin D,combined,5.2185,0.045
+25-OH vitamin D,combined,5.5084,0.0501
+25-OH vitamin D,combined,5.7983,0.0556
+25-OH vitamin D,combined,6.0882,0.0617
+25-OH vitamin D,combined,6.3782,0.0683
+25-OH vitamin D,combined,6.6681,0.0755
+25-OH vitamin D,combined,6.958,0.0834
+25-OH vitamin D,combined,7.2479,0.0918
+25-OH vitamin D,combined,7.5378,0.1009
+25-OH vitamin D,combined,7.8277,0.1107
+25-OH vitamin D,combined,8.1176,0.1212
+25-OH vitamin D,combined,8.4076,0.1324
+25-OH vitamin D,combined,8.6975,0.1444
+25-OH vitamin D,combined,8.9874,0.1571
+25-OH vitamin D,combined,9.2773,0.1705
+25-OH vitamin D,combined,9.5672,0.1847
+25-OH vitamin D,combined,9.8571,0.1997
+25-OH vitamin D,combined,10.1471,0.2154
+25-OH vitamin D,combined,10.437,0.2318
+25-OH vitamin D,combined,10.7269,0.249
+25-OH vitamin D,combined,11.0168,0.2669
+25-OH vitamin D,combined,11.3067,0.2854
+25-OH vitamin D,combined,11.5966,0.3046
+25-OH vitamin D,combined,11.8866,0.3244
+25-OH vitamin D,combined,12.1765,0.3448
+25-OH vitamin D,combined,12.4664,0.3657
+25-OH vitamin D,combined,12.7563,0.387
+25-OH vitamin D,combined,13.0462,0.4088
+25-OH vitamin D,combined,13.3361,0.4308
+25-OH vitamin D,combined,13.6261,0.4532
+25-OH vitamin D,combined,13.916,0.4758
+25-OH vitamin D,combined,14.2059,0.4985
+25-OH vitamin D,combined,14.4958,0.5213
+25-OH vitamin D,combined,14.7857,0.544
+25-OH vitamin D,combined,15.0756,0.5667
+25-OH vitamin D,combined,15.3655,0.5892
+25-OH vitamin D,combined,15.6555,0.6115
+25-OH vitamin D,combined,15.9454,0.6335
+25-OH vitamin D,combined,16.2353,0.655
+25-OH vitamin D,combined,16.5252,0.6762
+25-OH vitamin D,combined,16.8151,0.6968
+25-OH vitamin D,combined,17.105,0.7169
+25-OH vitamin D,combined,17.395,0.7364
+25-OH vitamin D,combined,17.6849,0.7552
+25-OH vitamin D,combined,17.9748,0.7732
+25-OH vitamin D,combined,18.2647,0.7906
+25-OH vitamin D,combined,18.5546,0.8072
+25-OH vitamin D,combined,18.8445,0.8229
+25-OH vitamin D,combined,19.1345,0.8379
+25-OH vitamin D,combined,19.4244,0.8521
+25-OH vitamin D,combined,19.7143,0.8654
+25-OH vitamin D,combined,20.0042,0.8779
+25-OH vitamin D,combined,20.2941,0.8896
+25-OH vitamin D,combined,20.584,0.9004
+25-OH vitamin D,combined,20.8739,0.9105
+25-OH vitamin D,combined,21.1639,0.9199
+25-OH vitamin D,combined,21.4538,0.9284
+25-OH vitamin D,combined,21.7437,0.9363
+25-OH vitamin D,combined,22.0336,0.9435
+25-OH vitamin D,combined,22.3235,0.9501
+25-OH vitamin D,combined,22.6134,0.956
+25-OH vitamin D,combined,22.9034,0.9614
+25-OH vitamin D,combined,23.1933,0.9662
+25-OH vitamin D,combined,23.4832,0.9705
+25-OH vitamin D,combined,23.7731,0.9744
+25-OH vitamin D,combined,24.063,0.9778
+25-OH vitamin D,combined,24.3529,0.9809
+25-OH vitamin D,combined,24.6429,0.9835
+25-OH vitamin D,combined,24.9328,0.9859
+25-OH vitamin D,combined,25.2227,0.988
+25-OH vitamin D,combined,25.5126,0.9898
+25-OH vitamin D,combined,25.8025,0.9913
+25-OH vitamin D,combined,26.0924,0.9927
+25-OH vitamin D,combined,26.3824,0.9938
+25-OH vitamin D,combined,26.6723,0.9948
+25-OH vitamin D,combined,26.9622,0.9957
+25-OH vitamin D,combined,27.2521,0.9964
+25-OH vitamin D,combined,27.542,0.997
+25-OH vitamin D,combined,27.8319,0.9975
+25-OH vitamin D,combined,28.1218,0.998
+25-OH vitamin D,combined,28.4118,0.9983
+25-OH vitamin D,combined,28.7017,0.9986
+25-OH vitamin D,combined,28.9916,0.9989
+25-OH vitamin D,combined,29.2815,0.9991
+25-OH vitamin D,combined,29.5714,0.9993
+25-OH vitamin D,combined,29.8613,0.9994
+25-OH vitamin D,combined,30.1513,0.9995
+25-OH vitamin D,combined,30.4412,0.9996
+25-OH vitamin D,combined,30.7311,0.9997
+25-OH vitamin D,combined,31.021,0.9998
+25-OH vitamin D,combined,31.3109,0.9998
+25-OH vitamin D,combined,31.6008,0.9999
+25-OH vitamin D,combined,31.8908,0.9999
+25-OH vitamin D,combined,32.1807,0.9999
+25-OH vitamin D,combined,32.4706,0.9999
+25-OH vitamin D,combined,32.7605,0.9999
+25-OH vitamin D,combined,33.0504,1.0
+25-OH vitamin D,combined,33.3403,1.0
+25-OH vitamin D,combined,33.6303,1.0
+25-OH vitamin D,combined,33.9202,1.0
+25-OH vitamin D,combined,34.2101,1.0
+25-OH vitamin D,combined,34.5,1.0

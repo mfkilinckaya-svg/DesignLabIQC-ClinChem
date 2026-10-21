@@ -35,6 +35,8 @@ SRC = [("BV EFLM (optimal)", "o", OI["blue"], "none"), ("BV EFLM (desirable)", "
        ("Belgium WIV-ISP", "P", OI["grey"], "full"), ("Turkey MoH 2026", "*", OI["orange"], "none")]
 LBL = {"CLIA": "CLIA 2025", "China WS/T 403-2024": "China WS/T 403", "Belgium WIV-ISP": "Belgium WIV-ISP",
        "Turkey MoH 2026": "Turkey MoH 2026", "SEKK Dmax": "SEKK Dmax", "RfB": "RfB"}
+pd.DataFrame([{"analyte": o["analyte"], "source": r["source"], "tea_pct": r["tea"], "sigma_weaker_level": min(r["sigma"]), "adopted": r["source"] == o["chosen"]["source"]}
+              for o in R for r in o["rows"]]).round(3).to_csv("results/figure1_sigma_by_source.csv", index=False)
 fig, ax = plt.subplots(figsize=(190 * MM, 118 * MM))
 ys = np.arange(len(order))[::-1]
 for o, y in zip(R, ys):
@@ -146,7 +148,7 @@ fig.tight_layout(); save(fig, "Figure_3")
 M = pd.read_csv("data/prepared/qc_measurements.csv", low_memory=False)
 M["month"] = M.timestamp.str[:7]
 EX = [("ALT", "L1"), ("25-OH vitamin D", "L1"), ("hs-Troponin T", "L1"), ("Ferritin", "L1")]
-INST_MK = {}
+F4 = []
 fig, axs = plt.subplots(2, 2, figsize=(190 * MM, 120 * MM), sharex=False)
 for ax, (a, lv) in zip(axs.flat, EX):
     d = M[(M.analyte == a) & (M.level == lv) & (M.used_for_imprecision == 1)].copy()
@@ -156,8 +158,10 @@ for ax, (a, lv) in zip(axs.flat, EX):
     mm = d.groupby(["instrument", "month"]).z.mean().reset_index()
     months = sorted(M.month.unique()); xi = {m: i for i, m in enumerate(months)}
     cols = [OI["blue"], OI["orange"], OI["green"], OI["purple"]]
-    for (inst, g), col in zip(mm.groupby("instrument"), cols):
-        ax.plot([xi[m] for m in g.month], g.z, marker="o", ms=2.5, lw=0.9, color=col, label=inst)
+    STY = [("o", "-"), ("s", "--"), ("^", "-."), ("D", ":")]
+    mm["analyte"] = a; mm["level"] = lv; F4.append(mm)
+    for (inst, g), col, (mk, ls) in zip(mm.groupby("instrument"), cols, STY):
+        ax.plot([xi[m] for m in g.month], g.z, marker=mk, ms=2.5, lw=0.9, ls=ls, color=col, label=inst)
     # LIS target as offset from lot mean
     d["lm"] = lotmean
     t = d.groupby("month").apply(lambda g: ((g.target_in_force - g.lm) / (cv * g.lm)).mean())
@@ -168,20 +172,24 @@ for ax, (a, lv) in zip(axs.flat, EX):
     for s in ["top", "right"]: ax.spines[s].set_visible(False)
     ax.legend(frameon=False, fontsize=6, ncol=2, loc="best")
 fig.tight_layout(); save(fig, "Figure_4")
+pd.concat(F4).round(3).to_csv("results/figure4_monthly_analyser_means.csv", index=False)
 print(agg.round(2).to_string())
 
 # ---------------- Figure 5: detection against the size of a systematic error, per cent ----------------
+F5 = []
 fig, axs = plt.subplots(2, 5, figsize=(190 * MM, 85 * MM), sharey=True)
 for ax, a in zip(axs.flat, order):
     r = rules[rules.analyte == a].sort_values("level"); tea = r.tea.iloc[0]
     crit = tea - max(abs(x.bias) + 1.65 * x.cv for x in r.itertuples())
     xs = np.linspace(0, tea * 1.15, 120)
     comb = np.ones_like(xs)
-    for x, col, ls in zip(r.itertuples(), [OI["green"], OI["sky"]], ["-", "-"]):
+    for x, col, ls in zip(r.itertuples(), [OI["green"], OI["sky"]], ["-", (0, (4, 1.5))]):
         p = np.array([ped(x.k_new, max(0, (e - abs(x.bias)) / x.cv)) for e in xs])
         ax.plot(xs, p, color=col, lw=1, ls=ls, label=x.level)
+        F5.append(pd.DataFrame({"analyte": a, "level": x.level, "systematic_error_pct": xs, "p_reject": p}))
         comb *= 1 - p
     ax.plot(xs, 1 - comb, color="black", lw=1.6, label="Combined")
+    F5.append(pd.DataFrame({"analyte": a, "level": "combined", "systematic_error_pct": xs, "p_reject": 1 - comb}))
     ax.axvline(crit, color="#555555", lw=0.7, ls="--"); ax.axvline(tea, color=OI["verm"], lw=0.7, ls=":")
     req = {"Sodium": 0.9, "Creatinine": 0.9, "Glucose": 0.9, "Calcium": 0.9, "hs-Troponin T": 0.9}.get(a, 0.7)
     ax.axhline(req, color="#999999", lw=0.5, ls=":")
@@ -190,7 +198,8 @@ for ax, a in zip(axs.flat, order):
     for sp in ["top", "right"]: ax.spines[sp].set_visible(False)
 axs[1, 0].set_xlabel("Systematic error (%)"); axs[0, 0].set_ylabel("Probability of rejection"); axs[1, 0].set_ylabel("Probability of rejection")
 for ax in axs[1]: ax.set_xlabel("Systematic error (%)")
-h = [Line2D([], [], color=OI["green"], lw=1, label="L1"), Line2D([], [], color=OI["sky"], lw=1, label="L2"), Line2D([], [], color="black", lw=1.6, label="Combined (either level)"),
+h = [Line2D([], [], color=OI["green"], lw=1, label="L1"), Line2D([], [], color=OI["sky"], lw=1, ls=(0, (4, 1.5)), label="L2"), Line2D([], [], color="black", lw=1.6, label="Combined (either level)"),
      Line2D([], [], color="#555555", lw=0.7, ls="--", label="Critical error"), Line2D([], [], color=OI["verm"], lw=0.7, ls=":", label="TEa"), Line2D([], [], color="#999999", lw=0.5, ls=":", label="Requirement")]
 fig.legend(handles=h, loc="lower center", ncol=6, frameon=False, fontsize=7, bbox_to_anchor=(0.5, -0.01))
 fig.tight_layout(rect=(0, 0.05, 1, 1)); save(fig, "Figure_5")
+pd.concat(F5).round(4).to_csv("results/figure5_power_curves.csv", index=False)

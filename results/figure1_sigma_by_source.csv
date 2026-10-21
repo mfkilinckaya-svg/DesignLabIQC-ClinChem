@@ -1,0 +1,101 @@
+analyte,source,tea_pct,sigma_weaker_level,adopted
+Sodium,BV EFLM (optimal),0.314,0.071,False
+Sodium,BV EFLM (desirable),0.628,0.36,False
+Sodium,BV Ricos (desirable),0.73,0.454,False
+Sodium,BV EFLM (minimum),0.941,0.648,False
+Sodium,Labquality,2.0,1.621,False
+Sodium,RCPA,2.0,1.621,False
+Sodium,Rili-BÄK,3.0,2.54,False
+Sodium,Belgium WIV-ISP,3.4,2.908,False
+Sodium,China WS/T 403-2024,4.0,3.46,False
+Sodium,SEKK Dmax,5.0,4.379,True
+Sodium,Turkey MoH 2026,9.0,8.055,False
+Creatinine,BV EFLM (optimal),3.901,1.989,False
+Creatinine,BV EFLM (desirable),7.803,4.039,False
+Creatinine,Labquality,8.0,4.143,True
+Creatinine,RCPA,8.0,4.143,False
+Creatinine,BV Ricos (desirable),8.87,4.6,False
+Creatinine,CLIA,10.0,5.194,False
+Creatinine,Belgium WIV-ISP,10.9,5.667,False
+Creatinine,Rili-BÄK,11.5,5.982,False
+Creatinine,BV EFLM (minimum),11.704,6.089,False
+Creatinine,China WS/T 403-2024,12.0,6.245,False
+Creatinine,SEKK Dmax,15.0,7.821,False
+Creatinine,Turkey MoH 2026,20.0,10.449,False
+ALT,BV EFLM (optimal),9.15,3.358,False
+ALT,Rili-BÄK,11.5,4.319,False
+ALT,Labquality,12.0,4.524,True
+ALT,RCPA,12.0,4.524,False
+ALT,Belgium WIV-ISP,13.3,5.055,False
+ALT,CLIA,15.0,5.75,False
+ALT,China WS/T 403-2024,15.0,5.75,False
+ALT,SEKK Dmax,15.0,5.75,False
+ALT,BV EFLM (desirable),18.299,7.099,False
+ALT,Turkey MoH 2026,20.0,7.794,False
+ALT,BV EFLM (minimum),27.449,10.84,False
+ALT,BV Ricos (desirable),27.48,10.852,False
+Glucose,BV EFLM (optimal),3.205,1.411,False
+Glucose,Rili-BÄK,5.0,2.341,False
+Glucose,Labquality,6.0,2.858,False
+Glucose,Belgium WIV-ISP,6.3,3.013,False
+Glucose,BV EFLM (desirable),6.409,3.07,False
+Glucose,BV Ricos (desirable),6.96,3.355,False
+Glucose,China WS/T 403-2024,7.0,3.376,False
+Glucose,CLIA,8.0,3.893,False
+Glucose,RCPA,8.0,3.893,False
+Glucose,SEKK Dmax,9.0,4.411,False
+Glucose,BV EFLM (minimum),9.614,4.729,True
+Glucose,Turkey MoH 2026,10.0,4.929,False
+Calcium,BV EFLM (optimal),1.148,0.402,False
+Calcium,BV EFLM (desirable),2.296,1.367,False
+Calcium,BV Ricos (desirable),2.55,1.58,False
+Calcium,Labquality,3.0,1.958,False
+Calcium,BV EFLM (minimum),3.444,2.331,False
+Calcium,RCPA,4.0,2.798,False
+Calcium,China WS/T 403-2024,5.0,3.639,False
+Calcium,Belgium WIV-ISP,5.0,3.639,False
+Calcium,Rili-BÄK,6.0,4.479,False
+Calcium,SEKK Dmax,10.0,7.84,True
+Calcium,Turkey MoH 2026,10.0,7.84,False
+TSH,BV EFLM (optimal),12.421,4.682,True
+TSH,Rili-BÄK,13.5,5.12,False
+TSH,SEKK Dmax,14.0,5.323,False
+TSH,CLIA,20.0,7.76,False
+TSH,RCPA,20.0,7.76,False
+TSH,China WS/T 403-2024,20.0,7.76,False
+TSH,BV Ricos (desirable),23.7,9.263,False
+TSH,BV EFLM (desirable),24.841,9.727,False
+TSH,Turkey MoH 2026,25.0,9.791,False
+TSH,BV EFLM (minimum),37.262,14.772,False
+hs-Troponin T,BV EFLM (optimal),8.819,1.867,False
+hs-Troponin T,Noklus,15.0,3.238,False
+hs-Troponin T,BV EFLM (desirable),17.639,3.823,False
+hs-Troponin T,Rili-BÄK,20.0,4.346,True
+hs-Troponin T,RCPA,20.0,4.346,False
+hs-Troponin T,BV EFLM (minimum),26.458,5.779,False
+hs-Troponin T,CLIA,30.0,6.564,False
+Ferritin,Labquality,12.0,4.12,False
+Ferritin,Rili-BÄK,13.5,4.641,True
+Ferritin,RCPA,15.0,5.162,False
+Ferritin,BV Ricos (desirable),16.9,5.822,False
+Ferritin,CLIA,20.0,6.899,False
+Ferritin,SEKK Dmax,24.0,8.289,False
+Ferritin,China WS/T 403-2024,25.0,8.637,False
+Ferritin,Turkey MoH 2026,25.0,8.637,False
+PSA,RCPA,8.0,1.258,False
+PSA,BV EFLM (optimal),8.123,1.288,False
+PSA,SEKK Dmax,15.0,2.97,False
+PSA,Rili-BÄK,15.5,3.092,False
+PSA,BV EFLM (desirable),16.247,3.275,False
+PSA,CLIA,20.0,4.193,False
+PSA,BV EFLM (minimum),24.37,5.262,True
+PSA,China WS/T 403-2024,25.0,5.416,False
+PSA,Turkey MoH 2026,25.0,5.416,False
+PSA,BV Ricos (desirable),33.6,7.52,False
+25-OH vitamin D,BV EFLM (optimal),7.581,0.864,False
+25-OH vitamin D,RCPA,15.0,1.971,False
+25-OH vitamin D,BV EFLM (desirable),15.162,1.996,False
+25-OH vitamin D,BV EFLM (minimum),22.744,3.128,False
+25-OH vitamin D,Rili-BÄK,25.0,3.465,False
+25-OH vitamin D,Turkey MoH 2026,25.0,3.465,False
+25-OH vitamin D,RfB,30.0,4.211,True

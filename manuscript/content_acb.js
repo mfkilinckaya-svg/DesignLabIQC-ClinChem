@@ -62,7 +62,7 @@ sub(C.discussion, 2, [[
 C.legends = [
   en.legends[0],
   en.legends[1],
-  en.legends[4].replace("Figure 5.", "Figure 3."),
+  en.legends[4].replace("Figure 5.", "Figure 3.").replace("each level with its own CV and K (thin lines)", "each level with its own CV and K (thin lines: L1 solid, L2 dashed)").replace("dotted red line: the adopted allowable total error; dotted grey line: the detection requirement", "vertical dotted line: the adopted allowable total error; horizontal dotted line: the detection requirement"),
 ];
 C.supplementary = [
   ...en.supplementary.slice(0, 5),
@@ -73,7 +73,16 @@ C.supplementary = [
 
 C.guarantor = "MFK.";
 C.contributions = "MFK designed the study, extracted and analysed the data, wrote the software and the manuscript, and is the guarantor.";
-C.ethics = "The study used only internal quality control results of the laboratory's own control materials. No patient samples, patient data or personal data were involved, and under the Norwegian Health Research Act no approval by a regional ethics committee (REK) was required.";
+C.ethics = "The study used only internal quality control results of the laboratory's own control materials. No patient samples, patient data or personal data were involved, and under the Norwegian Health Research Act no approval by a regional ethics committee (REK) was required; this was confirmed by the data protection officer of Helse Møre og Romsdal HF.";
 C.aiStatement = "Analysis scripts, the browser-based tool and the manuscript were drafted with the assistance of a large language model (Claude, Anthropic). The author specified the methods, checked every calculation against the exported data, verified all results and references, and takes full responsibility for the content.";
 
+// Sage Vancouver: first three authors, then et al.
+C.references = en.references.map((r) => {
+  const i = r.indexOf(". "); if (i < 0) return r;
+  const authors = r.slice(0, i); const rest = r.slice(i);
+  if (/^[A-Z][a-z]/.test(authors) && !/,/.test(authors)) return r;
+  const parts = authors.replace(/,? et al$/, "").split(", ");
+  if (parts.length <= 3) return r;
+  return parts.slice(0, 3).join(", ") + ", et al" + rest;
+});
 module.exports = C;
