@@ -1,0 +1,25 @@
+const { Document, Packer, Paragraph, TextRun, AlignmentType } = require("docx");
+const fs = require("fs");
+
+const P = (t, o = {}) => new Paragraph({ spacing: { after: 160, line: 276 }, alignment: AlignmentType.LEFT, ...o,
+  children: (Array.isArray(t) ? t : [t]).map(x => typeof x === "string" ? new TextRun({ text: x, font: "Times New Roman", size: 24 }) : x) });
+const B = t => new TextRun({ text: t, bold: true, font: "Times New Roman", size: 24 });
+const I = t => new TextRun({ text: t, italics: true, font: "Times New Roman", size: 24 });
+
+const paras = [
+  P("Muhammed Fevzi Kılınçkaya, MD\nDepartment of Medical Biochemistry\nSjukehuset Nordmøre og Romsdal, Helse Møre og Romsdal HF\nHjelset, Norway\nmuhammed.fevzi.kilinckaya@helse-mr.no · ORCID 0000-0002-0815-5467".split("\n").map((s, i, a) => new TextRun({ text: s, font: "Times New Roman", size: 24, break: i ? 1 : 0 }))),
+  P(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })),
+  P(["Editor-in-Chief", new TextRun({ text: "Annals of Clinical Biochemistry", italics: true, font: "Times New Roman", size: 24, break: 1 })]),
+  P("Dear Editor,"),
+  P(["I am submitting the manuscript ", I("Deriving clinical chemistry and immunoassay control rules from laboratory imprecision: the allowable-error source decides what is attainable"), " for consideration as a research article."]),
+  P(["Westgard's power functions for two control levels (N = 2) assume that a systematic error shifts both levels by the same number of standard deviations. Control levels rarely have the same CV, so the same error in per cent is a different number of SD at each level. Using 14 months of control results (n = 27,963) for ten routine measurands on two Roche cobas pro systems, I show with real data how far this assumption and its common alternative, evaluating each level at its own critical shift, mislead: for the same rule the combined detection of the critical error differs by up to 36 percentage points between the three conventions (creatinine 63% to 98%), and the per-level convention overstates it by up to 17 points. Sizing the error once per measurand and converting it per level with that level's own CV, as the manuscript does, changes which allowable-error source a laboratory can adopt for seven of the ten measurands."]),
+  P("Three further findings follow from the same data. First, the allowable total error source, not the analyser, decides whether a measurand looks controllable: across 14 published sources the sigma of the same sodium measurement spans 28-fold, and a biological-variation tier survives as the adopted source for only three of the ten measurands. Second, the standard deviations entered in the laboratory information system were wider than the measured ones at 15 of 20 levels, so the rules in force detected the critical error with a median probability of 44%; the derived rules reach 72% to 100% at the same false-rejection cost, and the manuscript reports the target and SD to enter so that the existing 1:3s rule reproduces them. Third, the Gaussian false-rejection estimate on which rule design rests is a lower bound: after re-centring the target on the lot mean, the observed rejection rate was still twice the expectation, and the excess is attributable to within-lot movement of analyser means (median 0.57 SD per month) with identifiable causes in the record."),
+  P("The study suits the Annals because it is practical: every number in it comes from routine control records that any laboratory holds, the method needs no software beyond a browser, and the output is the target and SD to enter in the laboratory information system. All scripts, the prepared data set (quality control results only, no patient data), the allowable-error workbook with 14 sources and the browser-based tool are openly available (github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence) and will be deposited at Zenodo on acceptance."),
+  P("The manuscript has about 3,500 words of main text, a 250-word structured abstract, three tables, three figures and 28 references, with five supplementary tables and two supplementary figures. It has not been published and is not under consideration elsewhere. I am the sole author and guarantor; there are no conflicts of interest and no funding to declare. The study used only internal quality control data, involved no patients or personal data, and required no ethics committee approval. The use of a large language model in preparing the analysis code and the draft is disclosed in the manuscript."),
+  P("Suggested reviewers are given in the submission form. Thank you for considering the manuscript."),
+  P("Yours sincerely,"),
+  P(["Muhammed Fevzi Kılınçkaya", new TextRun({ text: "Consultant Physician in Medical Biochemistry", font: "Times New Roman", size: 24, break: 1 })]),
+];
+
+const doc = new Document({ sections: [{ properties: { page: { margin: { top: 1440, bottom: 1440, left: 1440, right: 1440 } } }, children: paras }] });
+Packer.toBuffer(doc).then(b => { fs.writeFileSync("/home/claude/manuscript/Cover_letter_ACB.docx", b); console.log("written"); });
