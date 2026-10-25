@@ -76,6 +76,7 @@ import {
   binseg,
   RULE_SETS,
 } from "./core.js";
+import { VERIFICATION } from "./verification_data.js";
 
 const fmt = (v, d = 2) =>
   !isFinite(v) ? "—" : v.toFixed(d);
@@ -530,7 +531,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
   };
 
   return (
-    <section className="border border-slate-300 bg-white">
+    <section className="rounded-md border border-slate-200 bg-white shadow-sm">
       <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-slate-200 px-4 py-3">
         <input
           value={analyte.name}
@@ -1209,7 +1210,7 @@ function ResultStrip({ analyte, settings }) {
   );
   const req = analyte.pedReq ?? settings.pedTarget;
   return (
-    <div className="flex flex-wrap items-start gap-x-7 gap-y-3 border-b border-slate-200 bg-slate-50 px-4 py-3">
+    <div className="flex flex-wrap items-start gap-x-7 gap-y-3 border-b border-teal-100 bg-teal-50/60 px-4 py-3">
       {cell("Allowable error", `${analyte.teaSource} · ${fmt(effectiveTea(analyte), 1)}%`, "Adopted source and limit")}
       {cell("Rule (K per level)", analyte.levels.map((l) => fmt(l.k, 1)).join(" / "), "Rejection limit in observed SD, one control per level")}
       {cell("Sigma", analyte.levels.map((l) => fmt(l.sigma, 1)).join(" / "), "(TEa − |offset|) / CV per level")}
@@ -2335,12 +2336,97 @@ function MethodGuide({ settings }) {
 
 const STORE_KEY = "designlabiqc-clinchem-v4";
 
+/* How the calculations were checked, and the result of the last test run. */
+function ValidationView() {
+  const V = VERIFICATION;
+  const sections = [];
+  for (const r of V.rows) {
+    let s = sections.find((x) => x.name === r.section);
+    if (!s) { s = { name: r.section, n: 0, pass: 0, rows: [] }; sections.push(s); }
+    s.n++; if (r.pass) s.pass++; s.rows.push(r);
+  }
+  const f = (v) => (typeof v === "number" ? (Math.abs(v) >= 100 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(3) : v.toPrecision(4)) : String(v));
+  const [open, setOpen] = useState(null);
+  return (
+    <div className="space-y-5">
+      <div className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-semibold tracking-tight text-slate-900">How the tool was verified</h2>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-700">
+          The calculations live in one module with no user interface (<code>tool/core.js</code>). An automated test suite
+          runs that module against published values and against an independent implementation on every change to the
+          code, and this tab shows the result of the last run: <span className="font-mono">{V.passed} of {V.n}</span> comparisons
+          within tolerance ({V.generated}). The tool is a research prototype, not validated clinical software; what
+          follows is verification of the arithmetic, not of clinical benefit.
+        </p>
+        <div className="mt-4 grid gap-3 md:grid-cols-4">
+          {[
+            ["A · Analytical", "Are the formulas right?", "Fixed cases against Westgard 1977 and 1981, Fraser 1997, Hawkins & Olwell 1998, the Lucas & Saccucci EWMA design, exact Gaussian values and an independent Markov-chain / Monte Carlo computation."],
+            ["B · Software", "Do they stay right?", "The same tests run on every commit (GitHub Actions) and write the report shown here; a change that moves a tested number fails the build."],
+            ["C · End to end", "Does it match the independent analysis?", "The preloaded panel (10 measurands, 20 levels, 27,963 results) computed here and in Python from the same export: sigma, critical error, combined detection and false rejection, and the rule search itself."],
+            ["D · Use", "Can a laboratory scientist get the answer?", "Task-based user test with the System Usability Scale, planned after the October 2026 layout revision; not yet done."],
+          ].map(([t, q, d]) => (
+            <div key={t} className="rounded border border-slate-200 bg-slate-50 p-3">
+              <div className="text-xs font-semibold uppercase tracking-wide text-teal-800">{t}</div>
+              <div className="mt-1 text-sm font-medium text-slate-900">{q}</div>
+              <p className="mt-1 text-xs leading-relaxed text-slate-600">{d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rounded-md border border-slate-200 bg-white shadow-sm">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-slate-300 text-left text-xs text-slate-600">
+              <th className="px-4 py-2 font-medium">Section</th><th className="px-2 py-2 font-medium">Comparisons</th><th className="px-2 py-2 font-medium">Within tolerance</th><th className="px-2 py-2 font-medium">Reference</th><th className="px-2 py-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {sections.map((sec) => (
+              <React.Fragment key={sec.name}>
+                <tr className="border-b border-slate-100">
+                  <td className="px-4 py-2 text-slate-900">{sec.name}</td>
+                  <td className="px-2 py-2 font-mono text-xs">{sec.n}</td>
+                  <td className="px-2 py-2"><span className={`rounded px-2 py-0.5 font-mono text-xs ${sec.pass === sec.n ? "bg-emerald-50 text-emerald-800" : "bg-rose-50 text-rose-800"}`}>{sec.pass}/{sec.n}</span></td>
+                  <td className="px-2 py-2 text-xs text-slate-600">{[...new Set(sec.rows.map((r) => r.source))].join("; ")}</td>
+                  <td className="px-2 py-2 text-right"><button type="button" className="text-xs text-teal-800 underline" onClick={() => setOpen(open === sec.name ? null : sec.name)}>{open === sec.name ? "hide" : "show"}</button></td>
+                </tr>
+                {open === sec.name && (
+                  <tr><td colSpan={5} className="bg-slate-50 px-4 py-2">
+                    <table className="w-full text-xs">
+                      <thead><tr className="text-left text-slate-500"><th className="py-1 pr-3 font-medium">Item</th><th className="py-1 pr-3 font-medium">Tool</th><th className="py-1 pr-3 font-medium">Reference</th><th className="py-1 pr-3 font-medium">Tolerance</th><th className="py-1 font-medium">Source</th></tr></thead>
+                      <tbody>{sec.rows.map((r, i) => (
+                        <tr key={i} className="border-t border-slate-200"><td className="py-1 pr-3 text-slate-800">{r.item}</td><td className="py-1 pr-3 font-mono">{f(r.tool)}</td><td className="py-1 pr-3 font-mono">{f(r.reference)}</td><td className="py-1 pr-3 font-mono">{f(r.tolerance)}</td><td className="py-1 text-slate-600">{r.source}</td></tr>
+                      ))}</tbody>
+                    </table>
+                  </td></tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="rounded-md border border-slate-200 bg-white p-5 shadow-sm text-sm leading-relaxed text-slate-700">
+        <h3 className="font-semibold text-slate-900">What is not verified</h3>
+        <ul className="mt-2 list-disc space-y-1 pl-5">
+          <li>The importer (cobas infinity parsing, test-code mapping, Excel dates) is exercised by the recorded demo, not by unit tests; the ALT figures it produces were checked by hand against the Python CV.</li>
+          <li>Measurement uncertainty follows ISO/TS 20914 formulas; no external worked example has been compared. Variance components are checked for internal consistency only.</li>
+          <li>Browser rendering, saving in the browser and the CSV export are not tested automatically.</li>
+          <li>Nothing here shows that the derived rules improve patient outcomes; the retrospective evaluation in the manuscript is the only outcome-level evidence.</li>
+        </ul>
+        <p className="mt-3 text-xs text-slate-500">Two reference values first written into the test file were wrong and were caught by the independent computation (EWMA ARL₀ for λ 0.2 / L 2.86 is about 370, not 500; multirule first-event detection at 2 SD is 0.42, not 0.52). The tool was right in both cases; the test file was corrected and the reference script kept in the repository. Full document: docs/VALIDATION.md. Run: <code>npm test</code>.</p>
+      </div>
+    </div>
+  );
+}
+
 /* Layer 1: the whole panel on one screen. One row per analyte; click to open. */
 function OverviewTable({ computed, panels, settings, onOpen }) {
   const th = (t, title) => <th className="py-2 pr-3 text-left text-xs font-medium text-slate-600" title={title}>{t}</th>;
   const td = (t, cls = "") => <td className={`py-1.5 pr-3 font-mono text-xs text-slate-800 ${cls}`}>{t}</td>;
   return (
-    <div className="border border-slate-300 bg-white">
+    <div className="rounded-md border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto px-4 py-3">
         <table className="w-full min-w-max border-collapse">
           <thead>
@@ -2358,7 +2444,7 @@ function OverviewTable({ computed, panels, settings, onOpen }) {
                   const req = a.pedReq ?? settings.pedTarget;
                   const ok = a.ready && a.pfrOk && a.pedOk;
                   return (
-                    <tr key={a.id} onClick={() => onOpen(a.id)} className="cursor-pointer border-b border-slate-100 hover:bg-teal-50" title="Open">
+                    <tr key={a.id} onClick={() => onOpen(a.id)} className="cursor-pointer border-b border-slate-100 odd:bg-slate-50/60 hover:bg-teal-50" title="Open">
                       <td className="py-1.5 pr-3 text-sm text-slate-900">{a.name}</td>
                       {td(a.ready ? `${a.teaSource} ${fmt(effectiveTea(a), 1)}%` : "—")}
                       {td(a.ready ? a.levels.map((l) => fmt(l.sigma, 1)).join(" / ") : "—")}
@@ -2861,20 +2947,27 @@ export default function IqcRuleDesigner() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <div className="mx-auto max-w-7xl px-5 py-8">
-        <header className="mb-6">
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-            Internal quality control for clinical chemistry and immunochemistry
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
-            Control rules built from the imprecision your own instruments produce,
-            rather than from a fixed range someone else measured. Enter your figures,
-            see what each rule would catch and what it would cost in needless
-            rejections, and read off the standard deviation to put into your
-            laboratory system.
-          </p>
-        </header>
+    <div className="min-h-screen bg-gradient-to-b from-teal-50/70 via-slate-100 to-slate-100 text-slate-900">
+      <div className="bg-teal-950 text-white">
+        <div className="mx-auto max-w-7xl px-5 py-7">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-300">DesignLabIQC · ClinChem</div>
+              <h1 className="mt-1 text-2xl font-semibold tracking-tight">
+                Internal quality control for clinical chemistry and immunochemistry
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-teal-100">
+                Control rules built from the imprecision your own instruments produce,
+                rather than from a fixed range someone else measured. Enter your figures,
+                see what each rule would catch and what it would cost in needless
+                rejections, and read off the target and SD to put into your laboratory system.
+              </p>
+            </div>
+            <div className="font-mono text-xs text-teal-200">Verified {VERIFICATION.passed}/{VERIFICATION.n} · {VERIFICATION.generated}</div>
+          </div>
+        </div>
+      </div>
+      <div className="mx-auto max-w-7xl px-5 py-6">
 
         <nav className="mb-6 flex gap-6 border-b border-slate-300">
           {[
@@ -2882,13 +2975,14 @@ export default function IqcRuleDesigner() {
             ["design", "Rule design"],
             ["compare", "Maker ranges"],
             ["method", "Method and references"],
+            ["validation", "Validation"],
           ].map(([id, label]) => (
             <button
               key={id}
               onClick={() => setTab(id)}
               className={`-mb-px border-b-2 px-1 pb-2.5 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 ${
                 tab === id
-                  ? "border-teal-700 font-medium text-slate-900"
+                  ? "border-teal-700 font-semibold text-teal-900"
                   : "border-transparent text-slate-500 hover:text-slate-800"
               }`}
             >
@@ -2902,10 +2996,11 @@ export default function IqcRuleDesigner() {
         )}
 
         {tab === "method" && <MethodGuide settings={settings} />}
+        {tab === "validation" && <ValidationView />}
 
         {(tab === "design" || tab === "overview") && (
           <>
-        <div className="mb-4 flex flex-wrap items-center gap-3 border border-slate-300 bg-white px-4 py-2.5 text-sm">
+        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm shadow-sm">
           <button type="button" onClick={() => setShowSettings((v) => !v)} className="rounded border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50" title="Show or hide the design settings">
             {showSettings ? "Hide settings" : "Settings"}
           </button>
@@ -2955,7 +3050,7 @@ export default function IqcRuleDesigner() {
         </div>
 
         {showSettings && (
-        <div className="mb-6 flex flex-wrap items-end gap-x-8 gap-y-4 border border-slate-300 bg-white px-4 py-4">
+        <div className="mb-6 flex flex-wrap items-end gap-x-8 gap-y-4 rounded-md border border-slate-200 bg-white px-4 py-4 shadow-sm">
           <label className="text-sm text-slate-600">
             <span className="mb-1 block">False alarm allowance</span>
             <span className="flex items-center gap-1.5">
@@ -3064,7 +3159,7 @@ export default function IqcRuleDesigner() {
               return (
                 <div key={panel}>
                   <h2 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{panel}</h2>
-                  <ul className="border border-slate-300 bg-white">
+                  <ul className="rounded-md border border-slate-200 bg-white shadow-sm">
                     {group.map((a) => {
                       const active = a.id === currentId;
                       const tone = !a.ready ? "bg-slate-300" : a.pfrOk && a.pedOk ? "bg-emerald-500" : "bg-rose-500";

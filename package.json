@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Control rules from the laboratory's own imprecision: tool, analysis and manuscript.",
   "scripts": {
-    "test": "node --test tool/test/*.test.mjs",
+    "test": "node --test tool/test/*.test.mjs && python3 tool/build/gen_verification.py",
     "build": "bash tool/build/build.sh tool/iqc-rule-designer-clinchem.jsx tool/iqc-rule-designer-clinchem.html DesignLabIQC-ClinChem"
   }
 }
