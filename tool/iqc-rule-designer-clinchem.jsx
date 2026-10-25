@@ -2411,6 +2411,32 @@ function ValidationView() {
             </div>
           ))}
         </div>
+
+        {[["A · Analytical — the formulas, as they run in this file", ["Normal CDF", "1:K rule", "BV tiers", "CUSUM", "EWMA", "Multirule"]],
+          ["C · End to end — the study panel, step by step", ["Panel vs Python", "Rule search"]]].map(([title, keys]) => (
+          <div key={title} className="mt-4">
+            <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+            <div className="mt-2 divide-y divide-slate-200 rounded border border-slate-200">
+              {keys.map((k) => {
+                const sec = sections.find((x) => x.name === k);
+                return (
+                  <div key={k} className="grid gap-x-4 gap-y-1 px-3 py-2.5 text-xs leading-relaxed md:grid-cols-[9rem_minmax(0,1fr)]">
+                    <div>
+                      <div className="font-semibold text-slate-900">{k}</div>
+                      {sec && <div className={`mt-0.5 inline-block rounded px-1.5 py-0.5 font-mono ${sec.pass === sec.n ? "bg-emerald-50 text-emerald-800" : "bg-rose-50 text-rose-800"}`}>{sec.pass}/{sec.n} within tolerance</div>}
+                    </div>
+                    <div>
+                      <div className="font-mono text-slate-800">{MATH[k].formula}</div>
+                      <div className="mt-1 text-slate-700"><span className="font-semibold text-teal-900">Computed now: </span>{MATH[k].example}</div>
+                      {sec && <div className="mt-1 text-slate-500">Reference: {[...new Set(sec.rows.map((r) => r.source))].join("; ")}</div>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+        <p className="mt-3 text-xs text-slate-500">B · Software: the comparisons below are what the automated run checked ({V.passed}/{V.n} on {V.generated}); the same file is produced by <code>npm test</code>. D · Use: not yet performed.</p>
       </div>
 
       <div className="rounded-md border border-slate-200 bg-white shadow-sm">
@@ -2432,12 +2458,7 @@ function ValidationView() {
                 </tr>
                 {open === sec.name && (
                   <tr><td colSpan={5} className="bg-slate-50 px-4 py-2">
-                    {MATH[sec.name] && (
-                      <div className="mb-3 rounded border border-teal-100 bg-white px-3 py-2 text-xs leading-relaxed text-slate-700">
-                        <div><span className="font-semibold text-teal-900">Formula.</span> <span className="font-mono">{MATH[sec.name].formula}</span></div>
-                        <div className="mt-1"><span className="font-semibold text-teal-900">Worked example, computed now by this file.</span> {MATH[sec.name].example}</div>
-                      </div>
-                    )}
+
                     <table className="w-full text-xs">
                       <thead><tr className="text-left text-slate-500"><th className="py-1 pr-3 font-medium">Item</th><th className="py-1 pr-3 font-medium">Tool</th><th className="py-1 pr-3 font-medium">Reference</th><th className="py-1 pr-3 font-medium">Tolerance</th><th className="py-1 font-medium">Source</th></tr></thead>
                       <tbody>{sec.rows.map((r, i) => (
