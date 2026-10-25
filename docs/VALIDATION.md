@@ -1,6 +1,6 @@
 # Verification and validation of DesignLabIQC-ClinChem
 
-Version: tool 1.4 (October 2026). Scope: the calculation core (`tool/core.js`), the
+Version: tool 1.5 (October 2026; layout revised, calculations unchanged). Scope: the calculation core (`tool/core.js`), the
 browser component that presents it (`tool/iqc-rule-designer-clinchem.jsx`), and the
 Python analysis (`analysis/`) that produced the manuscript results. The tool is a research
 prototype for designing internal quality control rules; it is not a medical device and

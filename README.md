@@ -68,16 +68,17 @@ Imprecision uses accepted results only. The retrospective false-rejection analys
 
 ## Using the tool
 
-Open `tool/iqc-rule-designer-clinchem.html` in a browser. For each analyte:
+Open `tool/iqc-rule-designer-clinchem.html` in a browser. It has three layers:
 
-1. Add the allowable-error sources.
-2. Load `tool_import.csv` (or a raw cobas export) with **Import results**. This sets each level's CV to the pooled within-lot CV of the worst analyser, the target to the pooled mean of all analysers, and the bias to the largest analyser offset from that target.
-3. Read off sigma, critical shift, false rejection and detection.
-4. **Search for rules** to find the K per level that keeps the combined false rejection within the allowance while meeting the detection target.
+1. **Overview** — the whole panel on one screen, one row per measurand: adopted source, sigma, critical error, K per level, false rejection, detection and the target ± SD to enter in the LIS. **Search all** re-derives every rule; **Export CSV** writes the table. Click a row to open it.
+2. **Rule design** — one measurand at a time, chosen from the list on the left. The strip under the header gives the answer (source, rule, sigma, critical error, false rejection, detection, LIS entry, what the current LIS rule detects). Four tabs below it: *Rule* (false-alarm budget, level table with CV/target/offset/K, rule search, power curves), *Allowable error sources* (sources and the same-measurement comparison), *LIS and limits* (what to enter now versus recommended, the imprecision you can afford), *Monitoring* (CUSUM, EWMA, multirule, measurement uncertainty, reagent-lot steps, change points).
+3. **Settings** (collapsed by default), **Maker ranges** and **Method and references**.
 
-**Export CSV** writes the rules and the SD to enter in the LIS. Work is saved in the browser on that device only.
+To fill a measurand from data, load `tool_import.csv` or a raw cobas infinity export with **Import results**: each level's CV becomes the pooled within-lot CV of the worst analyser, the target the pooled lot mean, the offset the largest analyser deviation. Work is saved in the browser on that device only.
 
-To evaluate the LIS target instead of the pooled mean, overwrite the target in the level row.
+## Verification
+
+The calculation core (`tool/core.js`) is tested against published power functions and run lengths, exact Gaussian values, an independent Markov-chain/Monte Carlo computation and the Python analysis of the study panel: `npm test` (17 tests, 92 comparisons, report in `results/tool_verification.csv`). See `docs/VALIDATION.md`.
 
 ## Rebuilding the tool
 

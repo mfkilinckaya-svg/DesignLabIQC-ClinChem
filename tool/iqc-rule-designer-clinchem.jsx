@@ -81,6 +81,12 @@ const fmt = (v, d = 2) =>
   !isFinite(v) ? "—" : v.toFixed(d);
 const pct = (v, d = 2) => (!isFinite(v) ? "—" : (v * 100).toFixed(d) + "%");
 
+/* "target ± SD" in the measurand's unit, decimals chosen from the target's size. */
+function lisEntry(l) {
+  const d = sigDigits(Number(l.target));
+  return `${fmt(Number(l.target), d)} ± ${fmt(l.sdForLis, d + 1)}`;
+}
+
 function sigDigits(value) {
   const abs = Math.abs(value);
   if (abs === 0) return 3;
@@ -479,7 +485,8 @@ function SourceEditor({ analyte, onChange }) {
 }
 
 function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
-  const [chart, setChart] = useState("none");
+  const [chart, setChart] = useState("power");
+  const [view, setView] = useState("rule");
   const [strategy, setStrategy] = useState("balanced");
   const [suggestion, setSuggestion] = useState(null);
 
@@ -613,27 +620,13 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
               </span>
             );
           })()}
-          {analyte.ready && isFinite(analyte.critPct) && (
-            <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-700" title="Critical systematic error of the measurand: TEa − max over levels of (|offset| + z·CV). One size, applied to every level.">
-              critical error {fmt(analyte.critPct, 2)}%
-            </span>
-          )}
           {analyte.ready ? (
             <>
-              <Verdict ok={analyte.pfrOk}>
-                False alarms {fmt(analyte.combinedPfr * 100, 2)}%
-              </Verdict>
               {analyte.anyOffset && (
                 <Verdict ok={analyte.pfrOffsetOk}>
-                  With offset {fmt(analyte.combinedPfrOffset * 100, 2)}%
+                  False alarms with offset {fmt(analyte.combinedPfrOffset * 100, 2)}%
                 </Verdict>
               )}
-              <Verdict ok={analyte.pedOk}>
-                Detection {fmt(analyte.combinedPed * 100, 1)}%
-                {analyte.pedReq != null && analyte.pedReq !== settings.pedTarget
-                  ? ` (req. ${analyte.pedReq}%)`
-                  : ""}
-              </Verdict>
             </>
           ) : (
             <span className="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-slate-600">
@@ -643,7 +636,19 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
         </div>
       </header>
 
+      <ResultStrip analyte={analyte} settings={settings} />
+
+      <nav className="flex gap-5 border-b border-slate-200 px-4" aria-label="Analyte sections">
+        {[["rule", "Rule"], ["sources", "Allowable error sources"], ["lis", "LIS and limits"], ["monitor", "Monitoring"]].map(([id, label]) => (
+          <button key={id} type="button" onClick={() => setView(id)}
+            className={`-mb-px border-b-2 py-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 ${view === id ? "border-teal-700 font-medium text-slate-900" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
+            {label}
+          </button>
+        ))}
+      </nav>
+
       <div className="px-4 py-4">
+        {view === "rule" && (<>
         <div className="mb-4">
           <BudgetMeter
             levels={analyte.levels}
@@ -664,6 +669,9 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           );
         })()}
 
+        </>)}
+
+        {view === "sources" && (<>
         <SourceEditor analyte={analyte} onChange={onChange} />
 
         {teaOptionsFor(analyte).length > 1 && (
@@ -723,6 +731,9 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           </div>
         )}
 
+        </>)}
+
+        {view === "rule" && (<>
         <div className="overflow-x-auto">
           <table className="w-full min-w-max border-collapse text-sm">
             <thead>
@@ -925,6 +936,9 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           </table>
         </div>
 
+        </>)}
+
+        {view === "lis" && (<>
         {(() => {
           if (!analyte.ready) return null;
           const hasReq = analyte.pedReq || analyte.pedReq === 0;
@@ -1066,9 +1080,14 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           </p>
         </div>
 
+        </>)}
+
+        {view === "monitor" && (<>
         <CusumPanel analyte={analyte} settings={settings} series={series} />
         <ModelsPanel analyte={analyte} settings={settings} series={series} />
+        </>)}
 
+        {view === "rule" && (<>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <select
             value={strategy}
@@ -1166,8 +1185,40 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
             )}
           </div>
         )}
+        </>)}
       </div>
     </section>
+  );
+}
+
+/* The answer first: adopted source, rule, what it costs and catches, and what to
+   enter in the LIS. Always visible above the tabs. */
+function ResultStrip({ analyte, settings }) {
+  if (!analyte.ready) {
+    return (
+      <div className="border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-600">
+        Enter {analyte.missing.join(", ")} to derive a rule. Use the Allowable error sources tab for the limit and Import results (top) for CV and target.
+      </div>
+    );
+  }
+  const cell = (label, value, title) => (
+    <div className="min-w-[7rem]" title={title}>
+      <div className="text-[11px] uppercase tracking-wide text-slate-500">{label}</div>
+      <div className="font-mono text-sm text-slate-900">{value}</div>
+    </div>
+  );
+  const req = analyte.pedReq ?? settings.pedTarget;
+  return (
+    <div className="flex flex-wrap items-start gap-x-7 gap-y-3 border-b border-slate-200 bg-slate-50 px-4 py-3">
+      {cell("Allowable error", `${analyte.teaSource} · ${fmt(effectiveTea(analyte), 1)}%`, "Adopted source and limit")}
+      {cell("Rule (K per level)", analyte.levels.map((l) => fmt(l.k, 1)).join(" / "), "Rejection limit in observed SD, one control per level")}
+      {cell("Sigma", analyte.levels.map((l) => fmt(l.sigma, 1)).join(" / "), "(TEa − |offset|) / CV per level")}
+      {isFinite(analyte.critPct) && cell("Critical error", `${fmt(analyte.critPct, 2)}%`, "One size for the measurand: TEa − max over levels of (|offset| + z·CV); converted to SD at each level with its own CV")}
+      {cell("False rejection", `${fmt(analyte.combinedPfr * 100, 2)}% of ${settings.pfrBudget}%`, "Combined over levels per control event")}
+      {cell("Detection", `${fmt(analyte.combinedPed * 100, 1)}% (req. ${req}%)`, "Combined probability of detecting the critical error")}
+      {cell("LIS target / SD to enter", analyte.levels.map(lisEntry).join("  ·  "), `Target = lot mean; SD = action limit / ${settings.qmMultiplier} so that the LIS ${settings.qmMultiplier} SD rule reproduces the derived limit`)}
+      {analyte.hasLis && cell("LIS rule now", `detects ${fmt(analyte.combinedLisPed * 100, 0)}%`, "Detection of the critical error by the target and SD currently in the LIS")}
+    </div>
   );
 }
 
@@ -2284,11 +2335,65 @@ function MethodGuide({ settings }) {
 
 const STORE_KEY = "designlabiqc-clinchem-v4";
 
+/* Layer 1: the whole panel on one screen. One row per analyte; click to open. */
+function OverviewTable({ computed, panels, settings, onOpen }) {
+  const th = (t, title) => <th className="py-2 pr-3 text-left text-xs font-medium text-slate-600" title={title}>{t}</th>;
+  const td = (t, cls = "") => <td className={`py-1.5 pr-3 font-mono text-xs text-slate-800 ${cls}`}>{t}</td>;
+  return (
+    <div className="border border-slate-300 bg-white">
+      <div className="overflow-x-auto px-4 py-3">
+        <table className="w-full min-w-max border-collapse">
+          <thead>
+            <tr className="border-b border-slate-300">
+              {th("Analyte")}{th("Allowable error", "Adopted source and limit")}{th("Sigma L1 / L2")}{th("Crit. error %", "One size for the measurand, TEa − max(|offset| + z·CV)")}{th("K L1 / L2", "Rejection limit per level, observed SD")}{th("False rej.", "Combined per control event")}{th("Detection", "Combined probability of detecting the critical error, and the requirement")}{th("LIS target ± SD to enter")}{th("Status")}
+            </tr>
+          </thead>
+          <tbody>
+            {panels.map((panel) => {
+              const group = computed.filter((a) => (a.panel || "Imported") === panel);
+              if (!group.length) return null;
+              return [
+                <tr key={panel + "-h"}><td colSpan={9} className="pt-3 pb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{panel}</td></tr>,
+                ...group.map((a) => {
+                  const req = a.pedReq ?? settings.pedTarget;
+                  const ok = a.ready && a.pfrOk && a.pedOk;
+                  return (
+                    <tr key={a.id} onClick={() => onOpen(a.id)} className="cursor-pointer border-b border-slate-100 hover:bg-teal-50" title="Open">
+                      <td className="py-1.5 pr-3 text-sm text-slate-900">{a.name}</td>
+                      {td(a.ready ? `${a.teaSource} ${fmt(effectiveTea(a), 1)}%` : "—")}
+                      {td(a.ready ? a.levels.map((l) => fmt(l.sigma, 1)).join(" / ") : "—")}
+                      {td(a.ready && isFinite(a.critPct) ? fmt(a.critPct, 2) : "—")}
+                      {td(a.ready ? a.levels.map((l) => fmt(l.k, 1)).join(" / ") : "—")}
+                      {td(a.ready ? fmt(a.combinedPfr * 100, 2) + "%" : "—", a.ready && !a.pfrOk ? "text-rose-700" : "")}
+                      {td(a.ready ? `${fmt(a.combinedPed * 100, 1)}% (≥${req})` : "—", a.ready && !a.pedOk ? "text-rose-700" : "")}
+                      {td(a.ready ? a.levels.map(lisEntry).join("  ·  ") : "—")}
+                      <td className="py-1.5 pr-3">
+                        {!a.ready ? <span className="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600">needs {a.missing.join(", ")}</span>
+                          : ok ? <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs text-emerald-800">meets both</span>
+                          : <span className="rounded bg-rose-50 px-2 py-0.5 text-xs text-rose-800">{!a.pfrOk ? "false rejection over allowance" : "detection below requirement"}</span>}
+                      </td>
+                    </tr>
+                  );
+                }),
+              ];
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="border-t border-slate-200 px-4 py-2.5 text-xs text-slate-500">
+        Each row is one measurand under the settings above. Click a row to see the levels, the sources, the power curves and the monitoring charts. Search all re-derives every rule; Export CSV writes this table with the notes.
+      </p>
+    </div>
+  );
+}
+
 export default function IqcRuleDesigner() {
   const [analytes, setAnalytes] = useState(DEFAULT_ANALYTES);
   const [settings, setSettings] = useState(DEFAULT_SETTINGS);
   const [status, setStatus] = useState("Loading saved work…");
-  const [tab, setTab] = useState("design");
+  const [tab, setTab] = useState("overview");
+  const [selectedId, setSelectedId] = useState(null);
+  const [showSettings, setShowSettings] = useState(false);
   const [importNote, setImportNote] = useState("");
   // Imported result series for the CUSUM, by analyte name -> level -> instrument -> lot.
   // Kept in memory for the session; not saved with the work.
@@ -2741,6 +2846,20 @@ export default function IqcRuleDesigner() {
     setSettings(DEFAULT_SETTINGS);
   };
 
+  const currentId = computed.some((a) => a.id === selectedId) ? selectedId : (computed[0] && computed[0].id);
+  const searchAll = () => {
+    let n = 0;
+    setAnalytes((prev) => prev.map((a) => {
+      const c = computeAnalyte(a, settings);
+      if (!c.ready) return a;
+      const res = searchRules(a, settings, "balanced");
+      if (!res) return a;
+      n++;
+      return { ...a, levels: a.levels.map((l, i) => (l.locked ? l : { ...l, k: res.ks[i] })) };
+    }));
+    setImportNote(`Rule search applied to ${n} analyte${n === 1 ? "" : "s"} (best combined detection within the ${settings.pfrBudget}% false-alarm allowance). Locked levels were left as they were.`);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <div className="mx-auto max-w-7xl px-5 py-8">
@@ -2759,6 +2878,7 @@ export default function IqcRuleDesigner() {
 
         <nav className="mb-6 flex gap-6 border-b border-slate-300">
           {[
+            ["overview", "Overview"],
             ["design", "Rule design"],
             ["compare", "Maker ranges"],
             ["method", "Method and references"],
@@ -2783,8 +2903,58 @@ export default function IqcRuleDesigner() {
 
         {tab === "method" && <MethodGuide settings={settings} />}
 
-        {tab === "design" && (
+        {(tab === "design" || tab === "overview") && (
           <>
+        <div className="mb-4 flex flex-wrap items-center gap-3 border border-slate-300 bg-white px-4 py-2.5 text-sm">
+          <button type="button" onClick={() => setShowSettings((v) => !v)} className="rounded border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50" title="Show or hide the design settings">
+            {showSettings ? "Hide settings" : "Settings"}
+          </button>
+          <span className="font-mono text-xs text-slate-600">
+            false alarm ≤ {settings.pfrBudget}% · detection ≥ {settings.pedTarget}% · z {settings.zAlpha} · critical error: {settings.critMode === "common" ? "one size, all levels" : "each level its own"} · LIS rule {settings.qmMultiplier} SD
+          </span>
+          <div className="ml-auto flex items-center gap-3">
+            <span className="font-mono text-xs text-slate-500">{status}</span>
+            <input
+              ref={fileInput}
+              type="file"
+              accept=".xlsx,.xls,.csv"
+              className="hidden"
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) importResults(f);
+                e.target.value = "";
+              }}
+            />
+            <button
+              onClick={() => fileInput.current?.click()}
+              title="Load a results file (cobas infinity export or columns analyte, level, lot, instrument, result) and set each CV to the pooled within-lot value of the worst instrument"
+              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600"
+            >
+              Import results
+            </button>
+            <button
+              onClick={searchAll}
+              title="Run the rule search (best combined detection) for every analyte that has an allowable error and a CV, and apply the result"
+              className="rounded bg-teal-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+            >
+              Search all
+            </button>
+            <button
+              onClick={exportCsv}
+              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600"
+            >
+              Export CSV
+            </button>
+            <button
+              onClick={resetAll}
+              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
+        {showSettings && (
         <div className="mb-6 flex flex-wrap items-end gap-x-8 gap-y-4 border border-slate-300 bg-white px-4 py-4">
           <label className="text-sm text-slate-600">
             <span className="mb-1 block">False alarm allowance</span>
@@ -2843,40 +3013,8 @@ export default function IqcRuleDesigner() {
             />
           </label>
 
-          <div className="ml-auto flex items-center gap-3">
-            <span className="font-mono text-xs text-slate-500">{status}</span>
-            <input
-              ref={fileInput}
-              type="file"
-              accept=".xlsx,.xls,.csv"
-              className="hidden"
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) importResults(f);
-                e.target.value = "";
-              }}
-            />
-            <button
-              onClick={() => fileInput.current?.click()}
-              title="Load a results file (columns: analyte, level, lot, instrument, result) and set each CV to the pooled within-lot value of the worst instrument"
-              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600"
-            >
-              Import results
-            </button>
-            <button
-              onClick={exportCsv}
-              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-teal-600"
-            >
-              Export CSV
-            </button>
-            <button
-              onClick={resetAll}
-              className="rounded border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
-            >
-              Reset
-            </button>
-          </div>
         </div>
+        )}
 
         {importNote && (
           <p className="mb-6 flex items-start justify-between gap-4 border-l-2 border-teal-600 bg-white px-4 py-3 text-sm text-slate-700">
@@ -2913,16 +3051,42 @@ export default function IqcRuleDesigner() {
           </p>
         )}
 
-        <div className="space-y-5">
-          {panels.map((panel) => {
-            const group = computed.filter((a) => (a.panel || "Imported") === panel);
-            if (!group.length) return null;
-            return (
-              <div key={panel} className="space-y-5">
-                <h2 className="pt-2 text-sm font-semibold text-slate-500">
-                  {panel}
-                </h2>
-                {group.map((a) => (
+        {tab === "overview" && (
+          <OverviewTable computed={computed} panels={panels} settings={settings} onOpen={(id) => { setSelectedId(id); setTab("design"); }} />
+        )}
+
+        {tab === "design" && (
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-[13rem_minmax(0,1fr)]">
+          <aside className="space-y-4">
+            {panels.map((panel) => {
+              const group = computed.filter((a) => (a.panel || "Imported") === panel);
+              if (!group.length) return null;
+              return (
+                <div key={panel}>
+                  <h2 className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{panel}</h2>
+                  <ul className="border border-slate-300 bg-white">
+                    {group.map((a) => {
+                      const active = a.id === currentId;
+                      const tone = !a.ready ? "bg-slate-300" : a.pfrOk && a.pedOk ? "bg-emerald-500" : "bg-rose-500";
+                      return (
+                        <li key={a.id}>
+                          <button type="button" onClick={() => setSelectedId(a.id)}
+                            className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm ${active ? "bg-teal-50 font-medium text-slate-900" : "text-slate-700 hover:bg-slate-50"}`}>
+                            <span className={`inline-block h-2 w-2 rounded-full ${tone}`} aria-hidden="true" />
+                            <span className="truncate">{a.name}</span>
+                            {a.ready && <span className="ml-auto font-mono text-[11px] text-slate-500">{a.levels.map((l) => fmt(l.k, 1)).join("/")}</span>}
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+            <button type="button" onClick={addAnalyte} className="w-full rounded border border-dashed border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50">+ Add analyte</button>
+          </aside>
+          <div className="min-w-0">
+            {computed.filter((a) => a.id === currentId).map((a) => (
                   <AnalytePanel
                     key={a.id}
                     analyte={a}
@@ -2956,18 +3120,10 @@ export default function IqcRuleDesigner() {
                       setAnalytes((prev) => prev.filter((x) => x.id !== a.id))
                     }
                   />
-                ))}
-              </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-
-        <button
-          onClick={addAnalyte}
-          className="mt-5 w-full border border-dashed border-slate-300 bg-white py-3 text-sm text-slate-600 hover:border-teal-600 hover:text-teal-800"
-        >
-          Add analyte
-        </button>
+        )}
           </>
         )}
 
