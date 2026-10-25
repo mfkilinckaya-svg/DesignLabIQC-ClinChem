@@ -2347,6 +2347,45 @@ function ValidationView() {
   }
   const f = (v) => (typeof v === "number" ? (Math.abs(v) >= 100 ? v.toFixed(1) : Math.abs(v) >= 1 ? v.toFixed(3) : v.toPrecision(4)) : String(v));
   const [open, setOpen] = useState(null);
+  // The arithmetic behind each section, computed live from core.js so that the
+  // reader sees formula → inputs → result, not only "pass".
+  const na = DEFAULT_ANALYTES.find((a) => a.name === "Sodium");
+  const naC = computeAnalyte(na, DEFAULT_SETTINGS);
+  const des = BV_TIERS.find((t) => t.key === "desirable");
+  const MATH = {
+    "Normal CDF": {
+      formula: "Φ(z) = ½·erfc(−z/√2); erfc from the regularised incomplete gamma function (Numerical Recipes gammp/gammq), so that tails at z ≥ 4 keep full precision",
+      example: `Φ(2.5) = ${normCdf(2.5).toFixed(7)} (table 0.9937903); 1 − Φ(4) = ${normSf(4).toExponential(4)} (table 3.167e-5)`,
+    },
+    "1:K rule": {
+      formula: "Pfr(K, N) = 1 − [1 − 2·(1 − Φ(K))]^N;   Ped(K, N, Δ) = 1 − [Φ(K − Δ) − Φ(−K − Δ)]^N, Δ the systematic shift in SD",
+      example: `Pfr(2.5, 1) = 2·(1 − ${normCdf(2.5).toFixed(5)}) = ${falseRejection(2.5, 1).toFixed(5)};  Ped(3, 1, 2) = 1 − [Φ(1) − Φ(−5)] = ${errorDetection(3, 1, 2).toFixed(4)};  Ped(3, 2, 3) = 1 − [Φ(0) − Φ(−6)]² = ${errorDetection(3, 2, 3).toFixed(4)}`,
+    },
+    "BV tiers": {
+      formula: "TEa = 1.65·kI·CVI + kB·√(CVI² + CVG²), with kI/kB = 0.25/0.125 (optimal), 0.50/0.25 (desirable), 0.75/0.375 (minimum)",
+      example: `creatinine, CVI 4.4 %, CVG 16.1 %, desirable: 1.65·0.5·4.4 + 0.25·√(4.4² + 16.1²) = 3.630 + ${(0.25 * Math.sqrt(4.4 ** 2 + 16.1 ** 2)).toFixed(3)} = ${bvTea(4.4, 16.1, des).toFixed(3)} %`,
+    },
+    "Panel vs Python": {
+      formula: "sigma_i = (TEa − |offset_i|)/CV_i;   critical error = TEa − max_i(|offset_i| + z·CV_i);   Δ_i = (critical error − |offset_i|)/CV_i;   Ped = 1 − Π_i(1 − Ped(K_i, 1, Δ_i));   Pfr = 1 − Π_i(1 − Pfr(K_i, 1))",
+      example: `sodium, TEa 5 %, L1 CV ${na.levels[0].cv} % offset ${na.levels[0].bias} %, L2 CV ${na.levels[1].cv} % offset ${na.levels[1].bias} %: sigma ${naC.levels.map((l) => l.sigma.toFixed(2)).join(" / ")}; critical error 5 − max(${(Math.abs(na.levels[0].bias) + 1.65 * na.levels[0].cv).toFixed(3)}, ${(Math.abs(na.levels[1].bias) + 1.65 * na.levels[1].cv).toFixed(3)}) = ${naC.critPct.toFixed(3)} %; Δ = ${naC.levels.map((l) => l.criticalShift.toFixed(2)).join(" / ")} SD; with K ${na.levels.map((l) => l.k).join(" / ")}: Ped per level ${naC.levels.map((l) => (l.ped * 100).toFixed(1)).join(" / ")} % → combined ${(naC.combinedPed * 100).toFixed(1)} %; Pfr ${naC.levels.map((l) => (l.pfr * 100).toFixed(2)).join(" / ")} % → combined ${(naC.combinedPfr * 100).toFixed(2)} %. Python (scipy.stats.norm, no shared code) gives the same to the stated tolerance.`,
+    },
+    "Rule search": {
+      formula: "K_i ∈ {1.5, 1.6, …, 5.0} per level; keep the sets with combined Pfr ≤ allowance; take the set with the largest combined Ped (ties: lower Pfr)",
+      example: (() => { const r = searchRules({ ...na, levels: na.levels.map((l) => ({ ...l, k: 3, locked: false })) }, DEFAULT_SETTINGS, "balanced"); return r ? `sodium from K 3/3: ${K_GRID.length}² = ${K_GRID.length ** 2} candidate pairs, best within 1.5 % → K ${r.ks.join(" / ")}, Pfr ${(r.combinedPfr * 100).toFixed(2)} %, Ped ${(r.combinedPed * 100).toFixed(1)} %` : "—"; })(),
+    },
+    "CUSUM": {
+      formula: "C⁺ = max(0, C⁺ + z − k), C⁻ = max(0, C⁻ − z − k); alarm when either > h. ARL (Siegmund): [exp(−2Δ′b) + 2Δ′b − 1]/(2Δ′²), Δ′ = shift − k, b = h + 1.166; two-sided in-control ARL = one-sided/2",
+      example: `k 0.5, h 5: b = 6.166; in control Δ′ = −0.5 → ${cusumArl(0, 0.5, 5).toFixed(1)} one-sided, ${cusumArl0(0.5, 5).toFixed(1)} two-sided (exact 465); shift 1 SD, Δ′ = 0.5 → ${cusumArl(1, 0.5, 5).toFixed(2)} (exact 10.4)`,
+    },
+    "EWMA": {
+      formula: "e_t = λ·z_t + (1 − λ)·e_{t−1}; alarm when |e_t| > L·√(λ/(2 − λ)). ARL by Monte Carlo (seeded, 1,200–3,000 runs); reference ARL by the Brook–Evans Markov chain, 301 states",
+      example: `λ 0.2, L 2.86: limit ${ewmaLimit(0.2, 2.86).toFixed(4)}; ARL₀ ≈ ${ewmaArl(0, 0.2, 2.86, 600).toFixed(0)} here (Markov chain 371; Lucas & Saccucci design 370)`,
+    },
+    "Multirule": {
+      formula: "Per control event with N levels: 1-3s any |z| > 3; 2-2s both levels > 2 (or < −2), or the same level in two consecutive events; R-4s one level > 2 and another < −2 in the same event. Pfr: fraction of in-control events rejected; Ped: fraction of events rejected at the first event with the shift present",
+      example: `N = 2, 20,000 events: Pfr(1-3s) = ${multirulePfr(new Set(["13s"]), 2, 4000).toFixed(4)} (exact 1 − (1 − 0.0027)² = 0.0054); Ped(1-3s/2-2s/R-4s, Δ 2 SD, first event) ≈ ${multirulePed(new Set(["13s", "22s", "R4s"]), [2, 2], 2000).first.toFixed(3)} (independent simulation 0.418)`,
+    },
+  };
   return (
     <div className="space-y-5">
       <div className="rounded-md border border-slate-200 bg-white p-5 shadow-sm">
@@ -2393,6 +2432,12 @@ function ValidationView() {
                 </tr>
                 {open === sec.name && (
                   <tr><td colSpan={5} className="bg-slate-50 px-4 py-2">
+                    {MATH[sec.name] && (
+                      <div className="mb-3 rounded border border-teal-100 bg-white px-3 py-2 text-xs leading-relaxed text-slate-700">
+                        <div><span className="font-semibold text-teal-900">Formula.</span> <span className="font-mono">{MATH[sec.name].formula}</span></div>
+                        <div className="mt-1"><span className="font-semibold text-teal-900">Worked example, computed now by this file.</span> {MATH[sec.name].example}</div>
+                      </div>
+                    )}
                     <table className="w-full text-xs">
                       <thead><tr className="text-left text-slate-500"><th className="py-1 pr-3 font-medium">Item</th><th className="py-1 pr-3 font-medium">Tool</th><th className="py-1 pr-3 font-medium">Reference</th><th className="py-1 pr-3 font-medium">Tolerance</th><th className="py-1 font-medium">Source</th></tr></thead>
                       <tbody>{sec.rows.map((r, i) => (
