@@ -72,7 +72,7 @@ Open `tool/iqc-rule-designer-clinchem.html` in a browser. It has three layers:
 
 1. **Overview** — the whole panel on one screen, one row per measurand: adopted source, sigma, critical error, K per level, false rejection, detection and the target ± SD to enter in the LIS. **Search all** re-derives every rule; **Export CSV** writes the table. Click a row to open it.
 2. **Rule design** — one measurand at a time, chosen from the list on the left. The strip under the header gives the answer (source, rule, sigma, critical error, false rejection, detection, LIS entry, what the current LIS rule detects). Four tabs below it: *Rule* (false-alarm budget, level table with CV/target/offset/K, rule search, power curves), *Allowable error sources* (sources and the same-measurement comparison), *LIS and limits* (what to enter now versus recommended, the imprecision you can afford), *Monitoring* (CUSUM, EWMA, multirule, measurement uncertainty, reagent-lot steps, change points).
-3. **Settings** (collapsed by default), **Maker ranges** and **Method and references**.
+3. **Settings** (collapsed by default), **Maker ranges** and **Method and references**. Verification of the calculations is kept outside the tool: see below and `docs/VALIDATION.md`.
 
 To fill a measurand from data, load `tool_import.csv` or a raw cobas infinity export with **Import results**: each level's CV becomes the pooled within-lot CV of the worst analyser, the target the pooled lot mean, the offset the largest analyser deviation. Work is saved in the browser on that device only.
 
