@@ -3,7 +3,7 @@
 set -e
 SRC=$(realpath "$1"); OUT="$2"; TITLE="$3"; D=$(dirname "$0")
 cd "$D"
-cp "$SRC" app.jsx
+cp "$SRC" app.jsx; cp "$(dirname "$SRC")/core.js" core.js
 cat > main.jsx <<'X'
 import React from "react";
 import { createRoot } from "react-dom/client";

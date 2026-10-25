@@ -1,0 +1,11 @@
+{
+ "ewma_arl0_l02_L286": 371.0370750784343,
+ "ewma_arl_1sd_l02_L286": 9.801631335679135,
+ "ewma_arl_05sd_l02_L286": 36.20190911483606,
+ "multirule_pfr_13s_N2_exact": 0.005392303227737205,
+ "multirule_pfr_12s_N2_exact": 0.08893025377807862,
+ "multirule_pfr_13s22sR4s_N2_mc": 0.009385,
+ "multirule_ped_13s22sR4s_N2_shift2_first_mc": 0.41819,
+ "cusum_arl0_k05_h5_hawkins": 465.0,
+ "cusum_arl_1sd_k05_h5_hawkins": 10.4
+}
