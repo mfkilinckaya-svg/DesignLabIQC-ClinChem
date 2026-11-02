@@ -71,6 +71,7 @@ C.supplementary = [
   ...en.supplementary.slice(5),   // Text S1, Table S6, Table S7, Supplementary Data
 ];
 
+C.correspondingPostal = "Muhammed Fevzi Kılınçkaya, Department of Medical Biochemistry, Sjukehuset Nordmøre og Romsdal, Helse Møre og Romsdal HF, Opdølvegen 4, 6450 Hjelset, Norway. E-mail: muhammed.fevzi.kilinckaya@helse-mr.no";
 C.guarantor = "MFK.";
 C.contributions = "MFK designed the study, extracted and analysed the data, wrote the software and the manuscript, and is the guarantor.";
 C.ethics = "The study used only internal quality control results of the laboratory's own control materials. No patient samples, patient data or personal data were involved, and under the Norwegian Health Research Act no approval by a regional ethics committee (REK) was required; this was confirmed by the data protection officer of Helse Møre og Romsdal HF.";

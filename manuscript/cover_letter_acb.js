@@ -7,7 +7,7 @@ const B = t => new TextRun({ text: t, bold: true, font: "Times New Roman", size:
 const I = t => new TextRun({ text: t, italics: true, font: "Times New Roman", size: 24 });
 
 const paras = [
-  P("Muhammed Fevzi Kılınçkaya, MD\nDepartment of Medical Biochemistry\nSjukehuset Nordmøre og Romsdal, Helse Møre og Romsdal HF\nHjelset, Norway\nmuhammed.fevzi.kilinckaya@helse-mr.no · ORCID 0000-0002-0815-5467".split("\n").map((s, i, a) => new TextRun({ text: s, font: "Times New Roman", size: 24, break: i ? 1 : 0 }))),
+  P("Muhammed Fevzi Kılınçkaya, MD\nDepartment of Medical Biochemistry\nSjukehuset Nordmøre og Romsdal, Helse Møre og Romsdal HF\nOpdølvegen 4, 6450 Hjelset, Norway\nmuhammed.fevzi.kilinckaya@helse-mr.no · ORCID 0000-0002-0815-5467".split("\n").map((s, i, a) => new TextRun({ text: s, font: "Times New Roman", size: 24, break: i ? 1 : 0 }))),
   P(new Date().toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })),
   P(["Editor-in-Chief", new TextRun({ text: "Annals of Clinical Biochemistry", italics: true, font: "Times New Roman", size: 24, break: 1 })]),
   P("Dear Editor,"),
