@@ -14,10 +14,10 @@ function sub(arr, i, pairs) {
 C.shortTitle = "Control rules from imprecision: the allowable-error source decides";
 
 C.abstract = {
-  Background: "Internal quality control rules are rarely derived from measured imprecision, and allowable total error (TEa) sources disagree. We derived rules for ten measurands and tested them on later data.",
-  Methods: "Fourteen months of control results (n=27,963) on two Roche cobas pro systems gave per level the worst analyser's within-lot CV, lot mean and offset. TEa limits from 14 sources, from EFLM biological variation (BV) to EQA and national limits, were compared; the strictest source giving sigma ≥3 and a rule meeting the detection requirement within a 1.5% false-rejection allowance was adopted. Rules derived from 2025 were tested on 2026 data, injected errors and 2,465 calibration and reagent-lot events.",
-  Results: "Observed CV was below the LIS CV at 17 of 20 levels (median ratio 0.73); published limits differed up to 29-fold. A BV tier was adopted for TSH, glucose and PSA only; for sodium, calcium and 25-OH vitamin D only limits wider than clinical use requires were attainable. Derived rules (K 2.5–3.3 SD) raised predicted detection from a median 37% to 72–100%. On 2026 data they rejected 3.3% with lot-start targets and 1.4% re-centred (predicted 0.68%); the excess marked real shifts, such as a 4% glucose step confirmed by EQA. Injected errors were detected as predicted; 9 of 11 events leaving an error of the critical size were caught on the first run.",
-  Conclusions: "Derived rules are attainable and behave as predicted; controllability depends more on the TEa source than on the analyser, and false rejections beyond the Gaussian estimate mark uncorrected shifts.",
+  Background: "Internal quality control rules are rarely derived from measured imprecision, and allowable total error (TEa) sources disagree. We derived rules for ten measurands.",
+  Methods: "Fourteen months of control results (n=27,963) on two Roche cobas pro systems gave per level the worst analyser's within-lot CV, lot mean and offset. TEa limits from 14 sources, from EFLM biological variation (BV) to national limits, were compared; the strictest source giving sigma ≥3 and a rule meeting the detection requirement within a 1.5% false-rejection allowance was adopted. Rules derived from 2025 were tested on 2026 data, injected errors and 2,465 calibration and reagent-lot events.",
+  Results: "Observed CV was below the LIS CV at 17 of 20 levels (median ratio 0.73); published limits differed up to 29-fold. A BV tier was adopted for TSH, glucose and PSA only; for sodium, calcium and 25-OH vitamin D only limits wider than clinical use requires were attainable. Derived rules raised predicted detection from a median 37% to 72–100%. On 2026 data they rejected 3.3% with lot-start targets and 1.4% re-centred (predicted 0.68%); the excess marked real shifts, such as a 4% glucose step confirmed by EQA. Injected errors were detected as predicted for six measurands, 8–17 points less for four with between-day variation; 9 of 11 events leaving a critical-size error were caught on the first run.",
+  Conclusions: "Derived rules are attainable and outperform the rules in force; controllability depends more on the TEa source than on the analyser, and false rejections beyond the Gaussian estimate mark uncorrected shifts.",
 };
 
 // Introduction: one citation of the haematology study
@@ -68,8 +68,7 @@ C.supplementary = [
   ...en.supplementary.slice(0, 5),
   en.legends[2].replace("Figure 3.", "Supplementary Figure S1."),
   en.legends[3].replace("Figure 4.", "Supplementary Figure S2."),
-  en.supplementary[5],
-  en.supplementary[6],
+  ...en.supplementary.slice(5),   // Text S1, Table S6, Table S7, Supplementary Data
 ];
 
 C.guarantor = "MFK.";

@@ -1,0 +1,11 @@
+analyte,n_runs,predicted_worst_case_pct,predicted_no_offset_pct,observed_lot_start_pct,observed_centred_pct,predicted_analyser_2026_cv_pct,requirement_pct,centred_minus_no_offset_prediction,predicted_meets_requirement,observed_meets_requirement
+Sodium,746,90.2,98.1,96.1,96.0,98.4,90,-2.1,True,True
+Creatinine,551,90.9,93.6,87.7,91.2,93.6,90,-2.4,True,True
+ALT,488,59.4,78.6,56.2,70.8,81.9,70,-7.8,True,True
+Glucose,374,98.8,99.0,87.0,97.3,99.0,90,-1.7,True,True
+Calcium,378,100.0,100.0,100.0,100.0,100.0,90,0.0,True,True
+TSH,740,56.5,71.1,53.0,59.7,69.5,70,-11.4,True,False
+hs-Troponin T,400,72.3,83.1,72.8,85.0,83.1,90,1.9,False,False
+Ferritin,745,51.8,58.0,50.1,46.8,54.4,70,-11.2,False,False
+PSA,386,96.2,98.8,94.0,97.5,99.7,70,-1.3,True,True
+25-OH vitamin D,687,41.2,49.1,38.5,32.2,35.7,70,-16.8,False,False

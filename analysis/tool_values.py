@@ -27,7 +27,9 @@ for (a, lv), g in d.groupby(["analyte", "level"]):
     rows.append(dict(analyte=a, test_code=g.test_code.iat[0], unit=g.unit.iat[0], level=lv, control=g.control_name.iat[-1],
                      n=len(g), n_instruments=g.instrument.nunique(), worst_instrument=worst, cv=round(cvs[worst][0], 3),
                      target=float(f"{target:.6g}"), bias=round(off, 3), target_lot=gl.lot.iat[0], n_target_lot=len(gl),
-                     lis_target_in_lot=gl.target_in_force.iat[-1], lis_sd_in_lot=gl.sd_defined_in_lis.iat[-1], first=g.timestamp.min()[:10], last=g.timestamp.max()[:10]))
+                     lis_target_in_lot=gl.target_in_force.iat[-1], lis_sd_in_lot=gl.sd_defined_in_lis.iat[-1], first=g.timestamp.min()[:10], last=g.timestamp.max()[:10],
+                     # unrounded, for display only (rounding the 3-decimal values again would round 1.4949 to 1.50)
+                     cv_precise=round(cvs[worst][0], 6), bias_precise=round(off, 6)))
 t = pd.DataFrame(rows)
 t = t[t.n >= 20]
 t.to_csv("data/prepared/tool_values_by_level.csv", index=False)

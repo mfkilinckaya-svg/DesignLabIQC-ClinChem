@@ -32,8 +32,10 @@ const P = (text, opts = {}) =>
 const H1 = (t) => new Paragraph({ spacing: { before: 240, line: 480, after: 0 }, children: [new TextRun({ text: t, font: FONT, size: 24, bold: true })] });
 const H2 = (t) => new Paragraph({ spacing: { before: 120, line: 480, after: 0 }, children: [new TextRun({ text: t, font: FONT, size: 24, italics: true })] });
 const BR = () => new Paragraph({ children: [new PageBreak()] });
-const fmt = (x, d) => (x === "" || x == null || isNaN(+x) ? "–" : (+x).toFixed(d));
-const sig = (x) => { const v = +x; return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v.toFixed(3); };
+// half-up rounding (toFixed rounds 1.365 to 1.36 because of binary representation)
+const rnd = (v, d) => (Math.round(v * 10 ** d + 1e-9 * Math.sign(v)) / 10 ** d).toFixed(d);
+const fmt = (x, d) => (x === "" || x == null || isNaN(+x) ? "–" : rnd(+x, d));
+const sig = (x) => { const v = +x; return v >= 100 ? rnd(v, 0) : v >= 10 ? rnd(v, 1) : v >= 1 ? rnd(v, 2) : rnd(v, 3); };
 
 const SRC_LABEL = { "BV EFLM (desirable)": "BV desirable", "BV EFLM (optimal)": "BV optimal", "BV EFLM (minimum)": "BV minimum", "CLIA": "CLIA 2025", "China WS/T 403-2024": "China WS/T 403" };
 
@@ -68,12 +70,12 @@ const byA = (a) => vals.filter((v) => v.analyte === a).sort((x, y) => x.level.lo
 const t1rows = [];
 for (const a of ORDER) for (const v of byA(a)) {
   const lisCv = (+v.lis_sd_in_lot / +v.lis_target_in_lot) * 100;
-  t1rows.push([v.level === "L1" ? a : "", v.level, v.unit, sig(v.target), v.n, v.worst_instrument, fmt(v.cv, 2), fmt(lisCv, 2), fmt(+v.cv / lisCv, 2), fmt(v.bias, 2)]);
+  t1rows.push([v.level === "L1" ? a : "", v.level, v.unit, sig(v.target), v.n, v.worst_instrument, fmt(v.cv_precise ?? v.cv, 2), fmt(lisCv, 2), fmt(+(v.cv_precise ?? v.cv) / lisCv, 2), fmt(v.bias_precise ?? v.bias, 2)]);
 }
 const t2rows = ORDER.map((a) => {
   const o = R.find((x) => x.analyte === a); const c = o.chosen; const rr = rules.filter((r) => r.analyte === a).sort((x, y) => x.level.localeCompare(y.level));
   const f = f2.find((x) => x.analyte === a);
-  return [a, SRC_LABEL[c.source] || c.source, fmt(c.tea, 1), fmt(c.crit, 2), `${c.sigma[0].toFixed(1)} / ${c.sigma[1].toFixed(1)}`, `${c.ks[0].toFixed(1)} / ${c.ks[1].toFixed(1)}`,
+  return [a, SRC_LABEL[c.source] || c.source, fmt(c.tea, 1), fmt(c.crit, 2), `${rnd(c.sigma[0], 1)} / ${rnd(c.sigma[1], 1)}`, `${rnd(c.ks[0], 1)} / ${rnd(c.ks[1], 1)}`,
     fmt(c.pfr * 100, 2), fmt(c.ped * 100, 1), f.req, `${sig(rr[0].sd_for_lis)} / ${sig(rr[1].sd_for_lis)}`, `${sig(rr[0].sd_lis)} / ${sig(rr[1].sd_lis)}`];
 });
 const t3rows = ORDER.map((a) => { const r = retro.find((x) => x.analyte === a); return [a, (+r.n).toFixed(0), fmt(r.design_pfr_pct, 2), fmt(r.rej_lis_rule_pct, 2), fmt(r.A_lis_target_pct, 2), fmt(r.B_pooled_mean_pct, 2), fmt(r.C_analyser_mean_pct, 2), fmt(r.D_analyser_month_mean_pct, 2)]; });
