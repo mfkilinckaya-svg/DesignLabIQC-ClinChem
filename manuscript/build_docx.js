@@ -90,6 +90,16 @@ const nAbs = words(Object.values(C.abstract));
 console.log("abstract words", nAbs, "main text words", nMain, "references", C.references.length);
 
 // ---------- document ----------
+const DECL = [
+  ["Declaration of conflicting interests", "The author declares no conflicts of interest."],
+  ["Funding", "This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors."],
+  ["Ethical approval", C.ethics],
+  ["Guarantor", C.guarantor],
+  ["Contributorship", C.contributions],
+  ["Acknowledgements", C.acknowledgements],
+  ["Use of artificial intelligence", C.aiStatement],
+  ["Data availability", C.dataAvailability],
+];
 const titlePage = [
   P(C.title, { bold: true }),
   P(""),
@@ -97,11 +107,13 @@ const titlePage = [
   P(""),
   P(`${C.author}`), P(C.affiliation), P(`ORCID: ${C.orcid}`),
   P(""),
-  P((LANG === "tr" ? "Sorumlu yazar: " : "Corresponding author: ") + C.corresponding),
+  P((LANG === "tr" ? "Sorumlu yazar: " : "Corresponding author: ") + (C.correspondingPostal || C.corresponding)),
   P(""),
   P(LANG === "tr" ? `Türkçe okuma sürümü; İngilizce aslının birebir çevirisi. Tablo: 3. Figür: ${NFIG}. Kaynak: ${C.references.length}. Ek öğe: ${NSUP}.` : `Word count: abstract ${nAbs}; main text ${nMain} (excluding abstract, references, tables and figure legends). Tables: 3. Figures: ${NFIG}. References: ${C.references.length}. Supplementary items: ${NSUP}.`),
-  P(""),
-  P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; ")),
+  ...(FORMAT === "acb" && LANG !== "tr" ? [
+    // ACB: the title page carries the full list of declarations (Sage Manuscript Submission Guidelines, 5.i)
+    P(""), H2("Declarations"), ...DECL.map(([k, v]) => P([new TextRun({ text: k + ": ", font: FONT, size: 24, bold: true }), new TextRun({ text: v, font: FONT, size: 24 })])),
+  ] : [P(""), P((LANG === "tr" ? "Anahtar kelimeler: " : "Keywords: ") + C.keywords.join("; "))]),
   BR(),
   H1(LANG === "tr" ? "Özet" : "Abstract"),
   ...Object.entries(C.abstract).map(([k, v]) => P([new TextRun({ text: k + ": ", font: FONT, size: 24, bold: true }), new TextRun({ text: v, font: FONT, size: 24 })])),
@@ -136,16 +148,7 @@ const body = [
   H1("Katkı beyanı"), P(C.contributions),
   H1("Yapay zekâ kullanımı"), P(C.aiStatement),
   H1("Veri erişilebilirliği"), P(C.dataAvailability),
-  ] : [
-  H1("Acknowledgements"), P(C.acknowledgements),
-  H1("Declaration of conflicting interests"), P("The author declares no conflicts of interest."),
-  H1("Funding"), P("This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors."),
-  H1("Ethical approval"), P(C.ethics),
-  H1("Guarantor"), P(C.guarantor),
-  H1("Contributorship"), P(C.contributions),
-  H1("Use of artificial intelligence"), P(C.aiStatement),
-  H1("Data availability"), P(C.dataAvailability),
-  ]) : [
+  ] : [/* EN: declarations are on the title page */]) : [
   H1(LANG === "tr" ? "Teşekkür" : "Acknowledgements"), P(C.acknowledgements),
   H1(LANG === "tr" ? "Araştırma desteği" : "Research funding"), P(C.funding),
   H1(LANG === "tr" ? "Yazar katkıları" : "Author contributions"), P(C.contributions),
