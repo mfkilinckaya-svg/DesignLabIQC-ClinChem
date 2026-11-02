@@ -171,6 +171,16 @@ function BudgetMeter({ levels, combinedPfr, budget }) {
   );
 }
 
+// round axis ticks (0, 1, 2 ... or 0, 5, 10 ...) up to max
+function niceTicks(max) {
+  if (!(max > 0)) return [0];
+  const raw = max / 4, mag = 10 ** Math.floor(Math.log10(raw));
+  const step = [1, 2, 2.5, 5, 10].map((m) => m * mag).find((v) => v >= raw);
+  const out = [];
+  for (let v = 0; v <= max + 1e-9; v += step) out.push(Number(v.toFixed(6)));
+  return out;
+}
+
 function PowerCurves({ analyte, settings }) {
   // Two views of the same thing. In SD units each level has its own curve and
   // its own critical shift. In per cent a systematic error is one number for
@@ -221,9 +231,9 @@ function PowerCurves({ analyte, settings }) {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 16, bottom: 24, left: 4 }}>
             <CartesianGrid stroke="#e2e8f0" strokeDasharray="2 3" />
-            <XAxis dataKey="x" type="number" domain={[0, unit === "sd" ? 6 : Number(maxPct.toFixed(2))]} tickFormatter={(v) => (unit === "sd" ? v.toFixed(1) : v.toFixed(1))} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8"
+            <XAxis dataKey="x" type="number" domain={[0, unit === "sd" ? 6 : Number(maxPct.toFixed(2))]} ticks={niceTicks(unit === "sd" ? 6 : maxPct)} tickFormatter={(v) => (Number.isInteger(v) ? String(v) : v.toFixed(1))} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8"
               label={{ value: unit === "sd" ? "Systematic shift (SD)" : "Systematic error (%)", position: "insideBottom", offset: -12, fontSize: 11, fill: "#475569" }} />
-            <YAxis domain={[0, 1]} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8" tickFormatter={(v) => v.toFixed(1)} />
+            <YAxis domain={[0, 1]} ticks={[0, 0.25, 0.5, 0.75, 1]} tick={{ fontSize: 11, fill: "#475569" }} stroke="#94a3b8" tickFormatter={(v) => v.toFixed(2)} />
             <Tooltip formatter={(v) => v.toFixed(3)} labelFormatter={(v) => (unit === "sd" ? `Shift ${v} SD` : `Error ${v}%`)} contentStyle={{ fontSize: 12, borderRadius: 4 }} />
             <Legend verticalAlign="top" align="right" height={22} wrapperStyle={{ fontSize: 12 }} />
             {analyte.levels.map((l, i) => (
@@ -2825,7 +2835,7 @@ export default function IqcRuleDesigner() {
 
         <footer className="mt-10 border-t border-slate-200 pt-5 text-xs leading-relaxed text-slate-500">
           <p className="max-w-3xl">
-            Saved in this browser only; export the CSV for a copy that lasts. Rule choices need authorisation before they go into the LIS.
+            DesignLabIQC-ClinChem version 1.0 · Saved in this browser only; export the CSV for a copy that lasts. Rule choices need authorisation before they go into the LIS.
           </p>
         </footer>
       </div>

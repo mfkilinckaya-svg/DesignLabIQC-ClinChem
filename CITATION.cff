@@ -1,11 +1,13 @@
 cff-version: 1.2.0
-message: "If you use this repository, please cite it together with the accompanying article (in preparation)."
+message: "If you use this repository, please cite it together with the accompanying article (submitted)."
 title: "Clinical chemistry and immunochemistry IQC rule design from laboratory imprecision: data, analysis code and rule-design tool"
 authors:
   - family-names: Kilinckaya
-    given-names: Muhammed
+    given-names: Muhammed Fevzi
+    orcid: "https://orcid.org/0000-0002-0815-5467"
     affiliation: "Helse Møre og Romsdal HF, Norway"
-version: "0.1.0"
+version: "1.0.0"
+date-released: "2026-11-02"
 license: MIT
 repository-code: "https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem"
 references:

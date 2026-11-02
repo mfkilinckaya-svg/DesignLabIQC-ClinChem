@@ -36,7 +36,7 @@ sub(rd, 1, [
 ]);
 sub(rd, 2, [[
   "The calculations are those of the DesignLabIQC tool [16], extended to two-level panels, user-entered TEa sources and direct import of cobas infinity exports (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence), a single HTML file that opens in a browser with this panel loaded.",
-  "The calculations were implemented in a browser-based tool (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence), a single HTML file that runs without installation, accepts two-level panels, user-entered TEa sources and direct import of cobas infinity exports, and opens with this panel loaded.",
+  "The calculations were implemented in a browser-based tool (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence), a single HTML file that runs without installation, accepts two-level panels, user-entered TEa sources and direct import of cobas infinity exports, and opens with this panel loaded (Supplementary Figure S3).",
 ]]);
 
 // Results: figure numbering (3 main figures; retrospective and monthly-mean figures supplementary)
@@ -68,6 +68,7 @@ C.supplementary = [
   ...en.supplementary.slice(0, 5),
   en.legends[2].replace("Figure 3.", "Supplementary Figure S1."),
   en.legends[3].replace("Figure 4.", "Supplementary Figure S2."),
+  "Supplementary Figure S3. The browser tool (DesignLabIQC-ClinChem, version 1.0) on one measurand, sodium. (1) The cobas infinity export is imported, or the values are typed. (2) For each control level the target (lot mean), the CV of the worst analyser and the analyser offset. (3) The allowable total error source; the sigma of each level follows. (4) The rule search returns K per level, the combined false rejection per control event and the combined detection of the critical error against the requirement. (5) The target and the SD to enter in the LIS so that its 1:3s rule reproduces the derived limit. (6) Detection against the size of a systematic error, per level and combined; dashed line: critical error; dotted line: allowable total error. The red label gives the combined false rejection on the analyser furthest from the pooled target. The tool runs in a browser without installation, and no data leave the computer.",
   ...en.supplementary.slice(5),   // Text S1, Table S6, Table S7, Supplementary Data
 ];
 
