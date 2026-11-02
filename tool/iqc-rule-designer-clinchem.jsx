@@ -484,7 +484,7 @@ function SourceEditor({ analyte, onChange }) {
   );
 }
 
-function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
+function AnalytePanel({ analyte, settings, onChange, onRemove, series, advanced = false }) {
   const [chart, setChart] = useState("power");
   const [view, setView] = useState("rule");
   const [strategy, setStrategy] = useState("balanced");
@@ -572,7 +572,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           <span className="font-mono text-sm text-slate-500">%</span>
         </label>
 
-        <label
+        {advanced && <label
           className="flex items-center gap-2 text-sm text-slate-600"
           title="Within-subject (CVI) and between-subject (CVG) biological variation, from the EFLM database. Fill both and the optimal, desirable and minimum tiers appear as sources."
         >
@@ -590,7 +590,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
             width="w-14"
           />
           <span className="font-mono text-sm text-slate-500">%</span>
-        </label>
+        </label>}
 
         <div className="ml-auto flex items-center gap-2">
           {(() => {
@@ -609,7 +609,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           {(() => {
             const cvi = Number(analyte.bv && analyte.bv.cvi);
             const cvs = analyte.levels.map((l) => Number(l.cv)).filter((c) => c > 0);
-            if (!(cvi > 0) || !cvs.length) return null;
+            if (!advanced || !(cvi > 0) || !cvs.length) return null;
             const soc = cvi / Math.max(...cvs);
             return (
               <span
@@ -636,10 +636,10 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
         </div>
       </header>
 
-      <ResultStrip analyte={analyte} settings={settings} />
+      <ResultStrip analyte={analyte} settings={settings} advanced={advanced} />
 
       <nav className="flex gap-5 border-b border-slate-200 px-4" aria-label="Analyte sections">
-        {[["rule", "Rule"], ["sources", "Allowable error sources"], ["lis", "LIS and limits"], ["monitor", "Monitoring"]].map(([id, label]) => (
+        {[["rule", "Rule"], ["sources", "Allowable error sources"], ["lis", "LIS and limits"], ...(advanced ? [["monitor", "Monitoring"]] : [])].map(([id, label]) => (
           <button key={id} type="button" onClick={() => setView(id)}
             className={`-mb-px border-b-2 py-2 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-600 ${view === id ? "border-teal-700 font-medium text-slate-900" : "border-transparent text-slate-500 hover:text-slate-800"}`}>
             {label}
@@ -660,7 +660,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
         {(() => {
           const worst = Math.min(...analyte.levels.map((l) => l.sigma));
           const band = sigmaBand(worst);
-          if (!band) return null;
+          if (!band || !advanced) return null;
           return (
             <p className="mb-4 border-l-2 border-slate-300 pl-3 text-sm text-slate-600">
               Weakest level runs at sigma {fmt(worst, 1)}. Published sigma schemes
@@ -742,34 +742,34 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                 <th className="py-2 pr-3 font-medium">Target</th>
                 <th className="py-2 pr-3 font-medium">CV %</th>
                 <th className="py-2 pr-3 font-medium" title="Systematic error, or the offset of the analyser mean from the target">Bias / offset %</th>
-                <th className="py-2 pr-3 font-medium">Controls</th>
+                {advanced && <th className="py-2 pr-3 font-medium">Controls</th>}
                 <th className="py-2 pr-3 font-medium">Rule (K)</th>
                 <th className="py-2 pr-3 text-right font-medium">Sigma</th>
-                <th className="py-2 pr-3 text-right font-medium">Critical shift</th>
+                {advanced && <th className="py-2 pr-3 text-right font-medium">Critical shift</th>}
                 <th className="py-2 pr-3 text-right font-medium">False alarm</th>
-                <th
+                {advanced && <th
                   className="py-2 pr-3 text-right font-medium"
                   title="Offset of the analyser mean from the target, in SD units (bias divided by CV)"
                 >
                   Offset (SD)
-                </th>
-                <th
+                </th>}
+                {advanced && <th
                   className="py-2 pr-3 text-right font-medium"
                   title="False alarm rate once the control distribution is off-centre by that offset"
                 >
                   False alarm, offset
-                </th>
+                </th>}
                 <th className="py-2 pr-3 text-right font-medium">Detection</th>
-                <th className="py-2 pr-3 text-right font-medium">Action limit</th>
+                {advanced && <th className="py-2 pr-3 text-right font-medium">Action limit</th>}
                 <th className="py-2 pr-3 text-right font-medium">Accepted range</th>
-                <th className="py-2 pr-3 text-right font-medium">SD for LIS</th>
-                <th className="py-2 pr-3 text-right font-medium">
+                <th className="py-2 pr-3 text-right font-medium" title="Action limit ÷ the LIS rule width, so that the LIS rule reproduces the derived limit">SD for LIS</th>
+                {advanced && <th className="py-2 pr-3 text-right font-medium">
                   Maker range
-                </th>
-                <th className="py-2 pr-3 text-right font-medium">Maker K</th>
-                <th className="py-2 pr-3 text-right font-medium">
+                </th>}
+                {advanced && <th className="py-2 pr-3 text-right font-medium">Maker K</th>}
+                {advanced && <th className="py-2 pr-3 text-right font-medium">
                   Maker detection
-                </th>
+                </th>}
               </tr>
             </thead>
             <tbody>
@@ -800,23 +800,24 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                       <NumberCell
                         value={l.target}
                         onChange={(v) => setLevel(l.id, { target: v })}
+                        width="w-24"
                       />
                     </td>
                     <td className="py-2 pr-3">
                       <NumberCell
                         value={l.cv}
                         onChange={(v) => setLevel(l.id, { cv: v })}
-                        width="w-16"
+                        width="w-20"
                       />
                     </td>
                     <td className="py-2 pr-3">
                       <NumberCell
                         value={l.bias}
                         onChange={(v) => setLevel(l.id, { bias: v })}
-                        width="w-16"
+                        width="w-20"
                       />
                     </td>
-                    <td className="py-2 pr-3">
+                    {advanced && <td className="py-2 pr-3">
                       <NumberCell
                         value={l.n}
                         onChange={(v) => setLevel(l.id, { n: v })}
@@ -824,7 +825,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                         step="1"
                         min="1"
                       />
-                    </td>
+                    </td>}
                     <td className="py-2 pr-3">
                       <div className="flex items-center gap-1.5">
                         <NumberCell
@@ -863,20 +864,20 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                     >
                       {fmt(l.sigma)}
                     </td>
-                    <td
+                    {advanced && <td
                       className={`py-2 pr-3 text-right font-mono ${
                         l.criticalShift <= 0 ? "text-rose-700" : "text-slate-700"
                       }`}
                     >
                       {fmt(l.criticalShift)}
-                    </td>
+                    </td>}
                     <td className="py-2 pr-3 text-right font-mono text-slate-700">
                       {fmt(l.pfr * 100, 2)}%
                     </td>
-                    <td className="py-2 pr-3 text-right font-mono text-slate-600">
+                    {advanced && <td className="py-2 pr-3 text-right font-mono text-slate-600">
                       {l.offsetSd > 0 ? fmt(l.offsetSd, 2) : "—"}
-                    </td>
-                    <td
+                    </td>}
+                    {advanced && <td
                       className={`py-2 pr-3 text-right font-mono ${
                         l.pfrOffset > l.pfr * 2
                           ? "text-rose-700"
@@ -886,7 +887,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                       }`}
                     >
                       {l.offsetSd > 0 ? `${fmt(l.pfrOffset * 100, 2)}%` : "—"}
-                    </td>
+                    </td>}
                     <td
                       className={`py-2 pr-3 text-right font-mono ${
                         l.ped >= 0.9
@@ -898,26 +899,26 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                     >
                       {fmt(l.ped, 3)}
                     </td>
-                    <td className="py-2 pr-3 text-right font-mono text-slate-700">
+                    {advanced && <td className="py-2 pr-3 text-right font-mono text-slate-700">
                       ±{fmt(l.actionLimit, d)}
-                    </td>
+                    </td>}
                     <td className="py-2 pr-3 text-right font-mono text-slate-500">
                       {fmt(l.lower, d)} – {fmt(l.upper, d)}
                     </td>
                     <td className="py-2 pr-3 text-right font-mono font-semibold text-slate-900">
                       {fmt(l.sdForLis, d + 1)}
                     </td>
-                    <td className="py-2 pr-3 text-right">
+                    {advanced && <td className="py-2 pr-3 text-right">
                       <NumberCell
                         value={l.mfrRange ?? 0}
                         onChange={(v) => setLevel(l.id, { mfrRange: v })}
                         width="w-20"
                       />
-                    </td>
-                    <td className="py-2 pr-3 text-right font-mono text-slate-600">
+                    </td>}
+                    {advanced && <td className="py-2 pr-3 text-right font-mono text-slate-600">
                       {l.hasMfr ? fmt(l.mfrK, 1) : "—"}
-                    </td>
-                    <td
+                    </td>}
+                    {advanced && <td
                       className={`py-2 pr-3 text-right font-mono ${
                         l.hasMfr && l.mfrPed < l.ped ? "text-rose-700" : "text-slate-600"
                       }`}
@@ -928,7 +929,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
                       }
                     >
                       {l.hasMfr ? fmt(l.mfrPed, 3) : "—"}
-                    </td>
+                    </td>}
                   </tr>
                 );
               })}
@@ -1082,14 +1083,14 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
 
         </>)}
 
-        {view === "monitor" && (<>
+        {view === "monitor" && advanced && (<>
         <CusumPanel analyte={analyte} settings={settings} series={series} />
         <ModelsPanel analyte={analyte} settings={settings} series={series} />
         </>)}
 
         {view === "rule" && (<>
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <select
+          {advanced && <select
             value={strategy}
             onChange={(e) => {
               setStrategy(e.target.value);
@@ -1100,7 +1101,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
             <option value="balanced">Best combined detection</option>
             <option value="ends">Favour lowest and highest level</option>
             <option value="l1">Favour lowest level</option>
-          </select>
+          </select>}
           <button
             onClick={runSearch}
             className="rounded bg-teal-800 px-3 py-1.5 text-sm font-medium text-white hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-1"
@@ -1139,7 +1140,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           )}
 
           <div className="ml-auto flex items-center gap-3">
-            <select
+            {advanced && <select
               value={chart}
               onChange={(e) => setChart(e.target.value)}
               className="rounded border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-900 focus:border-teal-600 focus:outline-none"
@@ -1148,7 +1149,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
               <option value="power">Power curves</option>
               <option value="opspecs">Operating specifications</option>
               <option value="sigma">Method decision chart</option>
-            </select>
+            </select>}
             <button
               onClick={addLevel}
               className="text-sm text-slate-600 underline hover:text-slate-900"
@@ -1172,9 +1173,9 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
           className="mt-4 w-full resize-y rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-teal-600 focus:bg-white focus:outline-none"
         />
 
-        {chart !== "none" && (
+        {(advanced ? chart : "power") !== "none" && (
           <div className="mt-4 border-t border-slate-200 pt-4">
-            {chart === "power" ? (
+            {(advanced ? chart : "power") === "power" ? (
               <PowerCurves analyte={analyte} settings={settings} />
             ) : (
               <OperatingChart
@@ -1193,7 +1194,7 @@ function AnalytePanel({ analyte, settings, onChange, onRemove, series }) {
 
 /* The answer first: adopted source, rule, what it costs and catches, and what to
    enter in the LIS. Always visible above the tabs. */
-function ResultStrip({ analyte, settings }) {
+function ResultStrip({ analyte, settings, advanced = false }) {
   if (!analyte.ready) {
     return (
       <div className="border-b border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-600">
@@ -1213,11 +1214,11 @@ function ResultStrip({ analyte, settings }) {
       {cell("Allowable error", `${analyte.teaSource} · ${fmt(effectiveTea(analyte), 1)}%`, "Adopted source and limit")}
       {cell("Rule (K per level)", analyte.levels.map((l) => fmt(l.k, 1)).join(" / "), "Rejection limit in observed SD, one control per level")}
       {cell("Sigma", analyte.levels.map((l) => fmt(l.sigma, 1)).join(" / "), "(TEa − |offset|) / CV per level")}
-      {isFinite(analyte.critPct) && cell("Critical error", `${fmt(analyte.critPct, 2)}%`, "One size for the measurand: TEa − max over levels of (|offset| + z·CV); converted to SD at each level with its own CV")}
+      {advanced && isFinite(analyte.critPct) && cell("Critical error", `${fmt(analyte.critPct, 2)}%`, "One size for the measurand: TEa − max over levels of (|offset| + z·CV); converted to SD at each level with its own CV")}
       {cell("False rejection", `${fmt(analyte.combinedPfr * 100, 2)}% of ${settings.pfrBudget}%`, "Combined over levels per control event")}
       {cell("Detection", `${fmt(analyte.combinedPed * 100, 1)}% (req. ${req}%)`, "Combined probability of detecting the critical error")}
       {cell("LIS target / SD to enter", analyte.levels.map(lisEntry).join("  ·  "), `Target = lot mean; SD = action limit / ${settings.qmMultiplier} so that the LIS ${settings.qmMultiplier} SD rule reproduces the derived limit`)}
-      {analyte.hasLis && cell("LIS rule now", `detects ${fmt(analyte.combinedLisPed * 100, 0)}%`, "Detection of the critical error by the target and SD currently in the LIS")}
+      {advanced && analyte.hasLis && cell("LIS rule now", `detects ${fmt(analyte.combinedLisPed * 100, 0)}%`, "Detection of the critical error by the target and SD currently in the LIS")}
     </div>
   );
 }
@@ -2394,6 +2395,9 @@ export default function IqcRuleDesigner() {
   const [tab, setTab] = useState("overview");
   const [selectedId, setSelectedId] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
+  // Advanced view: offset columns, search strategy, chart choice, monitoring models,
+  // manufacturer-range comparison. Off by default; saved with the work.
+  const [advanced, setAdvanced] = useState(false);
   const [importNote, setImportNote] = useState("");
   // Imported result series for the CUSUM, by analyte name -> level -> instrument -> lot.
   // Kept in memory for the session; not saved with the work.
@@ -2409,6 +2413,7 @@ export default function IqcRuleDesigner() {
           const parsed = JSON.parse(res.value);
           if (parsed.analytes) setAnalytes(parsed.analytes);
           if (parsed.settings) setSettings({ ...DEFAULT_SETTINGS, ...parsed.settings });
+          if (parsed.advanced) setAdvanced(true);
           setStatus("Saved work restored");
         } else if (!cancelled) {
           setStatus("Starting from the cobas pro panel");
@@ -2428,14 +2433,14 @@ export default function IqcRuleDesigner() {
     if (!loaded.current) return;
     const t = setTimeout(async () => {
       try {
-        await window.storage.set(STORE_KEY, JSON.stringify({ analytes, settings }));
+        await window.storage.set(STORE_KEY, JSON.stringify({ analytes, settings, advanced }));
         setStatus("Saved");
       } catch (e) {
         setStatus("Could not save — your changes stay in this session only");
       }
     }, 600);
     return () => clearTimeout(t);
-  }, [analytes, settings]);
+  }, [analytes, settings, advanced]);
 
   const computed = useMemo(
     () => analytes.map((a) => computeAnalyte(a, settings)),
@@ -2863,21 +2868,17 @@ export default function IqcRuleDesigner() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-teal-50/70 via-slate-100 to-slate-100 text-slate-900">
       <div className="bg-teal-950 text-white">
-        <div className="mx-auto max-w-7xl px-5 py-7">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
+        <div className="mx-auto max-w-7xl px-5 py-4">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
               <div className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-300">DesignLabIQC · ClinChem</div>
-              <h1 className="mt-1 text-2xl font-semibold tracking-tight">
-                Internal quality control for clinical chemistry and immunochemistry
+              <h1 className="text-lg font-semibold tracking-tight">
+                Control rules from your own imprecision
               </h1>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-teal-100">
-                Control rules built from the imprecision your own instruments produce,
-                rather than from a fixed range someone else measured. Enter your figures,
-                see what each rule would catch and what it would cost in needless
-                rejections, and read off the target and SD to put into your laboratory system.
-              </p>
             </div>
-
+            <p className="text-sm text-teal-100">
+              Import results, read off the rule, enter the target and SD it gives into the LIS.
+            </p>
           </div>
         </div>
       </div>
@@ -2887,8 +2888,7 @@ export default function IqcRuleDesigner() {
           {[
             ["overview", "Overview"],
             ["design", "Rule design"],
-            ["compare", "Maker ranges"],
-            ["method", "Method and references"],
+            ["method", "Method"],
           ].map(([id, label]) => (
             <button
               key={id}
@@ -2904,10 +2904,6 @@ export default function IqcRuleDesigner() {
           ))}
         </nav>
 
-        {tab === "compare" && (
-          <ComparisonView computed={computed} settings={settings} />
-        )}
-
         {tab === "method" && <MethodGuide settings={settings} />}
 
         {(tab === "design" || tab === "overview") && (
@@ -2917,8 +2913,12 @@ export default function IqcRuleDesigner() {
             {showSettings ? "Hide settings" : "Settings"}
           </button>
           <span className="font-mono text-xs text-slate-600">
-            false alarm ≤ {settings.pfrBudget}% · detection ≥ {settings.pedTarget}% · z {settings.zAlpha} · critical error: {settings.critMode === "common" ? "one size, all levels" : "each level its own"} · LIS rule {settings.qmMultiplier} SD
+            false alarm ≤ {settings.pfrBudget}% · detection ≥ {settings.pedTarget}%{advanced ? ` · z ${settings.zAlpha} · critical error: ${settings.critMode === "common" ? "one size, all levels" : "each level its own"} · LIS rule ${settings.qmMultiplier} SD` : ""}
           </span>
+          <label className="flex cursor-pointer items-center gap-1.5 text-xs text-slate-600" title="Show offset columns, search strategy, chart choice, monitoring models and the manufacturer-range comparison">
+            <input type="checkbox" checked={advanced} onChange={(e) => setAdvanced(e.target.checked)} className="accent-teal-700" />
+            Advanced
+          </label>
           <div className="ml-auto flex items-center gap-3">
             <span className="font-mono text-xs text-slate-500">{status}</span>
             <input
@@ -3059,7 +3059,15 @@ export default function IqcRuleDesigner() {
         )}
 
         {tab === "overview" && (
-          <OverviewTable computed={computed} panels={panels} settings={settings} onOpen={(id) => { setSelectedId(id); setTab("design"); }} />
+          <>
+            <OverviewTable computed={computed} panels={panels} settings={settings} onOpen={(id) => { setSelectedId(id); setTab("design"); }} />
+            {advanced && computed.some((a) => a.levels.some((l) => l.hasMfr)) && (
+              <div className="mt-6">
+                <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Manufacturer ranges, compared</h2>
+                <ComparisonView computed={computed} settings={settings} />
+              </div>
+            )}
+          </>
         )}
 
         {tab === "design" && (
@@ -3076,13 +3084,17 @@ export default function IqcRuleDesigner() {
                       const active = a.id === currentId;
                       const tone = !a.ready ? "bg-slate-300" : a.pfrOk && a.pedOk ? "bg-emerald-500" : "bg-rose-500";
                       return (
-                        <li key={a.id}>
+                        <li key={a.id} className="flex items-center">
                           <button type="button" onClick={() => setSelectedId(a.id)}
                             className={`flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm ${active ? "bg-teal-50 font-medium text-slate-900" : "text-slate-700 hover:bg-slate-50"}`}>
                             <span className={`inline-block h-2 w-2 rounded-full ${tone}`} aria-hidden="true" />
                             <span className="truncate">{a.name}</span>
                             {a.ready && <span className="ml-auto font-mono text-[11px] text-slate-500">{a.levels.map((l) => fmt(l.k, 1)).join("/")}</span>}
                           </button>
+                          {panel === "Imported" && (
+                            <button type="button" onClick={() => setAnalytes((prev) => prev.filter((x) => x.id !== a.id))} title="Remove this imported analyte"
+                              className="px-2 text-xs text-slate-400 hover:text-rose-700">&times;</button>
+                          )}
                         </li>
                       );
                     })}
@@ -3098,6 +3110,7 @@ export default function IqcRuleDesigner() {
                     key={a.id}
                     analyte={a}
                     settings={settings}
+                    advanced={advanced}
                     series={series[a.name]}
                     onChange={(next) =>
                       updateAnalyte(a.id, {
@@ -3136,9 +3149,7 @@ export default function IqcRuleDesigner() {
 
         <footer className="mt-10 border-t border-slate-200 pt-5 text-xs leading-relaxed text-slate-500">
           <p className="max-w-3xl">
-            Work is saved in your browser as you type, on this device only. Export the
-            CSV if you need a copy that lasts. Rule choices still need authorisation
-            before anyone enters them into the analyser.
+            Saved in this browser only; export the CSV for a copy that lasts. Rule choices need authorisation before they go into the LIS.
           </p>
         </footer>
       </div>
