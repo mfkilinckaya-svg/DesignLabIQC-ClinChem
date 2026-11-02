@@ -1,0 +1,22 @@
+provider,scheme,analyte,lab_round,sample,result,target,unit,target_type,bias_pct,z,report_month
+RfB,Vitamins VT,25-OH vitamin D,VT1/26,A,238.0,241.0,nmol/L,RfB target value,-1.2448132780082988,,March 2026
+RfB,Vitamins VT,25-OH vitamin D,VT1/26,B,84.7,99.5,nmol/L,RfB target value,-14.87437185929648,,March 2026
+RfB,Vitamins VT,25-OH vitamin D,VT2/25,A,68.9,70.3,nmol/L,RfB target value,-1.991465149359874,,August 2025
+RfB,Vitamins VT,25-OH vitamin D,VT2/25,B,130.0,133.0,nmol/L,RfB target value,-2.255639097744361,,August 2025
+Labquality,Tumour markers,Ferritin,25/4,S001,120.0,127.0,µg/L,Roche method-group mean,-5.511811023622047,-1.12,November
+Labquality,Tumour markers,Ferritin,25/4,S002,150.0,156.0,µg/L,Roche method-group mean,-3.8461538461538463,-0.78,November
+Labquality,Hormones A,Ferritin,25/6,S001,36.8,39.4,µg/L,Roche method-group mean,-6.598984771573607,-1.3,October
+Labquality,Hormones A,Ferritin,25/6,S002,604.0,610.5,µg/L,Roche method-group mean,-1.0647010647010646,-0.15,October
+Labquality,Hormones A,Ferritin,25/8,S001,581.0,615.9,µg/L,Roche method-group mean,-5.66650430264653,-0.85,December
+Labquality,Hormones A,Ferritin,25/8,S002,617.0,636.9,µg/L,Roche method-group mean,-3.124509342125919,-0.47,December
+Labquality,Tumour markers,PSA,25/2,S001,58.8,64.5,µg/L,Roche method-group mean,-8.837209302325585,-1.83,May
+Labquality,Tumour markers,PSA,25/2,S002,9.8,10.6,µg/L,Roche method-group mean,-7.547169811320744,-1.53,May
+Labquality,Tumour markers,PSA,25/3,S001,4.1,4.1,µg/L,Roche method-group mean,0.0,-0.39,August
+Labquality,Tumour markers,PSA,25/3,S002,21.8,21.9,µg/L,Roche method-group mean,-0.45662100456620036,-0.12,August
+Labquality,Tumour markers,PSA,25/4,S001,1.8,1.9,µg/L,Roche method-group mean,-5.2631578947368345,-1.14,November
+Labquality,Tumour markers,PSA,25/4,S002,12.5,13.2,µg/L,Roche method-group mean,-5.303030303030298,-1.36,November
+Labquality,Hormones A,TSH,25/6,S001,1.67,1.73,mU/L,Roche method-group mean,-3.4682080924855523,-0.84,October
+Labquality,Hormones A,TSH,25/6,S002,30.1,30.52,mU/L,Roche method-group mean,-1.3761467889908197,-0.3,October
+Labquality,Hormones A,TSH,25/6,S003,89.1,88.99,mU/L,Roche method-group mean,0.12360939431396722,0.03,October
+Labquality,Hormones A,TSH,25/8,S001,30.4,30.69,mU/L,Roche method-group mean,-0.9449332029977279,-0.25,December
+Labquality,Hormones A,TSH,25/8,S002,30.9,31.0,mU/L,Roche method-group mean,-0.3225806451612949,-0.1,December
