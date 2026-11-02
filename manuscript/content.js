@@ -40,7 +40,7 @@ methods: [
 ["Further estimates",
 "Five further estimates were derived and implemented in the tool: multirule sets by Monte Carlo on the observed SD [3,6]; EWMA and CUSUM charts per analyser and lot [27–29]; measurement uncertainty as in ISO/TS 20914 [30]; reagent-lot steps and control-lot start deviations; and within-day and between-day CV with change points."],
 ["Statistics and data availability",
-"Analyses used Python 3.13 (pandas, NumPy, matplotlib); scripts, data set, TEa workbook, results and tool are in the repository above and will be deposited at Zenodo on acceptance. The study used only quality control data and required no ethics approval."],
+"Analyses used Python 3.13 (pandas, NumPy, matplotlib); scripts, data set, TEa workbook, results and tool are in the repository above and archived at Zenodo (doi:10.5281/zenodo.23886097). The study used only quality control data and required no ethics approval."],
 ],
 
 results: [
@@ -77,7 +77,7 @@ funding: "None declared.",
 coi: "None declared.",
 contributions: "MFK designed the study, extracted and analysed the data, wrote the software and the manuscript.",
 ethics: "The study used only internal quality control data. No patient samples, patient data or personal data were used, and no ethics committee approval was required.",
-dataAvailability: "The prepared data set, the TEa source workbook, all analysis scripts, the results and the tool are available at https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem and will be deposited at Zenodo on acceptance.",
+dataAvailability: "The prepared data set, the TEa source workbook, all analysis scripts, the results and the tool are available at https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem and archived at Zenodo (https://doi.org/10.5281/zenodo.23886097, version 1.0).",
 
 references: [
 "Westgard JO, Westgard SA. Quality control review: implementing a scientifically based quality control system. Ann Clin Biochem 2016;53:32–50.",

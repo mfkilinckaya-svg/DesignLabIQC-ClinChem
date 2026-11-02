@@ -1997,7 +1997,7 @@ function MethodGuide({ settings }) {
         <p className="text-xs text-slate-500">
           Please cite: Kılınçkaya MF. Deriving clinical chemistry and immunoassay control rules
           from laboratory imprecision: the allowable-error source decides what is attainable
-          (manuscript submitted), and the repository above. This is a research tool, not
+          (manuscript submitted), and the archived release, doi:10.5281/zenodo.23886097. This is a research tool, not
           validated clinical software.
         </p>
       </Section>

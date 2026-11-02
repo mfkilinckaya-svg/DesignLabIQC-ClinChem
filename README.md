@@ -1,8 +1,10 @@
 # Clinical chemistry and immunochemistry IQC rule design from laboratory imprecision
 
-Data, code and tool for the planned manuscript
+Data, code and tool for the manuscript
 
-> *Deriving clinical chemistry and immunoassay control rules from laboratory imprecision: the allowable-error source decides what is attainable* (in preparation).
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23886097.svg)](https://doi.org/10.5281/zenodo.23886097)
+
+> *Deriving clinical chemistry and immunoassay control rules from laboratory imprecision: the allowable-error source decides what is attainable* (submitted).
 
 This is the companion to the haematology study
 ([DesignLabIQC](https://github.com/mfkilinckaya-svg/DesignLabIQC), [doi:10.5281/zenodo.22685381](https://doi.org/10.5281/zenodo.22685381)).

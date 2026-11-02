@@ -8,6 +8,7 @@ authors:
     affiliation: "Helse Møre og Romsdal HF, Norway"
 version: "1.0.0"
 date-released: "2026-11-02"
+doi: "10.5281/zenodo.23886097"
 license: MIT
 repository-code: "https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem"
 references:
