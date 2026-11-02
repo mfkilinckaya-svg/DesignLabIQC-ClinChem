@@ -164,6 +164,73 @@ test("edge cases: missing CV, bias above TEa, per-level convention", () => {
   assert.ok(Number.isNaN(rc.critPct) && rc.combinedPed > 0.95, "per-level convention: no common crit, higher combined Ped");
 });
 
+/* ---------- 8. The laboratory's own QC design spreadsheet ---------- */
+// 36 analyte-level rows of the spreadsheet used in routine practice
+// (data/verification/lab_design_spreadsheet_rows.csv: inputs and the values
+// the spreadsheet computed). Same inputs, per-level critical error.
+test("laboratory QC design spreadsheet: 36 rows reproduced", () => {
+  const txt = fs.readFileSync(new URL("../../data/verification/lab_design_spreadsheet_rows.csv", import.meta.url), "utf8").trim().split("\n");
+  const head = txt[0].split(",");
+  const rows = txt.slice(1).map((l) => Object.fromEntries(l.split(",").map((v, i) => [head[i], v])));
+  const PL = { ...S, critMode: "perlevel" };
+  let worst = 0;
+  for (const r of rows) {
+    const L = C.computeLevel({ target: +r.target, cv: +r.cv_pct, n: +r.n_controls, k: +r.k, bias: +r.bias_pct }, +r.tea_pct, PL);
+    const pairs = [[L.teaAsSd, +r.xl_tea_as_sd], [L.criticalShift, +r.xl_critical_shift_sd], [L.pfr, +r.xl_pfr], [L.ped, +r.xl_ped], [L.actionLimit, +r.xl_action_limit]];
+    for (const [a, b] of pairs) worst = Math.max(worst, Math.abs(a - b));
+  }
+  near(worst, 0, 1e-12, "largest |tool − spreadsheet| over 36 rows × 5 outputs");
+  rec("Lab spreadsheet", "max |tool − spreadsheet|, 36 rows × 5 outputs", worst, 0, 1e-12, "Laboratory QC design spreadsheet (in routine use)");
+});
+
+/* ---------- 9. Values stated by Westgard ---------- */
+test("values stated in Westgard & Groth 1979 and Westgard et al. 1981", () => {
+  // 1-2s used as a rejection rule: about 5, 10, 14, 18 and 26 % for N = 1, 2, 3, 4, 6 (Westgard 1981, p. 499)
+  for (const [n, p] of [[1, 0.05], [2, 0.10], [3, 0.14], [4, 0.18], [6, 0.26]]) {
+    near(C.falseRejection(2, n), p, 0.02, `Pfr 1-2s N=${n}`);
+    rec("Westgard 1979/1981", `Pfr 1-2s, N=${n} (stated ≈${p})`, C.falseRejection(2, n), p, 0.02, "Westgard et al. 1981, p. 499");
+  }
+  // 1-3s, N = 2: probability 0.50 at a shift of about 2.5 SD (Westgard & Groth 1979, p. 866)
+  const d50 = C.shiftForDetection(3, 2, 0.5);
+  near(d50, 2.5, 0.1, "1-3s N=2, Ped 0.50");
+  rec("Westgard 1979/1981", "1-3s, N=2: shift with Ped 0.50 (SD)", d50, 2.5, 0.1, "Westgard & Groth 1979, p. 866");
+  // a 3.4 SD shift at Ped ≥ 0.90 needs N = 3 with 1-3s; N = 2 is not enough (p. 867)
+  assert.ok(C.errorDetection(3, 2, 3.4) < 0.9 && C.errorDetection(3, 3, 3.4) >= 0.9, "1-3s at 3.4 SD: N=2 < 0.90 ≤ N=3");
+  rec("Westgard 1979/1981", "1-3s at ΔSE 3.4 SD, N=3 (stated ≥ 0.90)", C.errorDetection(3, 3, 3.4), 0.9, 0.1, "Westgard & Groth 1979, p. 867");
+});
+
+/* ---------- 10. Westgard normalized OPSpecs charts ---------- */
+// x-intercept (bias 0) of a rule's line = 100/sigma where Ped = 0.90 (or 0.50);
+// chart values read from the online charts (±0.5 units).
+test("normalized OPSpecs intercepts, N = 2", () => {
+  const T = [[2, 0.9, 24], [2.5, 0.9, 21.5], [3, 0.9, 19.5], [3.5, 0.9, 17.5], [2, 0.5, 32], [3.5, 0.5, 21.5]];
+  for (const [k, p, chart] of T) {
+    const x = 100 / (C.shiftForDetection(k, 2, p) + 1.65);
+    near(x, chart, 0.6, `OPSpecs 1-${k}s ${p * 100}% AQA`);
+    rec("OPSpecs", `1-${k}s, N=2, ${p * 100}% AQA: x-intercept`, x, chart, 0.6, "Westgard normalized OPSpecs chart (read)");
+  }
+});
+
+/* ---------- 11. Multirules, run by run, against an independent simulation ---------- */
+// analysis/verify_multirule_runbyrun.py (written from Westgard 1981, 400,000 sequences).
+test("multirule Pfr and Ped run by run: tool vs independent simulation", () => {
+  const ref = JSON.parse(fs.readFileSync(new URL("../../results/verification_multirule_runbyrun.json", import.meta.url), "utf8"));
+  for (const [name, rs] of C.RULE_SETS) {
+    if (!ref[name]) continue;
+    const set = new Set(rs);
+    const pfr = C.multirulePfr(set, 2, 200000);
+    near(pfr, ref[name].Pfr, 0.0015, `Pfr ${name}`);
+    rec("Multirule run by run", `Pfr ${name}, N=2`, pfr, ref[name].Pfr, 0.0015, "Independent simulation (Westgard 1981 definitions)");
+    for (const s of [1.35, 2.35, 3.35]) {
+      const p = C.multirulePed(set, [s, s], 40000);
+      near(p.first, ref[name][`Ped1_${s}`], 0.01, `Ped first ${name} ${s}`);
+      near(p.two, ref[name][`Ped2_${s}`], 0.01, `Ped two ${name} ${s}`);
+      rec("Multirule run by run", `Ped ${name}, ΔSE ${s}, first run`, p.first, ref[name][`Ped1_${s}`], 0.01, "Independent simulation");
+      rec("Multirule run by run", `Ped ${name}, ΔSE ${s}, within two runs`, p.two, ref[name][`Ped2_${s}`], 0.01, "Independent simulation");
+    }
+  }
+});
+
 /* ---------- report ---------- */
 test("write verification report", () => {
   const out = new URL("../../results/tool_verification.csv", import.meta.url);
