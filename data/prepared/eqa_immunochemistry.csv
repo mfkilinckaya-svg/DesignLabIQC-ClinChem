@@ -9,7 +9,7 @@ Labquality,Hormones A,Ferritin,25/6,S001,36.8,39.4,µg/L,Roche method-group mean
 Labquality,Hormones A,Ferritin,25/6,S002,604.0,610.5,µg/L,Roche method-group mean,-1.0647010647010646,-0.15,October
 Labquality,Hormones A,Ferritin,25/8,S001,581.0,615.9,µg/L,Roche method-group mean,-5.66650430264653,-0.85,December
 Labquality,Hormones A,Ferritin,25/8,S002,617.0,636.9,µg/L,Roche method-group mean,-3.124509342125919,-0.47,December
-Labquality,Hormones A,Ferritin,26/1,S001,226.0,231.7,µg/L,Roche method-group mean,-2.4600776866637846,-0.44,February
+Labquality,Hormones A,Ferritin,26/1,S001,226.0,231.7,µg/L,Roche method-group mean,-2.460077686663785,-0.44,February
 Labquality,Tumour markers,Ferritin,26/1,S001,600.0,575.0,µg/L,Roche method-group mean,4.3478260869565215,1.12,February
 Labquality,Hormones A,Ferritin,26/1,S002,598.0,624.2,µg/L,Roche method-group mean,-4.197372636975335,-0.64,February
 Labquality,Tumour markers,Ferritin,26/1,S002,207.0,218.0,µg/L,Roche method-group mean,-5.045871559633028,-1.24,February
@@ -32,3 +32,13 @@ Labquality,Hormones A,TSH,25/8,S001,30.4,30.69,mU/L,Roche method-group mean,-0.9
 Labquality,Hormones A,TSH,25/8,S002,30.9,31.0,mU/L,Roche method-group mean,-0.3225806451612949,-0.1,December
 Labquality,Hormones A,TSH,26/1,S001,10.6,10.54,mU/L,Roche method-group mean,0.5692599620493406,0.17,February
 Labquality,Hormones A,TSH,26/1,S002,31.3,30.66,mU/L,Roche method-group mean,2.0874103065883904,0.55,February
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.02,Kontroll 1,991.0,1074.09,ng/L,Roche method-group mean,-7.735850813246556,,02.06.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.02,Kontroll 2,73.0,76.07,ng/L,Roche method-group mean,-4.035756540028912,,02.06.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.03,Kontroll 1,24.3,23.66,ng/L,Roche method-group mean,2.7049873203719383,,08.09.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.03,Kontroll 2,27.6,27.53,ng/L,Roche method-group mean,0.25426807119506095,,08.09.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.04,Kontroll 1,,20.65,ng/L,Roche method-group mean,,,03.11.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2025.04,Kontroll 2,,77.45,ng/L,Roche method-group mean,,,03.11.2025
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2026.01,Kontroll 1,18.2,17.5,ng/L,Roche method-group mean,3.999999999999996,,12.01.2026
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2026.01,Kontroll 2,476.0,450.66,ng/L,Roche method-group mean,5.6228642435538925,,12.01.2026
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2026.02,Kontroll 1,19.3,18.38,ng/L,Roche method-group mean,5.00544069640915,,01.06.2026
+Noklus,Hjertemarkører,hs-Troponin T,SPLHM2026.02,Kontroll 2,47.6,45.97,ng/L,Roche method-group mean,3.5457907330868013,,01.06.2026
