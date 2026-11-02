@@ -1888,443 +1888,119 @@ function Section({ title, children }) {
   );
 }
 
+const REPO = "https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem";
+
+function ExtLink({ href, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="font-medium text-teal-800 underline decoration-teal-300 underline-offset-2 hover:decoration-teal-700">
+      {children}
+    </a>
+  );
+}
+
 function MethodGuide({ settings }) {
   return (
     <div className="pb-6">
-      <Section title="What the two probabilities mean">
+      <Section title="What the tool does">
         <p>
-          Every control rule is a compromise between crying wolf and missing a real
-          problem. The two numbers that measure this are the only thing you are
-          really tuning.
+          It turns the imprecision your laboratory has measured into a control rule. For each
+          measurand you enter, or import from cobas infinity, the CV, target and analyser offset
+          of each control level, and choose an allowable total error (TEa) source. The tool
+          finds the widest action limits that keep false rejection within{" "}
+          {settings.pfrBudget}% per control event while catching the smallest error that would
+          make results clinically wrong, and tells you which SD to enter in the LIS.
         </p>
-        <p>
-          <span className="font-semibold text-slate-900">False alarm rate</span> is
-          the chance a run gets rejected when nothing is wrong and the analyser is
-          only showing its normal scatter. At 0.54% you would stop the line for no
-          reason roughly five times in a thousand control events.
-        </p>
-        <p>
-          <span className="font-semibold text-slate-900">Detection rate</span> is the
-          chance the rule catches a shift of the size that would actually make
-          results clinically wrong. At 0.70 you catch seven such shifts out of ten
-          and miss three.
-        </p>
-        <p>
-          Tightening a rule raises both. Widening it lowers both. There is no setting
-          that improves one without paying in the other, which is why this is a design
-          decision and not a calculation.
-        </p>
+        <ol className="ml-4 list-decimal space-y-1.5 marker:text-slate-400">
+          <li>Enter or import the CV, target and offset of each level (worst analyser, within-lot).</li>
+          <li>Choose the strictest TEa source you can defend, and record why.</li>
+          <li>Run the rule search; check that combined detection meets the requirement.</li>
+          <li>If no source and rule meet it, move to the next source and say so.</li>
+          <li>Export, get the change authorised, then enter the SD in the LIS.</li>
+        </ol>
       </Section>
 
-      <Section title="How each number is worked out">
-        <p>
-          Start from the imprecision you measured and the total error you are willing
-          to allow. Divide one by the other and you get the allowable error expressed
-          in standard deviations. Subtract any known bias and you have the sigma
-          metric:
-        </p>
-        <Formula>sigma = (TEa% − bias%) ÷ CV%</Formula>
-        <p>
-          A rule cannot be expected to catch a shift right up to the edge of the
-          allowable error, because half the time normal scatter would carry the result
-          past that edge anyway. Subtracting {settings.zAlpha} leaves a 5% margin and
-          gives the shift the rule genuinely has to detect:
-        </p>
-        <Formula>critical shift = sigma − {settings.zAlpha}</Formula>
-        <p>
-          The rest is the normal distribution. A single control result stays inside
-          ±K with a probability you can read off the curve; n results all stay inside
-          with that probability raised to the power n; the rule fires when at least
-          one falls outside:
-        </p>
+      <Section title="The arithmetic, in five lines">
         <Formula>
-          false alarm = 1 − P(inside ±K)ⁿ
+          sigma = (TEa − |offset|) ÷ CV
           <br />
-          detection = 1 − P(inside ±K, distribution shifted by the critical shift)ⁿ
+          critical error = TEa − max over levels of (|offset| + {settings.zAlpha} · CV)
+          <br />
+          shift at each level = (critical error − |offset|) ÷ CV
+          <br />
+          combined = 1 − Π (1 − p) over levels, for false rejection and for detection
+          <br />
+          SD to enter in the LIS = action limit ÷ {settings.qmMultiplier}
         </Formula>
         <p>
-          When the critical shift comes out at or below zero, the imprecision has
-          eaten the whole error budget. No choice of K helps, and the tool marks the
-          value in red.
+          A systematic error has one size, so it is sized once per measurand in per cent and
+          converted into SD with each level&rsquo;s own CV. The offset is assumed to lie on the side
+          opposite to the error, the worst case. Detection and false rejection of a 1:K rule come
+          from the normal distribution, and the levels are combined because a control event
+          fails when any level fails. The older convention, each level at its own critical shift
+          (sigma − {settings.zAlpha}), overstates combined detection and is kept in the settings
+          only for comparison.
         </p>
       </Section>
 
-      <Section title="One error, two levels: how the critical error is sized">
-        <p>
-          A systematic error has one size. If a calibration moves results by 3 %,
-          it moves both control levels by 3 %. But the two levels have different
-          CVs, so the same 3 % is a different number of SD at each: for sodium
-          2.8 SD at L1 (CV 1.09 %) and 4.1 SD at L2 (CV 0.73 %). The tool
-          therefore sizes the critical error once, in per cent, for the measurand:
-        </p>
-        <Formula>critical error = TEa − max over levels of (|offset| + z · CV)</Formula>
-        <p>
-          the smallest error that already breaks the allowable total error at
-          one of the levels, usually the level with the larger CV. That error is
-          converted into SD at each level with that level&rsquo;s own CV, the
-          detection probability is read off each level&rsquo;s rule, and the
-          probabilities are combined as 1 − Π(1 − p): the chance that at least
-          one level rejects. This is the combined probability the card reports
-          and the rule search optimises. The older convention, each level at its
-          own critical shift (sigma − z), evaluates the levels at different error
-          sizes and overstates the combined detection; it remains available in
-          the settings bar for comparison. Westgard&rsquo;s N=2 power functions
-          sit between the two: they assume the same shift in SD at both levels.
-        </p>
-      </Section>
-      <Section title="A second sigma: CVI / CV (Oosterhuis and Coskun)">
-        <p>
-          Oosterhuis and Coskun argue that the usual sigma, (TEa − |bias|)/CV,
-          rests on a tolerance that already contains a coverage factor and a bias
-          term, and so reasons in a circle. They propose a sigma without TEa:
-        </p>
-        <Formula>σ = CVI / CV</Formula>
-        <p>
-          with the within-subject biological variation CVI as the tolerance, no
-          coverage factor, and bias judged separately. Their benchmark is 4.65,
-          which requires CV ≤ 0.22 · CVI. When a CVI is entered on the card, the
-          header shows this value for the worst level beside the conventional
-          sigma. It is reported for comparison only: it yields no tolerance from
-          which a control limit can be sized, so the rules, the critical error and
-          the detection probabilities on the card are unaffected by it. For the
-          preloaded panel only ALT, TSH and ferritin exceed 4.65; sodium would need
-          a CV of 0.11 %.
-        </p>
-      </Section>
-      <Section title="Why the levels are judged together">
-        <p>
-          The three control levels run in the same event, so what matters is whether{" "}
-          <em>any</em> of them fires. Their individual probabilities combine:
-        </p>
-        <Formula>combined = 1 − (1 − p₁)(1 − p₂)(1 − p₃)</Formula>
-        <p>
-          This is what makes the false alarm allowance behave like a budget. If two
-          levels already spend 1.35% of a 1.5% allowance, the third can only have
-          0.15% left, and its rule has to be wide enough to fit. Spending that
-          allowance where it buys the most detection is the whole exercise.
-        </p>
-        <p>
-          It also means a weak level is not automatically a problem. A low level with
-          a detection rate of 0.24 looks alarming on its own, but if the other two
-          levels catch the same shift the combined figure still reaches 1.00.
-        </p>
-      </Section>
-
-      <Section title="Choosing K">
-        <p>
-          K is the width of the action limits in standard deviations. It is not
-          calculated for you anywhere, in this tool or in a spreadsheet. You pick it,
-          look at what happens, and pick again.
-        </p>
-        <p>
-          It does not have to be a whole number. K = 3.7 simply means the action limit
-          sits at 3.7 standard deviations, and intermediate values are often what let
-          you fit inside the allowance without giving up much.
-        </p>
-        <p>
-          The search button does the picking by brute force: it tries every
-          combination between 1.5 and 5.0 in steps of 0.1, throws away anything over
-          the false alarm allowance, and keeps the best survivor. Which survivor
-          counts as best depends on the strategy you choose, because favouring the
-          pathological levels and maximising the combined figure often point at
-          different answers. Fix a level first if you want it left alone.
-        </p>
-      </Section>
-
-      <Section title="Reading the three charts">
-        <p>
-          <span className="font-semibold text-slate-900">Power curves</span> plot
-          detection against the size of a shift, with a dashed line at each level's
-          critical shift. Where a curve crosses its dashed line is the detection rate
-          in the table. If the dashed line sits far to the left, under the flat part
-          of the curve, the analyte cannot be rescued by rule selection.
-        </p>
-        <p>
-          <span className="font-semibold text-slate-900">
-            Operating specifications
-          </span>{" "}
-          turns the question around: given the rule you chose, how much imprecision
-          and bias can the method have and still reach your detection target? Each
-          line is one level's rule, and each dot is that level's real performance. A
-          dot below its own line passes. Every boundary is straight because the
-          condition works out to bias ≤ TEa − CV × (shift + {settings.zAlpha}).
-        </p>
-        <p>
-          <span className="font-semibold text-slate-900">Method decision chart</span>{" "}
-          uses the same axes but draws fixed sigma levels instead of rules, so you can
-          see at a glance which band each control level falls into.
-        </p>
-      </Section>
-
-      <Section title="Sigma bands and what they ask for">
-        <p>
-          Sigma compresses everything into one number, which is coarser than the
-          probabilities above but useful for deciding how often to run controls. The
-          bands below are the scheme proposed by Cooper and colleagues (reference 4).
-        </p>
-        <div className="mt-3 overflow-x-auto">
-          <table className="w-full min-w-max border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-slate-300 text-left text-xs text-slate-600">
-                <th className="py-2 pr-6 font-medium">Sigma</th>
-                <th className="py-2 pr-6 font-medium">Verdict</th>
-                <th className="py-2 font-medium">Control plan</th>
-              </tr>
-            </thead>
-            <tbody>
-              {[6, 5, 3.5, 2].map((s) => {
-                const b = sigmaBand(s);
-                const range = { 6: "6 and above", 5: "4 to 6", 3.5: "3 to 4", 2: "below 3" }[s];
-                return (
-                  <tr key={s} className="border-b border-slate-100">
-                    <td className="py-2 pr-6 font-mono text-slate-700">{range}</td>
-                    <td className="py-2 pr-6">
-                      <span className={`rounded px-2 py-0.5 font-mono text-xs ${TONE[b.tone]}`}>
-                        {b.label}
-                      </span>
-                    </td>
-                    <td className="py-2 text-slate-700">{b.plan}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-3">
-          Treat this as a second opinion rather than a verdict. It says nothing about
-          which level matters clinically, and it assumes one rule for the whole
-          analyte.
-        </p>
-      </Section>
-
-      <Section title="Getting the numbers into the analyser">
-        <p>
-          Most quality management systems apply a fixed ±3 SD rule and let you set
-          only the standard deviation. So the standard deviation you enter has to be
-          the action limit you designed, divided by that fixed width:
-        </p>
-        <Formula>SD to enter = action limit ÷ {settings.qmMultiplier}</Formula>
-        <p>
-          Nothing here talks to your laboratory system. Changing a rule in this tool
-          changes nothing on the bench until someone types the new standard deviation
-          in, and that should happen only after the change has been authorised.
-        </p>
-      </Section>
-
-      <Section title="A working order">
-        <ol className="ml-4 list-decimal space-y-2 marker:text-slate-400">
+      <Section title="What the numbers do not tell you">
+        <ul className="ml-4 list-disc space-y-1.5 marker:text-slate-400">
           <li>
-            Enter the imprecision from your most recent lot, taking the highest CV per
-            instrument and level if you run more than one analyser.
+            The probabilities assume independent, normally distributed results. Where control
+            results vary from day to day (in the study: ALT, TSH, ferritin, 25-OH vitamin D),
+            detection on later data was 8 to 17 points below the prediction, so a narrow margin
+            should be read as optimistic.
           </li>
           <li>
-            Decide the allowable total error and record where it came from. This is
-            the choice that moves everything else, and it deserves a written reason.
+            The Gaussian false-rejection rate is a lower bound. Analyser means move within lots,
+            and observed rejection was two to more than three times the estimate, mostly from
+            real, uncorrected shifts.
           </li>
           <li>
-            Set every level to K = 3 and look at the combined false alarm figure. If
-            it is over the allowance, something has to widen.
+            The offset measures how far your analysers agree with each other, not with the truth.
+            If EQA shows a bias, enter it and re-run the design.
           </li>
           <li>
-            Widen the level that loses the least. Usually that is the level in the
-            normal range, or the level whose detection is already saturated.
+            A CV from too few results, or from a quiet period, makes every figure look better
+            than the bench. Refresh it when the lot or the method changes.
           </li>
           <li>
-            Check the combined detection still clears your target, and write down why
-            you settled where you did.
+            When no source gives a workable rule, the imprecision, not the rule, is the limit:
+            review the measurand against its clinical use rather than widen the limits.
           </li>
-          <li>Export, get it authorised, then update the analyser.</li>
+        </ul>
+      </Section>
+
+      <Section title="Verification, data and the full method">
+        <p>
+          The calculation core is tested on every change against published power functions,
+          Westgard&rsquo;s OPSpecs charts, exact Gaussian values, independent Monte Carlo and
+          run-by-run simulations and the laboratory&rsquo;s own QC design spreadsheet (141
+          comparisons). Nothing you enter leaves the browser; entries are kept only in this
+          browser&rsquo;s local storage.
+        </p>
+        <ul className="ml-4 list-disc space-y-1.5 marker:text-slate-400">
+          <li><ExtLink href={REPO}>Source code, data set, TEa workbook and analysis scripts</ExtLink> (MIT licence)</li>
+          <li><ExtLink href={`${REPO}/blob/main/docs/VALIDATION.md`}>Verification of the tool</ExtLink></li>
+          <li><ExtLink href={`${REPO}/blob/main/docs/DATA_DICTIONARY.md`}>Data dictionary</ExtLink></li>
+          <li><ExtLink href="https://github.com/mfkilinckaya-svg/DesignLabIQC">Companion tool for haematology</ExtLink></li>
+        </ul>
+        <p className="text-xs text-slate-500">
+          Please cite: Kılınçkaya MF. Deriving clinical chemistry and immunoassay control rules
+          from laboratory imprecision: the allowable-error source decides what is attainable
+          (manuscript submitted), and the repository above. This is a research tool, not
+          validated clinical software.
+        </p>
+      </Section>
+
+      <Section title="Key references">
+        <ol className="ml-4 list-decimal space-y-1.5 text-xs marker:text-slate-400">
+          <li>Westgard JO, Groth T, Aronsson T, et al. Performance characteristics of rules for internal quality control: probabilities for false rejection and error detection. Clin Chem 1977;23:1857–67.</li>
+          <li>Westgard JO, Groth T. Power functions for statistical control rules. Clin Chem 1979;25:863–9.</li>
+          <li>Westgard JO, Barry PL, Hunt MR, et al. A multi-rule Shewhart chart for quality control in clinical chemistry. Clin Chem 1981;27:493–501.</li>
+          <li>Cooper G, DeJonge N, Ehrmeyer S, et al. Collective opinion paper on findings of the 2010 convocation of experts on laboratory quality. Clin Chem Lab Med 2011;49:793–802.</li>
+          <li>Oosterhuis WP, Coskun A. Sigma metrics in laboratory medicine revisited: we are on the right road with the wrong map. Biochem Med (Zagreb) 2018;28:020503.</li>
+          <li>ISO/TS 20914:2019. Medical laboratories — practical guidance for the estimation of measurement uncertainty. Geneva: ISO; 2019.</li>
         </ol>
-      </Section>
-
-      <Section title="CUSUM: catching the slow drift">
-        <p>
-          The 1:K rule looks at one result at a time, so a shift of half an SD that
-          persists for weeks never trips it. The cumulative sum chart (CUSUM) adds up
-          the departures of successive results from the centre, discounting each by a
-          reference value k, and alarms when the sum passes a decision limit h:
-        </p>
-        <Formula>C⁺ = max(0, C⁺ + z − k) · C⁻ = max(0, C⁻ − z − k) · alarm when C⁺ &gt; h or C⁻ &gt; h</Formula>
-        <p>
-          z is the result in SD units from the centre. k is half the shift the chart
-          should catch quickly (0.5 for a 1 SD shift) and h sets the in-control alarm
-          rate; k 0.5 with h 5 gives an average of about a thousand results between
-          false alarms and catches a 1 SD shift in about ten results, where a 1:2.6
-          rule needs about eighteen and alarms falsely every hundred. The run
-          lengths shown are Siegmund&rsquo;s approximation. On imported data the
-          chart restarts at every lot change and after every alarm; an alarm rate far
-          above the expected one tells you that the analyser sits persistently off the
-          centre, and the comparison of centres shows whether that is an analyser
-          offset or drift within the lot. Use the CUSUM beside the 1:K rule, not
-          instead of it: the single-result rule still catches the gross error.
-        </p>
-      </Section>
-      <Section title="More models from the same control data">
-        <p>
-          Each card can open a second block that reuses the imported results for
-          other laboratory-specific estimates. <span className="font-semibold text-slate-900">EWMA</span>:
-          an exponentially weighted moving average of the standardised results, a
-          smoother relative of the CUSUM with the same purpose; its run lengths are
-          simulated. <span className="font-semibold text-slate-900">Multirule sets</span>:
-          the classic Westgard combinations evaluated on the laboratory&rsquo;s measured
-          SD rather than the manufacturer&rsquo;s, by simulation, with the card&rsquo;s
-          critical shift; this shows whether a 1-3s/2-2s/R-4s set on the right SD does
-          the job of the tuned single rule. <span className="font-semibold text-slate-900">Measurement
-          uncertainty</span>: u(Rw) from the pooled within-lot CV and U = 2·√(u(Rw)² +
-          u(bias)²) in the manner of ISO/TS 20914, with the analyser offset or an entered
-          EQA bias as the bias term. <span className="font-semibold text-slate-900">Reagent-lot
-          transitions</span>: the step of each analyser&rsquo;s mean at every R1 lot change,
-          in SD, with a Welch test. <span className="font-semibold text-slate-900">Control-lot
-          start</span>: how far the first 20 results of a lot sat from where the lot ended,
-          and what the LIS target set at the time missed by. <span className="font-semibold text-slate-900">Variance
-          components</span>: within-day and between-day CV per analyser and lot from daily
-          means. <span className="font-semibold text-slate-900">Change points</span>: binary
-          segmentation of each analyser&rsquo;s series, which dates the steps that the CUSUM
-          alarms on and marks those that coincide with a reagent-lot change.
-        </p>
-      </Section>
-      <Section title="Where this stops helping">
-        <p>
-          The arithmetic assumes results are normally distributed, that control
-          measurements are independent, and that the only error worth modelling is a
-          sustained shift. Increased scatter, drift within a run and carryover are all
-          outside it.
-        </p>
-        <p>
-          It also assumes the CV you typed is real. A CV from too few points, or from
-          a period when the instrument happened to behave, will make every figure on
-          the screen look better than the bench.
-        </p>
-        <p>
-          When an analyte comes out with a critical shift under one standard
-          deviation, no rule on the grid will help, and it is tempting to conclude
-          that the measurement is beyond control. Check the specification before
-          accepting that. In this panel MCV, MCH and MCHC all looked uncontrollable
-          at the biological variation minimum and all three sit at sigma 8 against
-          the external assessment limit, on identical data. The question of which
-          target is right is a policy question about clinical need, but it should be
-          asked deliberately rather than settled by whichever source was entered
-          first.
-        </p>
-        <p>
-          Where a specification is genuinely unattainable and the tightest defensible
-          source has already been chosen, control rules are not the right instrument
-          and patient based checks such as moving averages carry the real weight.
-        </p>
-        <p>
-          One failure mode is worth naming because it is invisible: if allowable
-          error in standard deviation units is entered as a fixed number rather than
-          recomputed from the current CV, every detection figure downstream is wrong
-          while still looking plausible. Recompute it whenever imprecision is
-          refreshed.
-        </p>
-      </Section>
-
-      <Section title="Implementation and reproducibility">
-        <p>
-          Normal probabilities are evaluated through the regularised incomplete gamma
-          function with a = ½, using the series expansion below x² = 1.5 and the
-          continued fraction above it, both iterated to a relative tolerance of
-          10⁻¹⁶. This is used instead of a polynomial approximation to the error
-          function because the false rejection rates of interest lie in the far tail,
-          where common approximations carry a relative error of several tenths of a
-          percent at K above 4.
-        </p>
-        <p>
-          The rule search enumerates K from 1.5 to 5.0 in steps of 0.1 at every level,
-          discards any combination whose combined false rejection exceeds the stated
-          allowance, and returns the survivor scoring highest under the selected
-          objective. Levels marked as fixed are held at their entered value. The shift
-          at which a rule reaches the detection target is found by bisection over 0 to
-          30 standard deviations across 80 iterations.
-        </p>
-        <p>
-          The calculation engine is the one used in the companion hematology tool,
-          whose outputs were checked against an independent implementation in SciPy
-          and against the laboratory's rule-design spreadsheet. Agreement was
-          exact to the reported precision for false rejection, detection and combined
-          figures, and to seven significant figures for the underlying tail
-          probabilities.
-        </p>
-        <p>
-          No data leave the browser. Entries are held in local browser storage on the
-          user's own device and are not transmitted anywhere.
-        </p>
-      </Section>
-
-      <Section title="Reporting rules selected with this tool">
-        <p>
-          Control rule designer for clinical chemistry and immunochemistry, version 1.0. State the allowable total
-          error and its source for each analyte, the imprecision estimate and the
-          period it came from, the false rejection allowance and detection target
-          applied, and the control rule and number of control measurements at each
-          level. Report the combined figures alongside the individual ones, since a
-          level can fail on its own while the control event as a whole performs
-          adequately.
-        </p>
-      </Section>
-
-      <Section title="References">
-        <ol className="ml-4 list-decimal space-y-2 marker:text-slate-400">
-          <li>
-            Westgard JO, Groth T, Aronsson T, et al. Performance characteristics of
-            rules for internal quality control: probabilities for false rejection and
-            error detection. Clin Chem 1977;23:1857–67.
-          </li>
-          <li>
-            Westgard JO, Groth T. Power functions for statistical control rules. Clin
-            Chem 1979;25:863–9.
-          </li>
-          <li>
-            Westgard JO, Barry PL, Hunt MR, Groth T. A multirule Shewhart chart for
-            quality control in clinical chemistry. Clin Chem 1981;27:493–501.
-          </li>
-          <li>
-            Cooper G, de Jonge N, Ehrmeyer S, et al. Collective opinion paper on
-            findings of the 2010 convocation of experts on laboratory quality. Clin
-            Chem Lab Med 2011;49:793.
-          </li>
-          <li>
-            Kinns H, Pitkin S, Housley D, Freedman DB. Internal quality control: best
-            practice. J Clin Pathol 2013;66:1027–32.
-          </li>
-          <li>
-            Page ES. Continuous inspection schemes. Biometrika 1954;41:100–15.
-          </li>
-          <li>
-            Westgard JO, Groth T, Aronsson T, de Verdier CH. Combined Shewhart-cusum
-            control chart for improved quality control in clinical chemistry. Clin
-            Chem 1977;23:1881–7.
-          </li>
-          <li>
-            Siegmund D. Sequential analysis: tests and confidence intervals. New York:
-            Springer; 1985.
-          </li>
-          <li>
-            Roberts SW. Control chart tests based on geometric moving averages.
-            Technometrics 1959;1:239–50.
-          </li>
-          <li>
-            ISO/TS 20914:2019. Medical laboratories — practical guidance for the
-            estimation of measurement uncertainty. Geneva: ISO; 2019.
-          </li>
-          <li>
-            Oosterhuis WP, Coskun A. Sigma metrics in laboratory medicine revisited:
-            we are on the right road with the wrong map. Biochem Med (Zagreb)
-            2018;28:020503.
-          </li>
-          <li>
-            Coskun A, Serteser M, Ünsal I. Sigma metric revisited: true known
-            mistakes. Biochem Med (Zagreb) 2019;29:010902.
-          </li>
-        </ol>
-        <p className="mt-3 text-xs text-slate-500">
-          The false rejection and error detection framework comes from references 1
-          to 3. The sigma bands and the control plans attached to them are reference
-          4. The CUSUM is reference 6, its use beside Shewhart rules in clinical
-          chemistry reference 7, and the run-length approximation reference 8. Verify
-          page numbers against the publisher record before submission.
-        </p>
       </Section>
     </div>
   );
