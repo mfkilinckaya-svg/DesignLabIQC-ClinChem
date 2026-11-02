@@ -225,8 +225,13 @@ def main(src: str, out: str) -> None:
     ts = d["timestamp"].dt.strftime("%Y-%m-%d %H:%M:%S")
     single = [EXCLUDED_RESULTS.get((t, i, x), "") for t, i, x in zip(d["test_code"], d["instrument"], ts)]
     d["excluded_reason"] = [a or b for a, b in zip(d["excluded_reason"], single)]
+    # Results the LIS accepted after a rejection-rule violation (QC status "Error") are
+    # not used for imprecision: their acceptance is a review decision, and keeping them
+    # widens the CV of heavy-tailed measurands (sodium) beyond the critical error.
+    # The CV with them is reported as a sensitivity (cv_with_accepted_error).
     d["used_for_imprecision"] = ((d["lis_rejected"] == 0) & (d["instrument_flag"] == "")
-                                 & (d["excluded_reason"] == "")).astype(int)
+                                 & (d["excluded_reason"] == "")
+                                 & ~d["lis_qc_status"].str.startswith("Error")).astype(int)
     d["bottle_status"] = d["Bottle status"]
     d["reagent_lot_r1"] = d["R1 lot"]
     d = d.sort_values(["analyte", "instrument", "level", "timestamp"])
@@ -267,11 +272,11 @@ def main(src: str, out: str) -> None:
     tg = acc.groupby(["analyte", "level"]).agg(target=("target_in_force", "median"),
                                                sd_lis=("sd_defined_in_lis", "median")).reset_index()
     cv = cv.merge(tg, on=["analyte", "level"])
-    # Sensitivity only (not used for rule design): CV without accepted results whose
-    # QC status was "Error", i.e. accepted after a rejection-rule violation.
-    acc_err = acc["lis_qc_status"].str.startswith("Error")
-    sens = (acc[~acc_err].groupby(["analyte", "level", "instrument"])
-            .apply(pooled_cv, include_groups=False)["cv"].rename("cv_without_accepted_error"))
+    # Sensitivity only (not used for rule design): CV including the results the LIS
+    # accepted with QC status "Error" (accepted after a rejection-rule violation).
+    acc_all = d[(d["lis_rejected"] == 0) & (d["instrument_flag"] == "") & (d["excluded_reason"] == "")]
+    sens = (acc_all.groupby(["analyte", "level", "instrument"])
+            .apply(pooled_cv, include_groups=False)["cv"].rename("cv_with_accepted_error"))
     cv = cv.merge(sens.reset_index(), on=["analyte", "level", "instrument"], how="left")
     # Sensitivity only: pooled within lot AND within each LIS target period, so that a step
     # change the laboratory corrected by re-targeting (e.g. after a recalibration) does not
@@ -309,22 +314,22 @@ def main(src: str, out: str) -> None:
             n = int(((d["test_code"] == t) & (d["control_name"] == c) & (d["lot"] == l)).sum())
             if n:
                 rep.append(f"- {t}, {c}, lot {l} ({n} results): {why}")
-    rep += ["", "## Accepted results with QC status Error (kept in imprecision; sensitivity only)", "",
+    rep += ["", "## Accepted results with QC status Error (excluded from imprecision; CV with them as sensitivity)", "",
             f"{len(ae)} result(s). The LIS rule failed but the result was accepted on review. "
-            "Imprecision keeps them (LIS decision governs); `cv_without_accepted_error` shows the CV without them.", ""]
+            "Imprecision excludes them; `cv_with_accepted_error` shows the CV with them.", ""]
     if len(ae):
         rep += ["| Analyte | Instrument | Level | Time | Result | Target | z | LIS rule outcome |", "|---|---|---|---|---|---|---|---|"]
         for _, r in ae.sort_values("timestamp").iterrows():
             rep.append(f"| {r['analyte']} | {r['instrument']} | {r['level']} | {r['timestamp']:%Y-%m-%d %H:%M} | {r['result']:g} | "
                        f"{r['target_in_force']:g} | {r['z_vs_target']:+.1f} | {r['lis_rule_outcome']} |")
     rep += ["", "## Imprecision (Accepted, no instrument flag; pooled within-lot)", "",
-            "| Analyte | Level | Instrument | n | Mean | CV % | CV % without accepted Error | CV % within target period | LIS CV % | Obs/def | Bias vs target % |",
+            "| Analyte | Level | Instrument | n | Mean | CV % | CV % with accepted Error | CV % within target period | LIS CV % | Obs/def | Bias vs target % |",
             "|---|---|---|---|---|---|---|---|---|---|---|"]
     for _, r in cv.iterrows():
         star = " ★" if ((worst["analyte"] == r["analyte"]) & (worst["level"] == r["level"]) &
                         (worst["instrument"] == r["instrument"])).any() else ""
         rep.append(f"| {r['analyte']} | {r['level']} | {r['instrument']}{star} | {int(r['n'])} | {r['mean']:.4g} | "
-                   f"{r['cv']:.2f} | {r['cv_without_accepted_error']:.2f} | {r['cv_within_target_period']:.2f} | {r['cv_lis_pct']:.2f} | {r['observed_to_defined']:.2f} | {r['bias_vs_target_pct']:+.2f} |")
+                   f"{r['cv']:.2f} | {r['cv_with_accepted_error']:.2f} | {r['cv_within_target_period']:.2f} | {r['cv_lis_pct']:.2f} | {r['observed_to_defined']:.2f} | {r['bias_vs_target_pct']:+.2f} |")
     rep.append("")
     rep.append("★ = worst instrument, carried forward to the rule design.")
 

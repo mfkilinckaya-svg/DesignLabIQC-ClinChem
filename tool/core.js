@@ -208,8 +208,8 @@ export const DEFAULT_ANALYTES = [
     name: "Sodium",
     pedReq: 90,
     unit: "mmol/L",
-    tea: 5,
-    teaSource: "SEKK Dmax",
+    tea: 4,
+    teaSource: "China WS/T 403-2024",
     teaOptions: [
       { label: "Labquality", value: 2 },
       { label: "Rili-BÄK", value: 3 },
@@ -222,10 +222,10 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 0.5, cvg: 0.7 },
     levels: [
-      Object.assign(lvl("L1", 136.569, 1.088, 1, 3.1), { bias: 0.236, lisTarget: 136.5, lisSd: 1.365 }),
-      Object.assign(lvl("L2", 154.677, 0.726, 1, 2.5), { bias: 0.251, lisTarget: 153.5, lisSd: 1.535 }),
+      Object.assign(lvl("L1", 136.621, 0.678, 1, 2.8), { bias: 0.198, lisTarget: 136.5, lisSd: 1.365 }),
+      Object.assign(lvl("L2", 154.701, 0.649, 1, 2.6), { bias: 0.231, lisTarget: 153.5, lisSd: 1.535 }),
     ],
-    note: "ISE module, four units. CV includes accepted results whose QC status was Error (sensitivity CV without them: L1 0.67%).",
+    note: "ISE module, four units. CV excludes results the LIS accepted with QC status Error; with them the L1 CV is 1.09% (sensitivity).",
   },
   {
     id: uid(),
@@ -274,8 +274,8 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 12.4, cvg: 29.8 },
     levels: [
-      Object.assign(lvl("L1", 53.6702, 2.446, 1, 2.8), { bias: 0.935, lisTarget: 55, lisSd: 2.2 }),
-      Object.assign(lvl("L2", 166.062, 2.171, 1, 2.6), { bias: 1.059, lisTarget: 167, lisSd: 3.34 }),
+      Object.assign(lvl("L1", 53.6722, 2.438, 1, 2.8), { bias: 0.939, lisTarget: 55, lisSd: 2.2 }),
+      Object.assign(lvl("L2", 166.073, 2.161, 1, 2.6), { bias: 1.065, lisTarget: 167, lisSd: 3.34 }),
     ],
     note: "Three c 703 units. Recalibration step of about +7% on 20\u201324 May 2025; targets re-set within the lot.",
   },
@@ -325,8 +325,8 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 1.8, cvg: 2.7 },
     levels: [
-      Object.assign(lvl("L1", 2.24434, 1.190, 1, 3.3), { bias: 0.670, lisTarget: 2.24, lisSd: 0.034 }),
-      Object.assign(lvl("L2", 3.13051, 0.998, 1, 3.2), { bias: 0.476, lisTarget: 3.135, lisSd: 0.031 }),
+      Object.assign(lvl("L1", 2.24451, 1.190, 1, 3.3), { bias: 0.664, lisTarget: 2.24, lisSd: 0.034 }),
+      Object.assign(lvl("L2", 3.13052, 0.998, 1, 3.2), { bias: 0.477, lisTarget: 3.135, lisSd: 0.031 }),
     ],
     note: "Two c 703 units. Defined L2 SD (0.99%) equals the observed CV.",
   },
@@ -349,8 +349,8 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 17.9, cvg: 36.1 },
     levels: [
-      Object.assign(lvl("L1", 3.02944, 2.462, 1, 2.8), { bias: 0.894, lisTarget: 3.06, lisSd: 0.113 }),
-      Object.assign(lvl("L2", 10.4928, 2.287, 1, 2.6), { bias: 0.874, lisTarget: 10.6, lisSd: 0.336 }),
+      Object.assign(lvl("L1", 3.02944, 2.440, 1, 2.8), { bias: 0.894, lisTarget: 3.06, lisSd: 0.113 }),
+      Object.assign(lvl("L2", 10.4928, 2.269, 1, 2.6), { bias: 0.874, lisTarget: 10.6, lisSd: 0.336 }),
     ],
     note: "Three e 801 units. Control lot changed 24 Feb 2026.",
   },
@@ -370,7 +370,7 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 11.4, cvg: 30.9 },
     levels: [
-      Object.assign(lvl("L1", 18.7954, 3.013, 1, 2.6), { bias: 0.821, lisTarget: 19.4, lisSd: 0.873 }),
+      Object.assign(lvl("L1", 18.7954, 3.006, 1, 2.6), { bias: 0.821, lisTarget: 19.4, lisSd: 0.873 }),
       Object.assign(lvl("L2", 2134.1, 4.509, 1, 2.8), { bias: 0.402, lisTarget: 2190, lisSd: 98.55 }),
     ],
     note: "Two e 801 units. L1 near the 99th-percentile limit (CV \u2264 10% required). Old L2 lot drifted upwards through 2025; new lot from 24 Feb 2026.",
@@ -381,8 +381,8 @@ export const DEFAULT_ANALYTES = [
     name: "Ferritin",
     pedReq: 70,
     unit: "\u00b5g/L",
-    tea: 13.5,
-    teaSource: "Rili-BÄK",
+    tea: 12,
+    teaSource: "Labquality",
     teaOptions: [
       { label: "Labquality", value: 12 },
       { label: "CLIA", value: 20 },
@@ -395,8 +395,8 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: {},
     levels: [
-      Object.assign(lvl("L1", 93.418, 2.571, 1, 2.6), { bias: 0.499, lisTarget: 95.8, lisSd: 3.832 }),
-      Object.assign(lvl("L2", 586.639, 2.878, 1, 2.8), { bias: 0.144, lisTarget: 597, lisSd: 17.91 }),
+      Object.assign(lvl("L1", 93.4395, 2.522, 1, 2.6), { bias: 0.526, lisTarget: 95.8, lisSd: 3.832 }),
+      Object.assign(lvl("L2", 586.925, 2.805, 1, 2.8), { bias: 0.117, lisTarget: 597, lisSd: 17.91 }),
     ],
     note: "Three e 801 units. Four L2 targets over the period; new lot reads below its target.",
   },
@@ -420,7 +420,7 @@ export const DEFAULT_ANALYTES = [
     bv: { cvi: 6.8, cvg: 42 },
     levels: [
       Object.assign(lvl("L1", 4.04595, 4.088, 1, 2.8), { bias: 2.859, lisTarget: 4.11, lisSd: 0.226 }),
-      Object.assign(lvl("L2", 20.8947, 3.992, 1, 2.6), { bias: 2.653, lisTarget: 21.2, lisSd: 1.024 }),
+      Object.assign(lvl("L2", 20.901, 3.984, 1, 2.6), { bias: 2.639, lisTarget: 21.2, lisSd: 1.024 }),
     ],
     note: "Two e 801 units. e801-1.1 drifts down between calibrations (\u224810% apart from e801-2.1 before the 21 May 2026 recalibration).",
   },
@@ -440,8 +440,8 @@ export const DEFAULT_ANALYTES = [
     ],
     bv: { cvi: 6.8, cvg: 37.6 },
     levels: [
-      Object.assign(lvl("L1", 97.6875, 6.697, 1, 2.8), { bias: 1.798, lisTarget: 95.1, lisSd: 8.469 }),
-      Object.assign(lvl("L2", 170.797, 5.749, 1, 2.6), { bias: 0.797, lisTarget: 168, lisSd: 11.138 }),
+      Object.assign(lvl("L1", 97.6875, 6.668, 1, 2.8), { bias: 1.798, lisTarget: 95.1, lisSd: 8.469 }),
+      Object.assign(lvl("L2", 170.797, 5.595, 1, 2.6), { bias: 0.797, lisTarget: 168, lisSd: 11.138 }),
     ],
     note: "Three e 801 units. Reagent-lot change in June 2025 raised results by \u224810%.",
   },

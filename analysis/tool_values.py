@@ -1,7 +1,7 @@
 """Per analyte x level, the values the tool's importer derives from tool_import.csv:
 worst-analyser pooled within-lot CV, target = grand mean of all results, bias = largest analyser offset (%)."""
 import pandas as pd, numpy as np
-d = pd.read_csv("out/qc_measurements.csv", low_memory=False)
+d = pd.read_csv("data/prepared/qc_measurements.csv", low_memory=False)
 d = d[d.used_for_imprecision == 1]
 rows = []
 for (a, lv), g in d.groupby(["analyte", "level"]):
@@ -30,6 +30,6 @@ for (a, lv), g in d.groupby(["analyte", "level"]):
                      lis_target_in_lot=gl.target_in_force.iat[-1], lis_sd_in_lot=gl.sd_defined_in_lis.iat[-1], first=g.timestamp.min()[:10], last=g.timestamp.max()[:10]))
 t = pd.DataFrame(rows)
 t = t[t.n >= 20]
-t.to_csv("out/tool_values_by_level.csv", index=False)
+t.to_csv("data/prepared/tool_values_by_level.csv", index=False)
 print(len(t), "levels;", t.analyte.nunique(), "analytes")
 print(t[t.analyte.isin(["Sodium","Creatinine","hs-Troponin T","C-peptide"])].to_string(index=False))
