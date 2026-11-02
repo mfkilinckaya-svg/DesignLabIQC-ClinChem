@@ -33,7 +33,7 @@ const H1 = (t) => new Paragraph({ spacing: { before: 240, line: 480, after: 0 },
 const H2 = (t) => new Paragraph({ spacing: { before: 120, line: 480, after: 0 }, children: [new TextRun({ text: t, font: FONT, size: 24, italics: true })] });
 const BR = () => new Paragraph({ children: [new PageBreak()] });
 const fmt = (x, d) => (x === "" || x == null || isNaN(+x) ? "–" : (+x).toFixed(d));
-const sig = (x) => { const v = +x; return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2); };
+const sig = (x) => { const v = +x; return v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v >= 1 ? v.toFixed(2) : v.toFixed(3); };
 
 const SRC_LABEL = { "BV EFLM (desirable)": "BV desirable", "BV EFLM (optimal)": "BV optimal", "BV EFLM (minimum)": "BV minimum", "CLIA": "CLIA 2025", "China WS/T 403-2024": "China WS/T 403" };
 

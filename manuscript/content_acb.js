@@ -14,41 +14,41 @@ function sub(arr, i, pairs) {
 C.shortTitle = "Control rules from imprecision: the allowable-error source decides";
 
 C.abstract = {
-  Background: "Internal quality control rules are rarely derived from measured imprecision, and the allowable total error (TEa) sources judging them disagree. We derived rules for ten measurands and examined their dependence on the TEa source.",
-  Methods: "Fourteen months of control results (n=27,963) for ten measurands on two Roche cobas pro systems gave per level the worst analyser's within-lot CV, lot mean and largest offset. TEa limits from 14 sources, from EFLM biological variation (BV) to EQA and national limits, were compared. The critical error was sized once per measurand; the strictest source giving sigma ≥3 at every level and rules within a 1.5% false-rejection allowance meeting the detection requirement was adopted. Rules derived from 2025 were validated on 2026 data, injected errors and 2,465 calibration and reagent-lot events.",
-  Results: "Observed CV was below the LIS CV at 15 of 20 levels (median ratio 0.75); sigma spanned 28-fold across sources. A BV tier was adopted for TSH, glucose and PSA only; none reached sigma 3 for sodium, calcium or 25-OH vitamin D. Derived rules (K 2.5–3.3 SD) raised predicted detection from a median 44% to 72–100%. On 2026 data they rejected 2.92% with lot-start targets and 1.06% re-centred (predicted 0.68%); the excess marked real shifts, such as a 4% glucose step after reagent-lot changes, confirmed by EQA. Injected errors were detected as predicted.",
-  Conclusions: "Derived rules are attainable and behave as predicted, but controllability depends more on the TEa source than on the analyser; false rejections beyond the Gaussian estimate mark uncorrected shifts.",
+  Background: "Internal quality control rules are rarely derived from measured imprecision, and allowable total error (TEa) sources disagree. We derived rules for ten measurands and tested them on later data.",
+  Methods: "Fourteen months of control results (n=27,963) on two Roche cobas pro systems gave per level the worst analyser's within-lot CV, lot mean and offset. TEa limits from 14 sources, from EFLM biological variation (BV) to EQA and national limits, were compared; the strictest source giving sigma ≥3 and a rule meeting the detection requirement within a 1.5% false-rejection allowance was adopted. Rules derived from 2025 were tested on 2026 data, injected errors and 2,465 calibration and reagent-lot events.",
+  Results: "Observed CV was below the LIS CV at 17 of 20 levels (median ratio 0.73); published limits differed up to 29-fold. A BV tier was adopted for TSH, glucose and PSA only; for sodium, calcium and 25-OH vitamin D only limits wider than clinical use requires were attainable. Derived rules (K 2.5–3.3 SD) raised predicted detection from a median 37% to 72–100%. On 2026 data they rejected 3.3% with lot-start targets and 1.4% re-centred (predicted 0.68%); the excess marked real shifts, such as a 4% glucose step confirmed by EQA. Injected errors were detected as predicted; 9 of 11 events leaving an error of the critical size were caught on the first run.",
+  Conclusions: "Derived rules are attainable and behave as predicted; controllability depends more on the TEa source than on the analyser, and false rejections beyond the Gaussian estimate mark uncorrected shifts.",
 };
 
 // Introduction: one citation of the haematology study
 sub(C.introduction, 2, [[
-  "In a haematology study we derived IQC rules from the pooled within-lot imprecision of three analysers, with the target on the laboratory's own pooled mean, and found that whether a parameter looked controllable depended more on the TEa source than on the analyser [16]. This study applies the method to ten clinical chemistry and immunoassay measurands on a Roche cobas pro, with many more candidate TEa sources and 14 months of data in which calibration and reagent-lot changes test whether the Gaussian false-rejection estimate holds.",
-  "This study derives IQC rules for ten clinical chemistry and immunoassay measurands on a Roche cobas pro from the pooled within-lot imprecision of the laboratory's own analysers, with the target on its own lot mean, and asks three questions: which of 14 published TEa sources leave a rule attainable at all; how the critical error should be sized when the control levels differ in CV; and whether the Gaussian false-rejection estimate holds over 14 months of data in which calibration and reagent-lot changes occur. A first application of the approach to a haematology panel found that the TEa source mattered more than the analyser [16]; the present study extends it, with many more candidate sources, and corrects the way the critical error was sized there.",
+  "In a haematology study we derived IQC rules from the pooled within-lot imprecision of three analysers, with the target on the laboratory's own pooled mean, and found that whether a parameter looked controllable depended more on the TEa source than on the analyser [16]. This study applies the method to ten clinical chemistry and immunoassay measurands on a Roche cobas pro, with more candidate TEa sources and 14 months of data in which calibration and reagent-lot changes test the Gaussian false-rejection estimate.",
+  "This study derives IQC rules for ten clinical chemistry and immunoassay measurands on a Roche cobas pro from the pooled within-lot imprecision of the laboratory's own analysers, with the target on its own lot mean, and asks which of 14 published TEa sources leave a rule attainable at all, how the critical error should be sized when the control levels differ in CV, and whether the Gaussian false-rejection estimate holds over 14 months in which calibration and reagent-lot changes occur. A first application of the approach to a haematology panel found that the TEa source mattered more than the analyser (tool and data deposited [16]; manuscript under review); the present study extends it with more candidate sources and corrects the way the critical error was sized there.",
 ]]);
 
 // Methods: rule derivation and tool, no reliance on the haematology paper
 const rd = C.methods.find((s) => s[0] === "Rule derivation");
 sub(rd, 1, [
-  ["Evaluating each level at its own critical shift (sigma − 1.65), as in the haematology study [16], overstates the combined detection; the conventions are compared in Supplementary Table S5.",
-   "Evaluating each level at its own critical shift (sigma − 1.65) answers a different question for each level and overstates the combined detection; the conventions are compared in Supplementary Table S5."],
+  ["with evaluating each level at its own critical shift (sigma − 1.65), as in the haematology study [16], which overstates combined detection.",
+   "with evaluating each level at its own critical shift (sigma − 1.65), which answers a different question for each level and overstates combined detection."],
   ["The detection requirement was 90% for sodium, creatinine, glucose, calcium and hs-TnT and 70% for the others, following the clinical weighting of the haematology study [16].",
    "The detection requirement was set by clinical judgement at 90% for sodium, creatinine, glucose, calcium and hs-TnT, where a missed systematic error changes treatment decisions within hours, and 70% for the others."],
 ]);
 sub(rd, 2, [[
-  "The calculations are those of the DesignLabIQC tool [16], extended to two-level panels, user-entered TEa sources and direct import of cobas infinity exports (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence): a single HTML file that runs in a browser and opens with this panel loaded.",
-  "The calculations were implemented in a browser-based tool (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence): a single HTML file that runs without installation, accepts two-level panels, user-entered TEa sources and direct import of cobas infinity exports, and opens with this panel loaded.",
+  "The calculations are those of the DesignLabIQC tool [16], extended to two-level panels, user-entered TEa sources and direct import of cobas infinity exports (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence), a single HTML file that opens in a browser with this panel loaded.",
+  "The calculations were implemented in a browser-based tool (DesignLabIQC-ClinChem, https://github.com/mfkilinckaya-svg/DesignLabIQC-ClinChem, MIT licence), a single HTML file that runs without installation, accepts two-level panels, user-entered TEa sources and direct import of cobas infinity exports, and opens with this panel loaded.",
 ]]);
 
 // Results: figure numbering (3 main figures; retrospective and monthly-mean figures supplementary)
 const r3 = C.results.find((s) => s[0].startsWith("Derived rules"));
 sub(r3, 1, [["Figure 5 shows detection per level and combined", "Figure 3 shows detection per level and combined"]]);
 const r4 = C.results.find((s) => s[0].startsWith("Retrospective"));
-sub(r4, 1, [["ALT L1 from 3.8% to 1.1% (Figure 3).", "ALT L1 from 3.8% to 1.1% (Supplementary Figure S1)."], ["Figure 4 shows four levels:", "Supplementary Figure S2 shows four levels:"]]);
+sub(r4, 1, [["ALT L1 from 3.8% to 1.2% (Figure 3).", "ALT L1 from 3.8% to 1.2% (Supplementary Figure S1)."], ["Figure 4 shows four levels:", "Supplementary Figure S2 shows four levels:"]]);
 
 // Discussion: one citation of the haematology study
 sub(C.discussion, 0, [[
-  "The main finding repeats, on a different platform and panel, the conclusion of the haematology study [16]: the rules a laboratory can justify from its own imprecision depend less on the analyser than on which allowable-error source it chooses.",
-  "The main finding is that the rules a laboratory can justify from its own imprecision depend less on the analyser than on which allowable-error source it chooses; the same was found for a haematology panel on a different platform [16].",
+  "The main finding repeats, on another platform and panel, the conclusion of the haematology study [16]: the rules a laboratory can justify from its own imprecision depend less on the analyser than on the allowable-error source it chooses.",
+  "The main finding is that the rules a laboratory can justify from its own imprecision depend less on the analyser than on the allowable-error source it chooses; the same was found for a haematology panel on a different platform (tool and data in [16]; manuscript under review).",
 ]]);
 sub(C.discussion, 1, [[
   "lowered the combined detection of the adopted rules by up to 17 percentage points against the per-level convention of the haematology study and moved",
