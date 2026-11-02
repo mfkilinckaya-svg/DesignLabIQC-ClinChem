@@ -1,0 +1,11 @@
+analyte,source,tea,eqa_n,eqa_bias_mean_pct,eqa_bias_median_pct,offset_study_pct,sigma_L1_study,sigma_L2_study,sigma_L1_eqa,sigma_L2_eqa,crit_study_pct,crit_eqa_pct,sigma3_at_both_levels_with_eqa_bias
+Sodium,China WS/T 403-2024,4.0,10,-0.36,-0.7,0.23,5.61,5.81,4.86,5.08,2.68,2.18,True
+Creatinine,Labquality,8.0,10,3.12,2.96,0.12,4.14,6.15,2.65,3.91,4.74,1.9,False
+ALT,Labquality,12.0,8,13.09,8.23,1.06,4.54,5.06,1.54,1.74,7.04,-0.26,False
+Glucose,BV EFLM (minimum),9.61379401381166,10,4.28,3.99,0.48,4.73,6.22,2.91,3.76,5.95,2.43,False
+Calcium,SEKK Dmax,10.0,10,1.39,1.89,0.66,7.85,9.54,6.82,8.13,7.37,6.15,True
+TSH,BV EFLM (optimal),12.4205210390686,7,-0.48,-0.32,0.89,4.72,5.09,4.96,5.33,7.5,8.07,True
+hs-Troponin T,Rili-BÄK,20.0,8,1.17,3.13,0.82,6.38,4.35,5.61,3.74,12.16,9.43,True
+Ferritin,Labquality,12.0,12,-3.21,-3.49,0.53,4.55,4.24,3.38,3.04,7.25,3.89,True
+PSA,BV EFLM (minimum),24.3700932306897,10,-3.43,-3.46,2.86,5.26,5.45,5.11,5.25,14.77,14.16,True
+25-OH vitamin D,RfB,30.0,4,-5.09,-2.12,1.8,4.23,5.22,4.18,4.98,17.2,16.87,True

@@ -14,7 +14,9 @@ Design
   training CV against the same statistic in the test period.
 - (2) Error injection: test-period runs (L1 and L2 on the same analyser within 30 min) are shifted by a
   known systematic error (0.5, 1.0 and 1.5 x the critical error, in % of the target) and the fraction of
-  runs in which at least one level rejects is compared with the theoretical combined Ped.
+  runs in which at least one level rejects is compared with the theoretical combined Ped: with the
+  training offset taken to oppose the error (the study's convention, for runs judged against the
+  lot-start target) and with the offset ignored (for runs re-centred on the analyser mean).
 Writes results/validation_temporal.csv and results/validation_injection.csv."""
 import math, itertools
 import numpy as np, pandas as pd
@@ -120,6 +122,8 @@ for a in PANEL:
             ri = ((y1 - pr.c1).abs() > K1 * cv1 * pr.c1) | ((y2 - pr.c2).abs() > K2 * cv2 * pr.c2)
             s = [mult * sh for sh in best["shifts"]]
             theo = combine([pfr1(K1), pfr1(K2)]) if mult == 0 else combine([ped1(K1, s[0]), ped1(K2, s[1])])
+            # the same error with the offset ignored (runs centred on the analyser mean carry no offset)
+            theo_no = combine([pfr1(K1), pfr1(K2)]) if mult == 0 else combine([ped1(K1, mult * max(best["crit"], 0) / st["L1"][0]), ped1(K2, mult * max(best["crit"], 0) / st["L2"][0])])
             # same model with the test-period SD of the worst analyser (limits stay at K x training SD)
             def p_out(K, cv_tr, cv_te, e_pct):
                 lim = K * cv_tr; return 1 - (ncdf((lim - e_pct) / cv_te) - ncdf((-lim - e_pct) / cv_te))
@@ -127,7 +131,7 @@ for a in PANEL:
             theo_te = combine([p_out(K1, st["L1"][0], st_test["L1"][0], e_pct), p_out(K2, st["L2"][0], st_test["L2"][0], e_pct)])
             inj.append(dict(analyte=a, shift_x_crit=mult, direction="+" if sign > 0 else "-", n_runs=len(pr),
                             empirical_pct=round(100 * r.mean(), 2), empirical_centred_pct=round(100 * ri.mean(), 2),
-                            theoretical_pct=round(100 * theo, 2), theoretical_test_cv_pct=round(100 * theo_te, 2)))
+                            theoretical_pct=round(100 * theo, 2), theoretical_no_offset_pct=round(100 * theo_no, 2), theoretical_test_cv_pct=round(100 * theo_te, 2)))
 
 R = pd.DataFrame(rows); I = pd.DataFrame(inj)
 R.to_csv("results/validation_temporal.csv", index=False); I.to_csv("results/validation_injection.csv", index=False)
@@ -136,7 +140,7 @@ print(R[["analyte", "level", "cv_train", "cv_test", "K", "n_test", "pfr_predicte
 w = R.n_test
 for c in ["pfr_predicted_pct", "rej_observed_pct", "rej_observed_unflagged_pct", "rej_centre_test_lot_mean_pct", "rej_centre_test_analyser_mean_pct"]:
     print("Overall %s: %.2f%%" % (c, (R[c] * w).sum() / w.sum()))
-J = I.groupby(["analyte", "shift_x_crit"]).agg(practice=("empirical_pct", "mean"), centred=("empirical_centred_pct", "mean"), theory=("theoretical_pct", "first"), theory_test_cv=("theoretical_test_cv_pct", "first")).round(1)
+J = I.groupby(["analyte", "shift_x_crit"]).agg(practice=("empirical_pct", "mean"), centred=("empirical_centred_pct", "mean"), theory=("theoretical_pct", "first"), theory_no_offset=("theoretical_no_offset_pct", "first"), theory_test_cv=("theoretical_test_cv_pct", "first")).round(1)
 print(J.unstack().to_string())
 print(I.pivot_table(index="analyte", columns=["shift_x_crit", "direction"], values="empirical_pct").round(1).to_string())
 print(I[I.direction == "+"].pivot_table(index="analyte", columns="shift_x_crit", values="theoretical_pct").round(1).to_string())

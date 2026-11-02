@@ -1,0 +1,7 @@
+error_after_event,events,within_runs,derived,derived_pct,derived_ci95,lis,lis_pct,lis_ci95,fisher_p
+>= 0.5 x critical error,91,1,14,15.4,9-24,6,6.6,2-14,0.095
+>= 0.5 x critical error,91,2,29,31.9,22-42,7,7.7,3-15,0.0
+>= 0.5 x critical error,91,3,32,35.2,25-46,8,8.8,4-17,0.0
+>= 1.0 x critical error,11,1,9,81.8,48-98,2,18.2,2-52,0.009
+>= 1.0 x critical error,11,2,9,81.8,48-98,2,18.2,2-52,0.009
+>= 1.0 x critical error,11,3,9,81.8,48-98,2,18.2,2-52,0.009
