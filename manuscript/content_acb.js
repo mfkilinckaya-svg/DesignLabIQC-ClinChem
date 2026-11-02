@@ -14,10 +14,10 @@ function sub(arr, i, pairs) {
 C.shortTitle = "Control rules from imprecision: the allowable-error source decides";
 
 C.abstract = {
-  Background: "Internal quality control rules are rarely derived from measured imprecision, and the allowable total error (TEa) judging them comes from disagreeing sources. We derived rules for ten clinical chemistry and immunoassay measurands and examined how far they depend on the TEa source.",
-  Methods: en.abstract.Methods.replace("for sodium, creatinine, ALT, glucose, calcium, TSH, high-sensitivity troponin T, ferritin, PSA and 25-OH vitamin D on two Roche cobas pro systems", "for ten measurands on two Roche cobas pro systems").replace(", from EFLM biological variation (BV) to EQA and national limits,", ", from EFLM biological variation (BV) to EQA and national limits,"),
-  Results: en.abstract.Results,
-  Conclusions: en.abstract.Conclusions,
+  Background: "Internal quality control rules are rarely derived from measured imprecision, and the allowable total error (TEa) sources judging them disagree. We derived rules for ten measurands and examined their dependence on the TEa source.",
+  Methods: "Fourteen months of control results (n=27,963) for ten measurands on two Roche cobas pro systems gave per level the worst analyser's within-lot CV, lot mean and largest offset. TEa limits from 14 sources, from EFLM biological variation (BV) to EQA and national limits, were compared. The critical error was sized once per measurand; the strictest source giving sigma ≥3 at every level and rules within a 1.5% false-rejection allowance meeting the detection requirement was adopted. Rules derived from 2025 were validated on 2026 data, injected errors and 2,465 calibration and reagent-lot events.",
+  Results: "Observed CV was below the LIS CV at 15 of 20 levels (median ratio 0.75); sigma spanned 28-fold across sources. A BV tier was adopted for TSH, glucose and PSA only; none reached sigma 3 for sodium, calcium or 25-OH vitamin D. Derived rules (K 2.5–3.3 SD) raised predicted detection from a median 44% to 72–100%. On 2026 data they rejected 2.92% with lot-start targets and 1.06% re-centred (predicted 0.68%); the excess marked real shifts, such as a 4% glucose step after reagent-lot changes, confirmed by EQA. Injected errors were detected as predicted.",
+  Conclusions: "Derived rules are attainable and behave as predicted, but controllability depends more on the TEa source than on the analyser; false rejections beyond the Gaussian estimate mark uncorrected shifts.",
 };
 
 // Introduction: one citation of the haematology study
@@ -69,6 +69,7 @@ C.supplementary = [
   en.legends[2].replace("Figure 3.", "Supplementary Figure S1."),
   en.legends[3].replace("Figure 4.", "Supplementary Figure S2."),
   en.supplementary[5],
+  en.supplementary[6],
 ];
 
 C.guarantor = "MFK.";
